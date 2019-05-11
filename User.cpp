@@ -7,7 +7,7 @@ using namespace std;
 int User::hashCode(string const &str) { 
     long long hash = 0;
     for (auto Letter : str){
-        hash = ( hash * 31 + Letter ) % mod;
+        hash = ( hash * 313 + Letter ) % mod;
     }
     return hash;
 }
@@ -26,4 +26,8 @@ void User::setPublisher(){
 
 bool User::isUserName(string _userName){
     return userName == _userName;
+}
+
+bool User::isPassword(string _password){
+    return password == this->hashCode(_password);
 }

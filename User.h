@@ -13,8 +13,10 @@ public:
     void setPublisher();
     int hashCode(std::string const& str);
     bool isUserName(std::string _userName);
+    bool isPassword(std::string _password);
 private:
-    std::string email, userName, password;
+    std::string email, userName;
+    int password;
     int age;
     int id;
     bool publisher = false;

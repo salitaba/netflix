@@ -17,8 +17,9 @@ public:
     void signup(std::vector<std::string>& elements);
     bool findUserName(std::string userName);
     int getUserId();
+    void login(std::vector<std::string> element);
 private:
-
+    User *userLoggined = NULL;
     std::vector<Film*> films;
     std::vector<User*> users;
     int userIdCounter;
