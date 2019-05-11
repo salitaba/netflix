@@ -45,13 +45,23 @@ void RequestManager::handleEvents(vector<string>& element){
 void RequestManager::signup(vector<string>& element){
     if(element.size() < MINIMUM_NUMBER_OF_SIGNUP_FIELD || element.size() > MAXIMUM_NUMBER_OF_SIGNUP_FIELD)
         throw BadRequest();
-    User* newUser = new User(element[3], element[4], element[5], atoi(element[6].c_str()), this->getUserId);
+    if(this->findUserName(element[4]) == true)
+        throw BadRequest();
+    User* newUser = new User(element[3], element[4], element[5], atoi(element[6].c_str()), this->getUserId());
     if(element.size() == MAXIMUM_NUMBER_OF_SIGNUP_FIELD){
         if(element[MAXIMUM_NUMBER_OF_SIGNUP_FIELD - 1] == "true")
             newUser->setPublisher();
         else if(element[MAXIMUM_NUMBER_OF_SIGNUP_FIELD  - 1] != "false")
             throw BadRequest();
     }
+}
+
+
+bool RequestManager::findUserName(string userName){
+    for( auto user : users)
+        if(user->isUserName(userName) == true)
+            return true;
+    return false;
 }
 
 int RequestManager::getUserId(){

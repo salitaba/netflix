@@ -15,12 +15,13 @@ public:
     void split(std::string, std::vector<std::string>& elements);
     void handleEvents(std::vector<std::string>& elements);
     void signup(std::vector<std::string>& elements);
+    bool findUserName(std::string userName);
     int getUserId();
 private:
 
     std::vector<Film*> films;
     std::vector<User*> users;
-    int UserIdCounter;
+    int userIdCounter;
 };
 
 
