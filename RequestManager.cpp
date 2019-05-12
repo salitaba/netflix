@@ -69,8 +69,6 @@ bool RequestManager::findUserName(string userName){
 }
 
 void RequestManager::login(vector<string> element){
-    if(element.size() != 5)
-        throw BadRequest();
     for( auto user : users)
         if(user->isUserName(element[3]) == true && user->isPassword(element[4]) == true){
             userLoggined = user;
