@@ -11,10 +11,9 @@
 using namespace std;
 
 void RequestManager::handle(string input){
-    vector<string> inputElements;
-    this->split(input, inputElements);
+    Request query(input);
     try{
-        this->handleEvents(inputElements);
+        this->handleEvents(query);
     }catch(exception &e){
         cout<<e.what()<<endl;
     }
@@ -33,14 +32,12 @@ void RequestManager::split(string input, vector<string>& inputElement){
     }
 }
 
-void RequestManager::handleEvents(vector<string>& element){
-    if(element.size() < 2)
-        throw BadRequest();
-    if(element[0] == POST && element[1] == "signup")
-        return this->signup(element);
-    if(element[0] == POST && element[1] == "login")
-        return this->login(element);
-    throw BadRequest();
+void RequestManager::handleEvents(Request){
+    // if(element[0] == POST && element[1] == "signup")
+    //     return this->signup(element);
+    // if(element[0] == POST && element[1] == "login")
+    //     return this->login(element);
+    // throw BadRequest();
 
 }
 

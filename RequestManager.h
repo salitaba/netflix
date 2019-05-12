@@ -4,6 +4,7 @@
 #include"Film.h"
 #include"User.h"
 #include"Exception.h"
+#include"Request.h"
 
 #include<string>
 #include<vector>
@@ -13,7 +14,7 @@ class RequestManager{
 public:
     void handle(std::string input);
     void split(std::string, std::vector<std::string>& elements);
-    void handleEvents(std::vector<std::string>& elements);
+    void handleEvents(Request);
     void signup(std::vector<std::string>& elements);
     bool findUserName(std::string userName);
     int getUserId();

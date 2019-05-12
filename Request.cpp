@@ -3,11 +3,13 @@
 using namespace std;
 
 Request::Request(string request){
-    vector<string> splitedRequest;
-    this->split(request, splitedRequest);
+    vector<string> splitedRequest = this->split(request);
+    if(splitedRequest.size() < 3)
+        throw BadRequest();
 }
 
-void Request::split(string input, vector<string>& inputElement){
+vector<string> Request::split(string input){
+    vector<string>inputElement;
     int index = 0;
     while(index < input.size()){
         string now = "";
@@ -18,4 +20,5 @@ void Request::split(string input, vector<string>& inputElement){
         inputElement.push_back(now);
         index++;
     }
+    return inputElement;
 }

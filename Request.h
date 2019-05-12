@@ -4,10 +4,12 @@
 #include<string>
 #include<vector>
 
+#include"Exception.h"
+
 class Request{
 public:
     Request(std::string);
-    void split(std::string input, std::vector<std::string>& inputElement);
+    std::vector<std::string> split(std::string input);
 private:
 
 
