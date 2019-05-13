@@ -33,10 +33,6 @@ queue<string> Request::split(string input){
     return inputElement;
 }
 
-bool Request::isQuery(string _method, string _query){
-    return method == method && query == _query;
-}
-
 string Request::getMethod(){
     return method;
 }
@@ -54,4 +50,10 @@ void Request::convertToMap(queue<string> keyValue){
         key[keyy] = keyValue.front();
         keyValue.pop();
     }              
+}
+
+void Request::check(vector<string> requirementField){
+    for(auto field : requirementField)
+        if(key[field].size() == 0)
+            throw BadRequest();
 }

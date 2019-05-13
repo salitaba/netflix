@@ -33,7 +33,7 @@ void RequestManager::split(string input, vector<string>& inputElement){
 }
 
 void RequestManager::handleEvents(Request request){
-    if (request.isQuery(POST, "signup") == true){
+    if (request.getMethod() == POST && request.getQuery() == "signup"){
         return this->signup(request);
     } 
     // if(element[0] == POST && element[1] == "signup")
@@ -44,7 +44,12 @@ void RequestManager::handleEvents(Request request){
 
 }
 
-void RequestManager::signup(Request element){
+void RequestManager::signup(Request request){
+    vector<string> requirementField{"email", "username", "password", "age"};
+    vector<string> optionalField{"publisher"};
+    request.check(requirementField);
+    
+    
     // if(element.size() < MINIMUM_NUMBER_OF_SIGNUP_FIELD || element.size() > MAXIMUM_NUMBER_OF_SIGNUP_FIELD)
     //     throw BadRequest();  
     // if(this->findUserName(element[4]) == true)
