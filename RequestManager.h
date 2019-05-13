@@ -14,10 +14,10 @@ public:
     void handle(std::string input);
     void split(std::string, std::vector<std::string>& elements);
     void handleEvents(Request);
-    void signup(Request elements);
+    void signup(Request request);
     bool findUserName(std::string userName);
     int getUserId();
-    void login(std::vector<std::string> element);
+    void login(Request request);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;

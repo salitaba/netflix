@@ -4,7 +4,6 @@ using namespace std;
 
 Request::Request(string request){
     queue<string> splitedRequest = this->split(request);
-    cout<<splitedRequest.size()<<endl;
     if(splitedRequest.size() < 3)
         throw BadRequest();
     method = splitedRequest.front();
@@ -54,8 +53,10 @@ void Request::convertToMap(queue<string> keyValue){
 
 void Request::check(vector<string> requirementField){
     for(auto field : requirementField)
-        if(key[field].size() == 0)
+        if(key[field].size() == 0){
             throw BadRequest();
+        }
+            
 }
 
 string Request::get(string _key, bool optional){
