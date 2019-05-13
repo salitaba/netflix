@@ -3,8 +3,6 @@
 
 #include"User.h"
 
-class User;
-
 class Film{
 public:
 

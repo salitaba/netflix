@@ -3,7 +3,6 @@
 
 #include"Film.h"
 #include"User.h"
-#include"Exception.h"
 #include"Request.h"
 
 #include<string>

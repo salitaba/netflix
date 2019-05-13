@@ -13,6 +13,7 @@ using namespace std;
 void RequestManager::handle(string input){
     try{
         Request query(input);
+        cout<<"OK"<<endl;
         this->handleEvents(query);
     }catch(exception &e){
         cout<<e.what()<<endl;
@@ -49,18 +50,15 @@ void RequestManager::signup(Request request){
     vector<string> optionalField{"publisher"};
     request.check(requirementField);
     
-    
-    // if(element.size() < MINIMUM_NUMBER_OF_SIGNUP_FIELD || element.size() > MAXIMUM_NUMBER_OF_SIGNUP_FIELD)
-    //     throw BadRequest();  
-    // if(this->findUserName(element[4]) == true)
-    //     throw BadRequest();
-    // User* newUser = new User(element[3], element[4], element[5], atoi(element[6].c_str()), this->getUserId());
-    // if(element.size() == MAXIMUM_NUMBER_OF_SIGNUP_FIELD){
-    //     if(element[MAXIMUM_NUMBER_OF_SIGNUP_FIELD - 1] == "true")
-    //         newUser->setPublisher();
-    //     else if(element[MAXIMUM_NUMBER_OF_SIGNUP_FIELD  - 1] != "false")
-    //         throw BadRequest();
-    // }
+    string username = request.get("username", false);
+    string email = request.get("email", false);
+    string password = request.get("password", false);
+    string age = request.get("age", false);
+    string publisher = request.get("publisher", true, "false");
+
+    if(this->findUserName(username) == true)
+        throw BadRequest();
+    User* newUser = new User(email, username, password, atoi(age.c_str()), this->getUserId(), publisher);
     // userLoggined = newUser;
     // users.push_back(newUser);
 }

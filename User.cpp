@@ -12,12 +12,16 @@ int User::hashCode(string const &str) {
     return hash;
 }
 
-User::User(string _email, string _userName, string _password, int _age, int _id){
+User::User(string _email, string _userName, string _password, int _age, int _id, string _publisher){
     email = _email;
     userName = _userName;
     password = this->hashCode(_password);
     age = _age;
     id = _id;
+    if(_publisher == "true")
+        publisher = true;
+    else if(_publisher != "false")
+        throw BadRequest();
 }
 
 void User::setPublisher(){

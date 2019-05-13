@@ -57,3 +57,17 @@ void Request::check(vector<string> requirementField){
         if(key[field].size() == 0)
             throw BadRequest();
 }
+
+string Request::get(string _key, bool optional){
+    if(optional == false && key[_key].size() == 0)
+        throw BadRequest();
+    return key[_key];
+}
+
+string Request::get(string _key, bool optional, string defaultValue){
+    if(optional == false && key[_key].size() == 0)
+        throw BadRequest();
+    if(key[_key].size() == 0)
+        return defaultValue;
+    return key[_key];
+}

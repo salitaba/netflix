@@ -16,6 +16,8 @@ public:
     std::string getMethod();
     std::string getQuery();
     void check(std::vector<std::string> requirementField);
+    std::string get(std::string key, bool optional);
+    std::string get(std::string key, bool optional, std::string defaultValue);
 private:
     std::string method, query;
     std::map<std::string, std::string>key;

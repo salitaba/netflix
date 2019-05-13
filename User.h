@@ -1,15 +1,16 @@
 #ifndef USER_H
 #define USER_H
 
-#include"Film.h"
 #include<string>
 #include<vector>
+
+#include"Exception.h"
 
 class Film;
 
 class User{
 public:
-    User (std::string email, std::string user, std::string password, int age, int _id);
+    User (std::string email, std::string user, std::string password, int age, int _id, std::string publisher);
     void setPublisher();
     int hashCode(std::string const& str);
     bool isUserName(std::string _userName);
