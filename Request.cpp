@@ -41,6 +41,10 @@ string Request::getMethod(){
     return method;
 }
 
+string Request::getQuery(){
+    return query;
+}
+
 void Request::convertToMap(queue<string> keyValue){
     if(keyValue.size() % 2 == 1)
         throw BadRequest();

@@ -15,6 +15,7 @@ public:
     bool isQuery(std::string method,std::string query);
     void convertToMap(std::queue<std::string> keyValue);
     std::string getMethod();
+    std::string getQuery();
 private:
     std::string method, query;
     std::map<std::string, std::string>key;
