@@ -15,7 +15,7 @@ public:
     void handle(std::string input);
     void split(std::string, std::vector<std::string>& elements);
     void handleEvents(Request);
-    void signup(std::vector<std::string>& elements);
+    void signup(Request elements);
     bool findUserName(std::string userName);
     int getUserId();
     void login(std::vector<std::string> element);

@@ -2,17 +2,19 @@
 #define REQUEST_H
 
 #include<string>
-#include<vector>
+#include<queue>
+#include<map>
 
 #include"Exception.h"
 
 class Request{
 public:
     Request(std::string);
-    std::vector<std::string> split(std::string input);
+    std::queue<std::string> split(std::string input);
+    bool isQuery(std::string method,std::string query);
 private:
-
-
+    std::string method, query;
+    std::map<string, string>key;
 };
 
 

@@ -3,13 +3,17 @@
 using namespace std;
 
 Request::Request(string request){
-    vector<string> splitedRequest = this->split(request);
+    queue<string> splitedRequest = this->split(request);
     if(splitedRequest.size() < 3)
         throw BadRequest();
+    method = splitedRequest.front();
+    splitedRequest.pop();
+    query = splitedRequest.front();
+    splitedRequest.pop();
 }
 
-vector<string> Request::split(string input){
-    vector<string>inputElement;
+queue<string> Request::split(string input){
+    queue<string>inputElement;
     int index = 0;
     while(index < input.size()){
         string now = "";
@@ -17,8 +21,12 @@ vector<string> Request::split(string input){
             now += input[index];
             index++;
         }
-        inputElement.push_back(now);
+        inputElement.push(now);
         index++;
     }
     return inputElement;
+}
+
+bool Request::isQuery(string _method, string _query){
+    return method == method && query == _query;
 }

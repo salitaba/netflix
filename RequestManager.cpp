@@ -32,7 +32,10 @@ void RequestManager::split(string input, vector<string>& inputElement){
     }
 }
 
-void RequestManager::handleEvents(Request){
+void RequestManager::handleEvents(Request request){
+    if (request.isQuery(POST, "signup") == true){
+        return this->signup(request);
+    } 
     // if(element[0] == POST && element[1] == "signup")
     //     return this->signup(element);
     // if(element[0] == POST && element[1] == "login")
@@ -41,20 +44,20 @@ void RequestManager::handleEvents(Request){
 
 }
 
-void RequestManager::signup(vector<string>& element){
-    if(element.size() < MINIMUM_NUMBER_OF_SIGNUP_FIELD || element.size() > MAXIMUM_NUMBER_OF_SIGNUP_FIELD)
-        throw BadRequest();  
-    if(this->findUserName(element[4]) == true)
-        throw BadRequest();
-    User* newUser = new User(element[3], element[4], element[5], atoi(element[6].c_str()), this->getUserId());
-    if(element.size() == MAXIMUM_NUMBER_OF_SIGNUP_FIELD){
-        if(element[MAXIMUM_NUMBER_OF_SIGNUP_FIELD - 1] == "true")
-            newUser->setPublisher();
-        else if(element[MAXIMUM_NUMBER_OF_SIGNUP_FIELD  - 1] != "false")
-            throw BadRequest();
-    }
-    userLoggined = newUser;
-    users.push_back(newUser);
+void RequestManager::signup(Request element){
+    // if(element.size() < MINIMUM_NUMBER_OF_SIGNUP_FIELD || element.size() > MAXIMUM_NUMBER_OF_SIGNUP_FIELD)
+    //     throw BadRequest();  
+    // if(this->findUserName(element[4]) == true)
+    //     throw BadRequest();
+    // User* newUser = new User(element[3], element[4], element[5], atoi(element[6].c_str()), this->getUserId());
+    // if(element.size() == MAXIMUM_NUMBER_OF_SIGNUP_FIELD){
+    //     if(element[MAXIMUM_NUMBER_OF_SIGNUP_FIELD - 1] == "true")
+    //         newUser->setPublisher();
+    //     else if(element[MAXIMUM_NUMBER_OF_SIGNUP_FIELD  - 1] != "false")
+    //         throw BadRequest();
+    // }
+    // userLoggined = newUser;
+    // users.push_back(newUser);
 }
 
 
