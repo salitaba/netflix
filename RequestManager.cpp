@@ -11,8 +11,8 @@
 using namespace std;
 
 void RequestManager::handle(string input){
-    Request query(input);
     try{
+        Request query(input);
         this->handleEvents(query);
     }catch(exception &e){
         cout<<e.what()<<endl;

@@ -10,6 +10,10 @@ Request::Request(string request){
     splitedRequest.pop();
     query = splitedRequest.front();
     splitedRequest.pop();
+    if(splitedRequest.front() != "?")
+        throw BadRequest();
+    splitedRequest.pop();
+    this->convertToMap(splitedRequest);
 }
 
 queue<string> Request::split(string input){
@@ -29,4 +33,15 @@ queue<string> Request::split(string input){
 
 bool Request::isQuery(string _method, string _query){
     return method == method && query == _query;
+}
+
+void Request::convertToMap(queue<string> keyValue){
+    if(keyValue.size() % 2 == 1)
+        throw BadRequest();
+    while(keyValue.size() > 0){
+        string keyy = keyValue.front();
+        keyValue.pop();
+        key[keyy] = keyValue.front();
+        keyValue.pop();
+    }              
 }
