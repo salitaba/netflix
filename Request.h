@@ -4,6 +4,7 @@
 #include<string>
 #include<queue>
 #include<map>
+#include<iostream>
 
 #include"Exception.h"
 
@@ -13,6 +14,7 @@ public:
     std::queue<std::string> split(std::string input);
     bool isQuery(std::string method,std::string query);
     void convertToMap(std::queue<std::string> keyValue);
+    std::string getMethod();
 private:
     std::string method, query;
     std::map<std::string, std::string>key;

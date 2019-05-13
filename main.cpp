@@ -8,12 +8,6 @@ using namespace std;
 
 int main(){
     RequestManager requestManager;
-    requestManager.handle("POST signup ? ali ali 1234 16 false");
-    requestManager.handle("POST login ? ali 12345");
-    queue<string>s;
-    cout<<"OK"<<endl;
-    s.push("!");
-    cout<<"OK"<<endl;
-    s.push("@");
-    cout<<s.front();
+    requestManager.handle(" POST signup ? email ali user   ali password 1234 age 16 publisher false");
+    requestManager.handle("POST login ? user ali password 12345");
 }

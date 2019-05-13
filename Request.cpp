@@ -4,6 +4,7 @@ using namespace std;
 
 Request::Request(string request){
     queue<string> splitedRequest = this->split(request);
+    cout<<splitedRequest.size()<<endl;
     if(splitedRequest.size() < 3)
         throw BadRequest();
     method = splitedRequest.front();
@@ -25,7 +26,8 @@ queue<string> Request::split(string input){
             now += input[index];
             index++;
         }
-        inputElement.push(now);
+        if(now.size())
+            inputElement.push(now);
         index++;
     }
     return inputElement;
@@ -33,6 +35,10 @@ queue<string> Request::split(string input){
 
 bool Request::isQuery(string _method, string _query){
     return method == method && query == _query;
+}
+
+string Request::getMethod(){
+    return method;
 }
 
 void Request::convertToMap(queue<string> keyValue){
