@@ -18,6 +18,7 @@ public:
     bool findUserName(std::string userName);
     int getUserId();
     void login(Request request);
+    void postFilm(Request request);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;

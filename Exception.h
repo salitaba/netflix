@@ -6,7 +6,13 @@ public:
     const char* what() const throw(){
         return "Bad request!";
     }
+};
 
+class PermissionDenied: public std::exception{
+public:
+    const char* what() const throw(){
+        return "Persmision denied";
+    }
 };
 
 

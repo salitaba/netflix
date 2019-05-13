@@ -8,12 +8,20 @@
 #define PASSWORD "password"
 #define EMAIL "email"
 #define AGE "age"
+#define NAME "name"
+#define YEAR "year"
+#define LENGTH "length"
+#define PRICE "price"
+#define SUMMARY "summary"
+#define DIRECTOR "director"
+
 using namespace std;
 
 void RequestManager::handle(string input){
     try{
         Request query(input);
         this->handleEvents(query);
+        cout<<"OK"<<endl;
     }catch(exception &e){
         cout<<e.what()<<endl;
     }
@@ -33,12 +41,13 @@ void RequestManager::split(string input, vector<string>& inputElement){
 }
 
 void RequestManager::handleEvents(Request request){
-    if (request.getMethod() == POST && request.getQuery() == "signup"){
+    if (request.getMethod() == POST && request.getQuery() == "signup")
         return this->signup(request);
-    } 
     if(request.getMethod() == POST && request.getQuery() == "login")
-         return this->login(request);
-    // throw BadRequest();
+        return this->login(request);
+    if(request.getMethod() == POST && request.getQuery() == "fimls")
+        return this->postFilm(request);
+    throw BadRequest();
 
 }
 
@@ -85,4 +94,11 @@ void RequestManager::login(Request request){
 int RequestManager::getUserId(){
     userIdCounter++;
     return userIdCounter - 1;
+}
+
+void RequestManager::postFilm(Request request){
+    vector<string> requirementField{NAME, YEAR, LENGTH, PRICE, SUMMARY, DIRECTOR};
+    request.check(requirementField);
+    if(userLoggined == NULL || userLoggined->isPublisher() == true)
+        throw PermissionDenied();
 }

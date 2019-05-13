@@ -15,6 +15,7 @@ public:
     int hashCode(std::string const& str);
     bool isUserName(std::string _userName);
     bool isPassword(std::string _password);
+    bool isPublisher();
 private:
     std::string email, userName;
     int password;

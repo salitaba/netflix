@@ -35,3 +35,7 @@ bool User::isUserName(string _userName){
 bool User::isPassword(string _password){
     return password == this->hashCode(_password);
 }
+
+bool User::isPublisher(){
+    return publisher;
+}
