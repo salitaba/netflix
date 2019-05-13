@@ -101,4 +101,10 @@ void RequestManager::postFilm(Request request){
     request.check(requirementField);
     if(userLoggined == NULL || userLoggined->isPublisher() == true)
         throw PermissionDenied();
+
+    string name = request.get(NAME), year = request.get(YEAR);
+    string length = request.get(LENGTH), price = request.get(PRICE);
+    string summary = request.get(SUMMARY), director = request.get(DIRECTOR);
+
+    films.push_back(new Film(name, year, length, price, summary, director));
 }

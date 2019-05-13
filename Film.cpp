@@ -1,0 +1,13 @@
+#include"Film.h"
+
+using namespace std;
+
+
+Film::Film(string _name, string _year, string _length, string _price,string _summary, string _director){
+    name = _name;
+    year = _year;
+    length = _length;
+    price = _price;
+    summary = _summary;
+    director =  _director;
+}
