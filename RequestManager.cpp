@@ -14,6 +14,7 @@
 #define PRICE "price"
 #define SUMMARY "summary"
 #define DIRECTOR "director"
+#define FILM_ID "film_id"
 
 using namespace std;
 
@@ -47,6 +48,8 @@ void RequestManager::handleEvents(Request request){
         return this->login(request);
     if(request.getMethod() == POST && request.getQuery() == "fimls")
         return this->postFilm(request);
+    if(request.getMethod() == PUT && request.getQuery() == "films")
+        return this->editFilm(request);
     throw BadRequest();
 
 }
@@ -93,18 +96,37 @@ void RequestManager::login(Request request){
 
 int RequestManager::getUserId(){
     userIdCounter++;
-    return userIdCounter - 1;
+    return userIdCounter;
+}
+
+int RequestManager::getFilmId(){
+    filmIdCounter++;
+    return filmIdCounter;
 }
 
 void RequestManager::postFilm(Request request){
     vector<string> requirementField{NAME, YEAR, LENGTH, PRICE, SUMMARY, DIRECTOR};
     request.check(requirementField);
-    if(userLoggined == NULL || userLoggined->isPublisher() == true)
+    if(userLoggined == NULL || userLoggined->isPublisher() == false)
         throw PermissionDenied();
 
     string name = request.get(NAME), year = request.get(YEAR);
     string length = request.get(LENGTH), price = request.get(PRICE);
     string summary = request.get(SUMMARY), director = request.get(DIRECTOR);
 
-    films.push_back(new Film(name, year, length, price, summary, director));
+    films.push_back(new Film(name, year, length, price, summary, director, this->getFilmId(), userLoggined));
+}
+
+void RequestManager::editFilm(Request request){
+    vector<string> requirementField{FILM_ID};
+    request.check(requirementField);
+    if(userLoggined == NULL || userLoggined->isPublisher() == false)
+        throw PermissionDenied();
+    int id = atoi(request.get(FILM_ID).c_str());
+    // Film* film = this->getFilm(id);
+
+    string name = request.get(NAME, true), year = request.get(YEAR, true);
+    string length = request.get(LENGTH, true), price = request.get(PRICE, true);
+    string summary = request.get(SUMMARY, true), director = request.get(DIRECTOR, true);
+
 }

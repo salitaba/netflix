@@ -19,11 +19,13 @@ public:
     int getUserId();
     void login(Request request);
     void postFilm(Request request);
+    int getFilmId();
+    void editFilm(Request request);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;
     std::vector<User*> users;
-    int userIdCounter;
+    int userIdCounter = 0, filmIdCounter = 0;
 };
 
 
