@@ -8,6 +8,8 @@ public:
     Film(std::string _name, std::string _year, std::string _length, std::string _price, 
             std::string _summary, std::string _director, int id, User* _aurtor);
 
+    void setDetail(std::string _name, std::string _year, std::string _length, std::string _price, 
+            std::string _summary, std::string _director);
     bool isId(int id);
     bool isUser(User* user);
     

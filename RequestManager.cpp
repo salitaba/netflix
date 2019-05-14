@@ -122,6 +122,7 @@ void RequestManager::editFilm(Request request){
     request.check(requirementField);
     if(userLoggined == NULL || userLoggined->isPublisher() == false)
         throw PermissionDenied();
+
     int id = atoi(request.get(FILM_ID).c_str());
     Film* film = this->getFilm(id);
 
@@ -129,6 +130,7 @@ void RequestManager::editFilm(Request request){
     string length = request.get(LENGTH, true), price = request.get(PRICE, true);
     string summary = request.get(SUMMARY, true), director = request.get(DIRECTOR, true);
 
+    film->setDetail(name, year, length, price, summary, director);
 }
 
 Film* RequestManager::getFilm(int id){

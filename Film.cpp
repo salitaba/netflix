@@ -15,6 +15,15 @@ Film::Film(string _name, string _year, string _length, string _price,string _sum
     aurtor = _aurtor;
 }
 
+void Film::setDetail(string _name, string _year, string _length, string _price,string _summary, string _director){
+    if(_name.size() > 0)  name = _name;
+    if(_year.size() > 0)  year = _year;
+    if(_length.size() > 0) length = _length;
+    if(_price.size() > 0) price = _price;
+    if(_summary.size() > 0) summary = _summary;
+    if(_director.size() > 0) director = _director;
+}
+
 bool Film::isId(int _id){
     return id == _id;
 }
