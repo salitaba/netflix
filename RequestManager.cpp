@@ -130,3 +130,13 @@ void RequestManager::editFilm(Request request){
     string summary = request.get(SUMMARY, true), director = request.get(DIRECTOR, true);
 
 }
+
+Film* RequestManager::getFilm(int id){
+    for(auto film : films)
+        if(film->isId(id) == true){
+            if( film->isUser(userLoggined) == true)
+                return film;
+            throw PermissionDenied();
+        } 
+    throw NotFound();
+}
