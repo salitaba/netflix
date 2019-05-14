@@ -31,3 +31,7 @@ bool Film::isId(int _id){
 bool Film::isUser(User* _user){
     return aurtor == _user;
 }
+
+void Film::unusable(){
+    usable = false;
+}

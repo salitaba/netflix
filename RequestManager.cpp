@@ -50,6 +50,8 @@ void RequestManager::handleEvents(Request request){
         return this->postFilm(request);
     if(request.getMethod() == PUT && request.getQuery() == "films")
         return this->editFilm(request);
+    if(request.getMethod() == DELETE && request.getQuery() == "films")
+        return this->deleteFilm(request);
     throw BadRequest();
 
 }
@@ -141,4 +143,17 @@ Film* RequestManager::getFilm(int id){
             throw PermissionDenied();
         } 
     throw NotFound();
+}
+
+void RequestManager::deleteFilm(Request request){
+    vector<string> requirement{FILM_ID};
+    request.check(requirement);
+
+    if(userLoggined == NULL || userLoggined->isPublisher() == false)
+        throw PermissionDenied();
+
+    int id = atoi(request.get(FILM_ID).c_str());
+    Film* film = this->getFilm(id);
+
+    film->unusable();
 }

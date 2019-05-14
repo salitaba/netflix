@@ -12,12 +12,14 @@ public:
             std::string _summary, std::string _director);
     bool isId(int id);
     bool isUser(User* user);
+    void unusable();
     
 
 private:
     User* aurtor;
     std::string name, year, length, price, summary, director;
     int id;
+    bool usable = true;
 };
 
 
