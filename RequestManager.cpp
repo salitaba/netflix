@@ -123,7 +123,7 @@ void RequestManager::editFilm(Request request){
     if(userLoggined == NULL || userLoggined->isPublisher() == false)
         throw PermissionDenied();
     int id = atoi(request.get(FILM_ID).c_str());
-    // Film* film = this->getFilm(id);
+    Film* film = this->getFilm(id);
 
     string name = request.get(NAME, true), year = request.get(YEAR, true);
     string length = request.get(LENGTH, true), price = request.get(PRICE, true);

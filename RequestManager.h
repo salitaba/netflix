@@ -21,6 +21,7 @@ public:
     void postFilm(Request request);
     int getFilmId();
     void editFilm(Request request);
+    Film* getFilm(int id);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;

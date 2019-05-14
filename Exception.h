@@ -15,5 +15,11 @@ public:
     }
 };
 
+class NotFound: public std::exception {
+public: 
+    const char* what() const throw(){
+        return "Not Found";
+    }
+};
 
 #endif
