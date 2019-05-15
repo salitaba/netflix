@@ -41,12 +41,8 @@ void RequestManager::split(string input, vector<string>& inputElement){
 }
 
 void RequestManager::handleEvents(Request request){
-    if (request.getMethod() == POST && request.getQuery() == "signup")
-        return this->signup(request);
-    if(request.getMethod() == POST && request.getQuery() == "login")
-        return this->login(request);
-    if(request.getMethod() == POST && request.getQuery() == "films")
-        return this->postFilm(request);    
+    if( request.getMethod() == POST )
+        return this->post(request);
     if(request.getMethod() == PUT && request.getQuery() == "films")
         return this->editFilm(request);
     if(request.getMethod() == DELETE && request.getQuery() == "films")
@@ -165,4 +161,14 @@ void RequestManager::showFollowers(Request request){
         throw PermissionDenied();
     
     userLoggined->showFollower();
+}
+
+void RequestManager::post(Request request){
+    if (request.getMethod() == POST && request.getQuery() == "signup")
+        this->signup(request);
+    if(request.getMethod() == POST && request.getQuery() == "login")
+        this->login(request);
+    if(request.getMethod() == POST && request.getQuery() == "films")
+        this->postFilm(request);    
+    cout<<"OK"<<endl;
 }
