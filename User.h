@@ -3,6 +3,8 @@
 
 #include<string>
 #include<vector>
+#include<iostream>
+#include<set>
 
 #include"Exception.h"
 
@@ -16,13 +18,15 @@ public:
     bool isUserName(std::string _userName);
     bool isPassword(std::string _password);
     bool isPublisher();
+    void showFollower();
 private:
     std::string email, userName;
     int password;
     int age;
     int id;
     bool publisher = false;
-    std::vector<Film*>films;
+    std::vector< Film* >films;
+    std::set< User* >followers;
 
 };
 

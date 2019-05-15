@@ -22,7 +22,6 @@ void RequestManager::handle(string input){
     try{
         Request query(input);
         this->handleEvents(query);
-        cout<<"OK"<<endl;
     }catch(exception &e){
         cout<<e.what()<<endl;
     }
@@ -46,12 +45,14 @@ void RequestManager::handleEvents(Request request){
         return this->signup(request);
     if(request.getMethod() == POST && request.getQuery() == "login")
         return this->login(request);
-    if(request.getMethod() == POST && request.getQuery() == "fimls")
-        return this->postFilm(request);
+    if(request.getMethod() == POST && request.getQuery() == "films")
+        return this->postFilm(request);    
     if(request.getMethod() == PUT && request.getQuery() == "films")
         return this->editFilm(request);
     if(request.getMethod() == DELETE && request.getQuery() == "films")
         return this->deleteFilm(request);
+    if(request.getMethod() == GET && request.getQuery() == "followers")
+        return this->showFollowers(request);
     throw BadRequest();
 
 }
@@ -156,4 +157,12 @@ void RequestManager::deleteFilm(Request request){
     Film* film = this->getFilm(id);
 
     film->unusable();
+}
+
+void RequestManager::showFollowers(Request request){
+    
+    if(userLoggined == NULL)
+        throw PermissionDenied();
+    
+    userLoggined->showFollower();
 }

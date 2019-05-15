@@ -23,6 +23,7 @@ public:
     void editFilm(Request request);
     Film* getFilm(int id);
     void deleteFilm(Request request);
+    void showFollowers(Request request);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;
