@@ -43,8 +43,8 @@ void RequestManager::split(string input, vector<string>& inputElement){
 void RequestManager::handleEvents(Request request){
     if( request.getMethod() == POST )
         return this->post(request);
-    if(request.getMethod() == PUT && request.getQuery() == "films")
-        return this->editFilm(request);
+    if( request.getMethod() == PUT )
+        return this->put(request);
     if( request.getMethod() == DELETE ) 
         return this->deleteMethod(request);
     if(request.getMethod() == GET && request.getQuery() == "followers")
@@ -176,5 +176,11 @@ void RequestManager::post(Request request){
 void RequestManager::deleteMethod(Request request){
     if(request.getMethod() == DELETE && request.getQuery() == "films")
         this->deleteFilm(request);
+    cout<<"OK"<<endl;
+}
+
+void RequestManager::put(Request request){
+    if(request.getMethod() == PUT && request.getQuery() == "films")
+        this->editFilm(request);
     cout<<"OK"<<endl;
 }
