@@ -45,8 +45,8 @@ void RequestManager::handleEvents(Request request){
         return this->post(request);
     if(request.getMethod() == PUT && request.getQuery() == "films")
         return this->editFilm(request);
-    if(request.getMethod() == DELETE && request.getQuery() == "films")
-        return this->deleteFilm(request);
+    if( request.getMethod() == DELETE ) 
+        return this->deleteMethod(request);
     if(request.getMethod() == GET && request.getQuery() == "followers")
         return this->showFollowers(request);
     throw BadRequest();
@@ -170,5 +170,11 @@ void RequestManager::post(Request request){
         this->login(request);
     if(request.getMethod() == POST && request.getQuery() == "films")
         this->postFilm(request);    
+    cout<<"OK"<<endl;
+}
+
+void RequestManager::deleteMethod(Request request){
+    if(request.getMethod() == DELETE && request.getQuery() == "films")
+        this->deleteFilm(request);
     cout<<"OK"<<endl;
 }
