@@ -44,6 +44,8 @@ void User::showFollower(){
     cout << "List of Followers" << endl;
     cout << "#. User Id | User Username | User Email" << endl;
     int counter = 1;
-    for(auto user : followers)
+    for(auto user : followers){
         cout << counter << ". " << user->id << " | " << user->userName << " | " << user->email << endl;
+        counter++;
+    }
 }

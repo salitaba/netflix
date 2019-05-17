@@ -47,8 +47,8 @@ void RequestManager::handleEvents(Request request){
         return this->put(request);
     if( request.getMethod() == DELETE ) 
         return this->deleteMethod(request);
-    if(request.getMethod() == GET && request.getQuery() == "followers")
-        return this->showFollowers(request);
+    if( request.getMethod() == GET )
+        return this->getMethod(request);
     throw BadRequest();
 
 }
@@ -164,23 +164,28 @@ void RequestManager::showFollowers(Request request){
 }
 
 void RequestManager::post(Request request){
-    if (request.getMethod() == POST && request.getQuery() == "signup")
+    if (request.getQuery() == "signup")
         this->signup(request);
-    if(request.getMethod() == POST && request.getQuery() == "login")
+    if(request.getQuery() == "login")
         this->login(request);
-    if(request.getMethod() == POST && request.getQuery() == "films")
+    if(request.getQuery() == "films")
         this->postFilm(request);    
     cout<<"OK"<<endl;
 }
 
 void RequestManager::deleteMethod(Request request){
-    if(request.getMethod() == DELETE && request.getQuery() == "films")
+    if(request.getQuery() == "films")
         this->deleteFilm(request);
     cout<<"OK"<<endl;
 }
 
 void RequestManager::put(Request request){
-    if(request.getMethod() == PUT && request.getQuery() == "films")
+    if(request.getQuery() == "films")
         this->editFilm(request);
     cout<<"OK"<<endl;
+}
+
+void RequestManager::getMethod(Request request){
+    if(request.getQuery() == "followers")
+        return this->showFollowers(request);
 }
