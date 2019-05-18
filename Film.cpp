@@ -6,9 +6,9 @@ using namespace std;
 Film::Film(string _name, string _year, string _length, string _price,string _summary,
         string _director, int _id, User* _aurtor){
     name = _name;
-    year = _year;
-    length = _length;
-    price = _price;
+    year = atoi(_year.c_str());
+    length = atoi(_length.c_str());
+    price = atoi(_price.c_str());
     summary = _summary;
     director =  _director;
     id = _id;
@@ -17,9 +17,9 @@ Film::Film(string _name, string _year, string _length, string _price,string _sum
 
 void Film::setDetail(string _name, string _year, string _length, string _price,string _summary, string _director){
     if(_name.size() > 0)  name = _name;
-    if(_year.size() > 0)  year = _year;
-    if(_length.size() > 0) length = _length;
-    if(_price.size() > 0) price = _price;
+    if(_year.size() > 0)  year = atoi(_year.c_str());
+    if(_length.size() > 0) length =atoi( _length.c_str());
+    if(_price.size() > 0) price = atoi(_price.c_str());
     if(_summary.size() > 0) summary = _summary;
     if(_director.size() > 0) director = _director;
 }
@@ -34,4 +34,18 @@ bool Film::isUser(User* _user){
 
 void Film::unusable(){
     usable = false;
+}
+
+bool Film::find(string _name,string _minYear,string _minRate,string _price,string _maxYear,string _director){
+    if(_name.size() > 0 &&  name != _name) return false;
+    if(_director.size() > 0 &&  director != _director ) return false;
+    if(_minYear.size() > 0 &&  atoi(_minYear.c_str()) > year) return false;
+    if(_maxYear.size() > 0 && atoi(_maxYear.c_str()) < year) return false;
+    if(_minRate.size() > 0 && atoi(_minRate.c_str()) > rate ) return false;
+    return true;
+}
+
+void Film::printDetail(int counter){
+    cout<< counter << ". " << id << " | " << name << " | " << length << " | " 
+        << price << " | " << rate << " | " << year << " | " << director <<endl;
 }

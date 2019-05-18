@@ -1,7 +1,10 @@
 #ifndef FILM_H
 #define FILM_H
 
-#include"User.h"
+#include<string>
+#include<iostream>
+
+class User;
 
 class Film{
 public:
@@ -13,12 +16,13 @@ public:
     bool isId(int id);
     bool isUser(User* user);
     void unusable();
-    
+    bool find(std::string name,std::string minYear,std::string minRate,std::string price,std::string maxYear,std::string director);
+    void printDetail(int id);
 
 private:
     User* aurtor;
-    std::string name, year, length, price, summary, director;
-    int id;
+    std::string name, summary, director;
+    int id, year, length, price, rate = 0;
     bool usable = true;
 };
 

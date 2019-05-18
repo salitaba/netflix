@@ -28,6 +28,7 @@ public:
     void deleteMethod(Request request);
     void put(Request request);
     void getMethod(Request request);
+    void published(Request request);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;

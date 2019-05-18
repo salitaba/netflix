@@ -15,6 +15,9 @@
 #define SUMMARY "summary"
 #define DIRECTOR "director"
 #define FILM_ID "film_id"
+#define MIN_RATE "min_rate"
+#define MIN_YEAR "min_year"
+#define MAX_YEAR "max_rate"
 
 using namespace std;
 
@@ -188,4 +191,15 @@ void RequestManager::put(Request request){
 void RequestManager::getMethod(Request request){
     if(request.getQuery() == "followers")
         return this->showFollowers(request);
+    if(request.getQuery() == "published")
+        return this->published(request);
+}
+
+void RequestManager::published(Request request){
+    string name = request.get(NAME, true), minYear = request.get(MIN_YEAR, true);
+    string minRate = request.get(MIN_RATE, true), price = request.get(PRICE, true);
+    string maxYear = request.get(MAX_YEAR, true), director = request.get(DIRECTOR, true);
+
+    for(auto film : films)
+        film->find(name, minYear, minRate, price, maxYear, director);
 }

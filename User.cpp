@@ -49,3 +49,12 @@ void User::showFollower(){
         counter++;
     }
 }
+
+void User::find(string name,string minYear,string minRate,string price,string maxYear,string director){
+    cout<<"#. Film Id | Film Name | Film length | Film price | Rate | Production Year | Film Director"<<endl;
+    int counter = 1; 
+    for(auto film : films){
+        if( film->find(name, minYear, minRate, price, maxYear, director) == true)
+            film->printDetail(counter), counter++;
+    }
+}

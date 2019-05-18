@@ -8,7 +8,7 @@
 
 #include"Exception.h"
 
-class Film;
+#include"Film.h"
 
 class User{
 public:
@@ -19,6 +19,7 @@ public:
     bool isPassword(std::string _password);
     bool isPublisher();
     void showFollower();
+    void find(std::string name,std::string minYear,std::string minRate,std::string price,std::string maxYear,std::string director);
 private:
     std::string email, userName;
     int password;
