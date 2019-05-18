@@ -29,6 +29,7 @@ public:
     void put(Request request);
     void getMethod(Request request);
     void published(Request request);
+    void searchFilm(Request request);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;

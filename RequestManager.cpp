@@ -193,6 +193,8 @@ void RequestManager::getMethod(Request request){
         return this->showFollowers(request);
     if(request.getQuery() == "published")
         return this->published(request);
+    if(request.getQuery() == "Films")
+        return this->searchFilm(request);
 }
 
 void RequestManager::published(Request request){
@@ -200,6 +202,17 @@ void RequestManager::published(Request request){
     string minRate = request.get(MIN_RATE, true), price = request.get(PRICE, true);
     string maxYear = request.get(MAX_YEAR, true), director = request.get(DIRECTOR, true);
 
+    userLoggined->find(name, minYear, minRate, price, maxYear, director);
+}
+
+void RequestManager::searchFilm(Request request){
+    int counter = 1;
+
+    string name = request.get(NAME, true), minYear = request.get(MIN_YEAR, true);
+    string minRate = request.get(MIN_RATE, true), price = request.get(PRICE, true);
+    string maxYear = request.get(MAX_YEAR, true), director = request.get(DIRECTOR, true);
+
     for(auto film : films)
-        film->find(name, minYear, minRate, price, maxYear, director);
+        if(film->find(name, minYear, minRate, price, maxYear, director))
+            film->printDetail(counter), counter;
 }
