@@ -21,6 +21,7 @@
 #define MIN_YEAR "min_year"
 #define MAX_YEAR "max_rate"
 #define RATE "rate"
+#define CONTENT "content"
 
 using namespace std;
 
@@ -184,6 +185,8 @@ void RequestManager::post(Request request){
         this->buyFilm(request);
     if(request.getQuery() == "rate")
         this->rateFilm(request);
+    if(request.getQuery() == "comments")
+        this->commentFilm(request);
 
     cout<<"OK"<<endl;
 }
@@ -262,5 +265,20 @@ void RequestManager::rateFilm(Request request){
 
     Film* film = this->getFilm(atoi(request.get(FILM_ID).c_str()));
 
+    if(userLoggined->checkBuyFilm(film) == true)
+        throw PermissionDenied();
+
     film->rateTheRate(atoi(request.get(RATE).c_str()), userLoggined);
+}
+
+void RequestManager::commentFilm(Request request){
+    vector< string > requiredFieldS{FILM_ID, CONTENT};
+    request.check(requiredFieldS);
+
+    Film* film = this->getFilm(atoi(request.get(FILM_ID).c_str()));
+
+    if(userLoggined->checkBuyFilm(film) == true)
+        throw PermissionDenied();
+
+    film->addComment(request.get(CONTENT), userLoggined);
 }

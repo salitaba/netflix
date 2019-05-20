@@ -70,9 +70,13 @@ User* Film::getAuthor(){
 void Film::rateTheRate(int rateNum, User* user){
     if(userRated.size() != 0 && userRated.find(user) == userRated.end())
         return;
-        
+
     int sumRate = rate * userRated.size();
     userRated.insert(user);
     sumRate += rateNum;
     rate = (double)rateNum / userRated.size();
+}
+
+void Film::addComment(string content, User* user){
+    comments.push_back(make_pair( content, user));
 }

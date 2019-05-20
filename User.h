@@ -21,6 +21,7 @@ public:
     void find(std::string name,std::string minYear,std::string minRate,std::string price,std::string maxYear,std::string director);
     void buy(Film* film);
     void sold(User* user, Film* film);
+    bool checkBuyFilm(Film* film);
 private:
     std::string email, userName;
     int password;

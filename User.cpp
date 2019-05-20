@@ -74,3 +74,9 @@ void User::buy(Film* film){
 void User::sold(User* user, Film* film){
     solds.insert(make_pair(user, film->getRate()));
 }
+
+bool User::checkBuyFilm(Film* film){
+    if(buyedFilm.size() == 0 || buyedFilm.find(film) == buyedFilm.end())
+        return false;
+    return true;
+}

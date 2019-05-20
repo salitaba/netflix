@@ -3,6 +3,7 @@
 
 #include<string>
 #include<iostream>
+#include<vector>
 #include<set>
 
 class User;
@@ -24,6 +25,7 @@ public:
     double getRate();
     User* getAuthor();
     void rateTheRate(int rateNum, User* user);
+    void addComment(std::string content, User* user);
 private:
     User* aurtor;
     std::string name, summary, director;
@@ -31,6 +33,7 @@ private:
     double rate = 0;
     bool usable = true;
     std::set< User* > userRated;
+    std::vector< std::pair< std::string, User* > > comments;
 };
 
 

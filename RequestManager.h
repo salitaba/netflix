@@ -33,7 +33,7 @@ public:
     void seprateSearchFromShowDetailFilm(Request request);
     void buyFilm(Request request);
     void rateFilm(Request request);
-
+    void commentFilm(Request reqeust);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;
