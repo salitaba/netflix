@@ -58,3 +58,17 @@ void User::find(string name,string minYear,string minRate,string price,string ma
             film->printDetail(counter), counter++;
     }
 }
+
+void User::buy(Film* film){
+    int price = film->getPrice();
+
+    if(money < price) 
+        throw BadRequest();
+    
+    money -= price;
+    film->getAuthor()->sold(this, film);
+}
+
+void User::sold(User* user, Film* film){
+    solds.push_back(make_pair(user, film->getRate()));
+}

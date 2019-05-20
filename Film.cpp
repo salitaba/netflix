@@ -49,3 +49,20 @@ void Film::printDetail(int counter){
     cout<< counter << ". " << id << " | " << name << " | " << length << " | " 
         << price << " | " << rate << " | " << year << " | " << director <<endl;
 }
+
+void Film::printInformation(){
+    cout<<"Details of Film "<< name << endl << "ID = " << id << endl << "Director = " << director << endl
+        <<"Length = " << length << "Year = " << year << "Summary = " << summary << endl << "Price = " << price << endl;
+}
+
+int Film::getPrice(){
+    return price;
+}
+
+double Film::getRate(){
+    return rate;
+}
+
+User* Film::getAuthor(){
+    return aurtor;
+}

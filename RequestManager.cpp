@@ -128,6 +128,9 @@ void RequestManager::editFilm(Request request){
     int id = atoi(request.get(FILM_ID).c_str());
     Film* film = this->getFilm(id);
 
+    if( film->isUser(userLoggined) == false)
+        throw PermissionDenied();
+
     string name = request.get(NAME, true), year = request.get(YEAR, true);
     string length = request.get(LENGTH, true), price = request.get(PRICE, true);
     string summary = request.get(SUMMARY, true), director = request.get(DIRECTOR, true);
@@ -137,11 +140,8 @@ void RequestManager::editFilm(Request request){
 
 Film* RequestManager::getFilm(int id){
     for(auto film : films)
-        if(film->isId(id) == true){
-            if( film->isUser(userLoggined) == true)
-                return film;
-            throw PermissionDenied();
-        } 
+        if(film->isId(id) == true)
+            return film;
     throw NotFound();
 }
 
@@ -171,29 +171,45 @@ void RequestManager::post(Request request){
         this->signup(request);
     if(request.getQuery() == "login")
         this->login(request);
+    
+    if(userLoggined == NULL)
+        throw PermissionDenied();
+
     if(request.getQuery() == "films")
         this->postFilm(request);    
+    if(request.getQuery() == "buy")
+        this->buyFilm(request);
+
     cout<<"OK"<<endl;
 }
 
 void RequestManager::deleteMethod(Request request){
+    if(userLoggined == NULL)
+        throw PermissionDenied();
+
     if(request.getQuery() == "films")
         this->deleteFilm(request);
     cout<<"OK"<<endl;
 }
 
 void RequestManager::put(Request request){
+    if(userLoggined == NULL)
+        throw PermissionDenied();
+
     if(request.getQuery() == "films")
         this->editFilm(request);
     cout<<"OK"<<endl;
 }
 
 void RequestManager::getMethod(Request request){
+    if(userLoggined == NULL)
+        throw PermissionDenied();
+
     if(request.getQuery() == "followers")
         return this->showFollowers(request);
     if(request.getQuery() == "published")
         return this->published(request);
-    if(request.getQuery() == "Films")
+    if(request.getQuery() == "films")
         return this->searchFilm(request);
 }
 
@@ -203,6 +219,15 @@ void RequestManager::published(Request request){
     string maxYear = request.get(MAX_YEAR, true), director = request.get(DIRECTOR, true);
 
     userLoggined->find(name, minYear, minRate, price, maxYear, director);
+}
+
+void RequestManager::seprateSearchFromShowDetailFilm(Request request){
+    string filmId = request.get(FILM_ID, true);
+
+    if(filmId.size() > 0)
+        this->getFilm(atoi(filmId.c_str()))->printInformation();
+    else
+        this->searchFilm(request);
 }
 
 void RequestManager::searchFilm(Request request){
@@ -215,4 +240,13 @@ void RequestManager::searchFilm(Request request){
     for(auto film : films)
         if(film->find(name, minYear, minRate, price, maxYear, director))
             film->printDetail(counter), counter;
+}
+
+void RequestManager::buyFilm(Request request){
+    vector< string > requirementField{ FILM_ID };
+    request.check(requirementField);
+
+    Film* film = this->getFilm(atoi(request.get(FILM_ID).c_str()));
+    
+    userLoggined->buy(film);
 }

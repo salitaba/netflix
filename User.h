@@ -7,7 +7,6 @@
 #include<set>
 
 #include"Exception.h"
-
 #include"Film.h"
 
 class User{
@@ -20,14 +19,18 @@ public:
     bool isPublisher();
     void showFollower();
     void find(std::string name,std::string minYear,std::string minRate,std::string price,std::string maxYear,std::string director);
+    void buy(Film* film);
+    void sold(User* user, Film* film);
 private:
     std::string email, userName;
     int password;
     int age;
     int id;
+    int money = 0 ;
     bool publisher = false;
     std::vector< Film* >films;
     std::set< User* >followers;
+    std::vector< std::pair<User*, int> >solds;
 
 };
 

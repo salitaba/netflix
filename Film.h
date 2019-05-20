@@ -18,6 +18,10 @@ public:
     void unusable();
     bool find(std::string name,std::string minYear,std::string minRate,std::string price,std::string maxYear,std::string director);
     void printDetail(int id);
+    void printInformation();
+    int getPrice();
+    double getRate();
+    User* getAuthor();
 
 private:
     User* aurtor;

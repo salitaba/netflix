@@ -30,6 +30,9 @@ public:
     void getMethod(Request request);
     void published(Request request);
     void searchFilm(Request request);
+    void seprateSearchFromShowDetailFilm(Request request);
+    void buyFilm(Request request);
+
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;
