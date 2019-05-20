@@ -80,3 +80,7 @@ bool User::checkBuyFilm(Film* film){
         return false;
     return true;
 }
+
+void User::increaseMoney(int value){
+    money += value;
+}

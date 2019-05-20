@@ -22,6 +22,7 @@
 #define MAX_YEAR "max_rate"
 #define RATE "rate"
 #define CONTENT "content"
+#define AMOUNT "amount"
 
 using namespace std;
 
@@ -187,6 +188,8 @@ void RequestManager::post(Request request){
         this->rateFilm(request);
     if(request.getQuery() == "comments")
         this->commentFilm(request);
+    if(request.getQuery() == "money")  
+        this->increaseMoney(request);
 
     cout<<"OK"<<endl;
 }
@@ -281,4 +284,11 @@ void RequestManager::commentFilm(Request request){
         throw PermissionDenied();
 
     film->addComment(request.get(CONTENT), userLoggined);
+}
+
+void RequestManager::increaseMoney(Request request){
+    vector< string > requiredFields {AMOUNT};
+    request.check(requiredFields);
+
+    userLoggined->increaseMoney(atoi(request.get(AMOUNT).c_str()));
 }

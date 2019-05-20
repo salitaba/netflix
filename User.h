@@ -22,6 +22,7 @@ public:
     void buy(Film* film);
     void sold(User* user, Film* film);
     bool checkBuyFilm(Film* film);
+    void increaseMoney(int value);
 private:
     std::string email, userName;
     int password;
