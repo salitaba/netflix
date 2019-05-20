@@ -30,8 +30,8 @@ private:
     bool publisher = false;
     std::vector< Film* >films;
     std::set< User* >followers;
-    std::vector< std::pair<User*, int> >solds;
-
+    std::set< std::pair<User*, int> >solds;
+    std::set< Film* > buyedFilm;
 };
 
 

@@ -65,10 +65,12 @@ void User::buy(Film* film){
     if(money < price) 
         throw BadRequest();
     
+    buyedFilm.insert(film);
+
     money -= price;
     film->getAuthor()->sold(this, film);
 }
 
 void User::sold(User* user, Film* film){
-    solds.push_back(make_pair(user, film->getRate()));
+    solds.insert(make_pair(user, film->getRate()));
 }

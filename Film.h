@@ -3,6 +3,7 @@
 
 #include<string>
 #include<iostream>
+#include<set>
 
 class User;
 
@@ -22,12 +23,14 @@ public:
     int getPrice();
     double getRate();
     User* getAuthor();
-
+    void rateTheRate(int rateNum, User* user);
 private:
     User* aurtor;
     std::string name, summary, director;
-    int id, year, length, price, rate = 0;
+    int id, year, length, price;
+    double rate = 0;
     bool usable = true;
+    std::set< User* > userRated;
 };
 
 

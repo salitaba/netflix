@@ -1,3 +1,5 @@
+//  COPY RIGHT
+
 #include"RequestManager.h"
 
 #define PUT "PUT"
@@ -18,6 +20,7 @@
 #define MIN_RATE "min_rate"
 #define MIN_YEAR "min_year"
 #define MAX_YEAR "max_rate"
+#define RATE "rate"
 
 using namespace std;
 
@@ -179,6 +182,8 @@ void RequestManager::post(Request request){
         this->postFilm(request);    
     if(request.getQuery() == "buy")
         this->buyFilm(request);
+    if(request.getQuery() == "rate")
+        this->rateFilm(request);
 
     cout<<"OK"<<endl;
 }
@@ -249,4 +254,13 @@ void RequestManager::buyFilm(Request request){
     Film* film = this->getFilm(atoi(request.get(FILM_ID).c_str()));
     
     userLoggined->buy(film);
+}
+
+void RequestManager::rateFilm(Request request){
+    vector< string > requiredFields{FILM_ID, RATE};
+    request.check(requiredFields);
+
+    Film* film = this->getFilm(atoi(request.get(FILM_ID).c_str()));
+
+    film->rateTheRate(atoi(request.get(RATE).c_str()), userLoggined);
 }

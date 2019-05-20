@@ -32,6 +32,7 @@ public:
     void searchFilm(Request request);
     void seprateSearchFromShowDetailFilm(Request request);
     void buyFilm(Request request);
+    void rateFilm(Request request);
 
 private:
     User *userLoggined = NULL;
