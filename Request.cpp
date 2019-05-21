@@ -4,8 +4,6 @@ using namespace std;
 
 Request::Request(string request){
     queue<string> splitedRequest = this->split(request);
-    if(splitedRequest.size() < 3)
-        throw BadRequest();
     method = splitedRequest.front();
     splitedRequest.pop();
     while(splitedRequest.size() != 0 && splitedRequest.front() != "?"){

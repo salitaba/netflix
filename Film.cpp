@@ -52,9 +52,10 @@ void Film::printDetail(int counter){
 
 void Film::printInformation(vector< Film* > topFilm){
     cout << "Details of Film " << name << endl << "ID = " << id << endl << "Director = " << director << endl
-         << "Length = " << length << "Year = " << year << "Summary = " << summary << endl << "Price = " << price << endl;
+         << "Length = " << length << endl << "Year = " << year << endl<< "Summary = " << summary << endl 
+         << "Price = " << price << endl;
 
-    cout << endl << "Comments" << endl;
+    cout << endl << "Comments" << endl << endl;
     
     for(auto comment : comments)
         comment->show();
@@ -63,7 +64,7 @@ void Film::printInformation(vector< Film* > topFilm){
          << "#. Film Id | Film Name | Film Length | Film Director" << endl;
     for(int i = 0; i < topFilm.size(); i++){
         cout << i + 1 << ". ";
-        this->printShortDetail();
+        topFilm[i]->printShortDetail();
         cout<< endl;
     }
 }

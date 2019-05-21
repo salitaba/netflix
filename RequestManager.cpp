@@ -26,6 +26,7 @@
 #define COMMENT_ID "comment_id"
 #define USER_ID "user_id"
 #define LIMIT "limit"
+#define SCORE "score"
 using namespace std;
 
 void RequestManager::handle(string input){
@@ -124,6 +125,7 @@ void RequestManager::postFilm(Request request){
     string summary = request.get(SUMMARY), director = request.get(DIRECTOR);
 
     films.push_back(new Film(name, year, length, price, summary, director, this->getFilmId(), userLoggined));
+    userLoggined->addFilm(films.back());
 
     for(auto user : users)
         user->sendNotification(userLoggined->createPostFilmNotif());
@@ -225,8 +227,7 @@ void RequestManager::put(Request request){
 
 void RequestManager::getMethod(Request request){
     if(userLoggined == NULL)
-        throw PermissionDenied();
-
+        throw PermissionDenied();    
     if(request.getQuery() == "followers")
         return this->showFollowers(request);
     if(request.getQuery() == "published")
@@ -248,7 +249,6 @@ void RequestManager::published(Request request){
     string name = request.get(NAME, true), minYear = request.get(MIN_YEAR, true);
     string minRate = request.get(MIN_RATE, true), price = request.get(PRICE, true);
     string maxYear = request.get(MAX_YEAR, true), director = request.get(DIRECTOR, true);
-
     userLoggined->find(name, minYear, minRate, price, maxYear, director);
 }
 
@@ -270,7 +270,7 @@ void RequestManager::searchFilm(Request request){
 
     for(auto film : films)
         if(film->find(name, minYear, minRate, price, maxYear, director))
-            film->printDetail(counter), counter;
+            film->printDetail(counter), counter++;
     
 
 }
@@ -286,15 +286,14 @@ void RequestManager::buyFilm(Request request){
 }
 
 void RequestManager::rateFilm(Request request){
-    vector< string > requiredFields{FILM_ID, RATE};
+    vector< string > requiredFields{FILM_ID, SCORE};
     request.check(requiredFields);
 
     Film* film = this->getFilm(atoi(request.get(FILM_ID).c_str()));
 
-    if(userLoggined->checkBuyFilm(film) == true)
+    if(userLoggined->checkBuyFilm(film) == false)
         throw PermissionDenied();
-
-    film->rateTheRate(atoi(request.get(RATE).c_str()), userLoggined);
+    film->rateTheRate(atoi(request.get(SCORE).c_str()), userLoggined);
     film->getAuthor()->sendNotification(userLoggined->createRateNotif(film));
 }
 
@@ -357,7 +356,7 @@ void RequestManager::deleteComment(Request request){
 vector< Film* > RequestManager::topFilms(){
     vector < Film* > topFilm;
     for(int i = 0 ;i < films.size() ;i++)
-        for(int j = 0 ;j < films.size() ;j++)
+        for(int j = i ;j < films.size() ;j++)
             if(films[j]->getRate() != films[i]->getRate()){
                 if(films[j]->getRate() > films[i]->getRate())
                     swap(films[i], films[j]);
@@ -371,6 +370,7 @@ vector< Film* > RequestManager::topFilms(){
             topFilm.push_back(films[id]), counter++;
         id++;
     }
+    return topFilm;
 }
 
 void RequestManager::follow(Request request){

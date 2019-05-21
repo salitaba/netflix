@@ -174,3 +174,7 @@ void User::findBuyedFilm(string name,string minYear,string minRate,string price,
             film->printDetail(counter), counter++;
     }
 }
+
+void User::addFilm(Film* film){
+    films.push_back(film);
+}
