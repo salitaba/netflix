@@ -187,7 +187,7 @@ void RequestManager::post(Request request){
     if(userLoggined == NULL)
         throw PermissionDenied();
 
-    if(request.getQuery() == "follower")
+    if(request.getQuery() == "followers")
         this->follow(request);
     if(request.getQuery() == "films")
         this->postFilm(request);    
@@ -234,9 +234,9 @@ void RequestManager::getMethod(Request request){
         return this->published(request);
     if(request.getQuery() == "films")
         return this->seprateSearchFromShowDetailFilm(request);
-    if(request.getQuery() == "notification")
+    if(request.getQuery() == "notifications")
         return this->showNotification();
-    if(request.getQuery() == "notification read")
+    if(request.getQuery() == "notifications read")
         return this->showLimitedNotification(request);
     if(request.getQuery() == "purchased")
         return this->purchased(request);
@@ -303,7 +303,7 @@ void RequestManager::commentFilm(Request request){
 
     Film* film = this->getFilm(atoi(request.get(FILM_ID).c_str()));
 
-    if(userLoggined->checkBuyFilm(film) == true)
+    if(userLoggined->checkBuyFilm(film) == false)
         throw PermissionDenied();
 
     film->addComment(request.get(CONTENT), userLoggined);
@@ -377,7 +377,10 @@ void RequestManager::follow(Request request){
     vector< string > requiredFields{ USER_ID };
     request.check(requiredFields);
 
-    this->getUser(atoi(request.get(USER_ID).c_str()))->addFollowers(userLoggined);
+    User* user = this->getUser(atoi(request.get(USER_ID).c_str()));
+    user->addFollowers(userLoggined);
+    user->sendNotification(userLoggined->createFollowNotif());
+
 }
 
 User* RequestManager::getUser(int id){
