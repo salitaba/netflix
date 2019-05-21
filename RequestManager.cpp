@@ -273,6 +273,7 @@ void RequestManager::buyFilm(Request request){
     Film* film = this->getFilm(atoi(request.get(FILM_ID).c_str()));
     
     userLoggined->buy(film);
+    film->getAuthor()->sendNotification(userLoggined->createBuyFilmNotif(film));
 }
 
 void RequestManager::rateFilm(Request request){

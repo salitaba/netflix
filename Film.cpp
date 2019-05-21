@@ -118,5 +118,8 @@ Comment* Film::getComment(int id){
     for(auto comment : comments)
         if(comment->isId(id) == true)
             return comment;
+}
 
+string Film::getName(){
+    return name;
 }

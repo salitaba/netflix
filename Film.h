@@ -34,6 +34,7 @@ public:
     int getId();
     void printShortDetail();
     Comment* getComment(int id);
+    std::string getName();
 private:
     User* aurtor;
     std::string name, summary, director;
