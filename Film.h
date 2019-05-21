@@ -33,6 +33,7 @@ public:
     void deleteComment(int commentId);
     int getId();
     void printShortDetail();
+    Comment* getComment(int id);
 private:
     User* aurtor;
     std::string name, summary, director;

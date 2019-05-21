@@ -113,3 +113,10 @@ int Film::getId(){
 void Film::printShortDetail(){
     cout<< id << " | " << name << " | " << length << " | " << director ;
 }
+
+Comment* Film::getComment(int id){
+    for(auto comment : comments)
+        if(comment->isId(id) == true)
+            return comment;
+
+}

@@ -25,6 +25,9 @@ public:
     void increaseMoney(int value);
     void getMoney();
     bool isBuyed(Film* film);
+    void sendNotification(std::string notification);
+    std::string createPostFilmNotif();
+    std::string createReplyNotif();
 private:
     std::string email, userName;
     int password;
@@ -36,6 +39,8 @@ private:
     std::set< User* >followers;
     std::set< std::pair<int, double> >solds;
     std::set< Film* > buyedFilm;
+    std::vector< std::string > unreadedNotification;
+    std::vector< std::string > allNotification;
 };
 
 

@@ -21,3 +21,12 @@ void Comment::show(){
     for(int i = 0 ; i < replies.size() ;i++)
         cout << id << "." <<  i + 1 << "." << replies[i] << endl;
 }
+
+bool Comment::isId(int _id){
+    return id == _id;
+}
+
+User* Comment::getUser(){
+    return user;
+}
+

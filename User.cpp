@@ -102,3 +102,16 @@ void User::getMoney(){
 bool User::isBuyed(Film* film){
     return buyedFilm.find(film) != buyedFilm.end();
 }
+
+void User::sendNotification(std::string notification){
+    unreadedNotification.push_back(notification);
+    allNotification.push_back(notification);
+}
+
+string User::createPostFilmNotif(){
+    return "Publisher " + userName + " with id " + to_string(id) + " register new film.";
+}
+
+string User::createReplyNotif(){
+    return "Publisher " + userName + " with id " + to_string(id) + " reply to your comment.";
+}

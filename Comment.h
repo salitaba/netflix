@@ -13,6 +13,8 @@ public:
     void hidden();
     void reply(std::string content);
     void show();
+    bool isId(int id);
+    User* getUser();
 private:
     std::string content;
     int id;

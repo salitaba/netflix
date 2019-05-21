@@ -123,6 +123,9 @@ void RequestManager::postFilm(Request request){
     string summary = request.get(SUMMARY), director = request.get(DIRECTOR);
 
     films.push_back(new Film(name, year, length, price, summary, director, this->getFilmId(), userLoggined));
+
+    for(auto user : users)
+        user->sendNotification(userLoggined->createPostFilmNotif());
 }
 
 void RequestManager::editFilm(Request request){
@@ -316,7 +319,12 @@ void RequestManager::reply(Request request){
     if(film->getAuthor() != userLoggined)
         throw PermissionDenied();
     
-    film->reply(atoi(request.get(COMMENT_ID).c_str()), request.get(CONTENT));
+    int commentId = atoi(request.get(COMMENT_ID).c_str());
+
+    film->reply(commentId, request.get(CONTENT));
+    
+    User* user = film->getComment(commentId)->getUser();
+    user->sendNotification(userLoggined->createReplyNotif());
 }
 
 void RequestManager::deleteComment(Request request){
