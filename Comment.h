@@ -2,6 +2,7 @@
 #define COMMENT_H
 
 #include<string>
+#include<iostream>
 #include<vector>
 
 class User;
@@ -11,6 +12,7 @@ public:
     Comment(std::string content, int id, User* user);
     void hidden();
     void reply(std::string content);
+    void show();
 private:
     std::string content;
     int id;

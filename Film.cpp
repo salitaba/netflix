@@ -53,6 +53,11 @@ void Film::printDetail(int counter){
 void Film::printInformation(){
     cout<<"Details of Film "<< name << endl << "ID = " << id << endl << "Director = " << director << endl
         <<"Length = " << length << "Year = " << year << "Summary = " << summary << endl << "Price = " << price << endl;
+
+    cout<< endl << "Comments" << endl;
+    
+    for(auto comment : comments)
+        comment->show();
 }
 
 int Film::getPrice(){

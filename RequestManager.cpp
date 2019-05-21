@@ -226,7 +226,7 @@ void RequestManager::getMethod(Request request){
     if(request.getQuery() == "published")
         return this->published(request);
     if(request.getQuery() == "films")
-        return this->searchFilm(request);
+        return this->seprateSearchFromShowDetailFilm(request);
 }
 
 void RequestManager::published(Request request){
@@ -256,6 +256,8 @@ void RequestManager::searchFilm(Request request){
     for(auto film : films)
         if(film->find(name, minYear, minRate, price, maxYear, director))
             film->printDetail(counter), counter;
+    
+
 }
 
 void RequestManager::buyFilm(Request request){

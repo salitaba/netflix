@@ -29,8 +29,8 @@ public:
     User* getAuthor();
     void rateTheRate(int rateNum, User* user);
     void addComment(std::string content, User* user);
-    void reply(int comment_id, std::string content);
-    void deleteComment(int comment_id);
+    void reply(int commentId, std::string content);
+    void deleteComment(int commentId);
 private:
     User* aurtor;
     std::string name, summary, director;
