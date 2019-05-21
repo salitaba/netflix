@@ -184,6 +184,8 @@ void RequestManager::post(Request request){
     if(userLoggined == NULL)
         throw PermissionDenied();
 
+    if(request.getQuery() == "follower")
+        this->follow(request);
     if(request.getQuery() == "films")
         this->postFilm(request);    
     if(request.getQuery() == "buy")
@@ -356,4 +358,11 @@ vector< Film* > RequestManager::topFilms(){
             topFilm.push_back(films[id]), counter++;
         id++;
     }
+}
+
+void RequestManager::follow(Request request){
+    vector< string > requiredFields;
+    request.check(requiredFields);
+
+
 }

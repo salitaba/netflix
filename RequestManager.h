@@ -39,6 +39,7 @@ public:
     void reply(Request request);
     void deleteComment(Request request);
     std::vector< Film* > topFilms();
+    void follow(Request request);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;
