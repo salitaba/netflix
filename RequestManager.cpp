@@ -241,7 +241,7 @@ void RequestManager::seprateSearchFromShowDetailFilm(Request request){
     string filmId = request.get(FILM_ID, true);
 
     if(filmId.size() > 0)
-        this->getFilm(atoi(filmId.c_str()))->printInformation();
+        this->getFilm(atoi(filmId.c_str()))->printInformation(this->topFilms());
     else
         this->searchFilm(request);
 }
@@ -329,4 +329,23 @@ void RequestManager::deleteComment(Request request){
         throw PermissionDenied();
     
     film->deleteComment(atoi(request.get(COMMENT_ID).c_str()));
+}
+
+vector< Film* > RequestManager::topFilms(){
+    vector < Film* > topFilm;
+    for(int i = 0 ;i < films.size() ;i++)
+        for(int j = 0 ;j < films.size() ;j++)
+            if(films[j]->getRate() != films[i]->getRate()){
+                if(films[j]->getRate() > films[i]->getRate())
+                    swap(films[i], films[j]);
+            }else{
+                if(films[j]->getId() < films[i]->getId())
+                    swap(films[i], films[j]);
+            }
+    int counter = 1, id = 0;
+    while(counter < 5 &&  id < films.size()){
+        if(userLoggined->isBuyed(films[id]) == false)
+            topFilm.push_back(films[id]), counter++;
+        id++;
+    }
 }

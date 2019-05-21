@@ -24,6 +24,7 @@ public:
     bool checkBuyFilm(Film* film);
     void increaseMoney(int value);
     void getMoney();
+    bool isBuyed(Film* film);
 private:
     std::string email, userName;
     int password;

@@ -98,3 +98,7 @@ void User::getMoney(){
     }
     solds.clear();
 }
+
+bool User::isBuyed(Film* film){
+    return buyedFilm.find(film) != buyedFilm.end();
+}

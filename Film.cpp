@@ -50,14 +50,22 @@ void Film::printDetail(int counter){
         << price << " | " << rate << " | " << year << " | " << director <<endl;
 }
 
-void Film::printInformation(){
-    cout<<"Details of Film "<< name << endl << "ID = " << id << endl << "Director = " << director << endl
-        <<"Length = " << length << "Year = " << year << "Summary = " << summary << endl << "Price = " << price << endl;
+void Film::printInformation(vector< Film* > topFilm){
+    cout << "Details of Film " << name << endl << "ID = " << id << endl << "Director = " << director << endl
+         << "Length = " << length << "Year = " << year << "Summary = " << summary << endl << "Price = " << price << endl;
 
-    cout<< endl << "Comments" << endl;
+    cout << endl << "Comments" << endl;
     
     for(auto comment : comments)
         comment->show();
+    
+    cout << "Recommendation Film" << endl
+         << "#. Film Id | Film Name | Film Length | Film Director" << endl;
+    for(int i = 0; i < topFilm.size(); i++){
+        cout << i + 1 << ". ";
+        this->printShortDetail();
+        cout<< endl;
+    }
 }
 
 int Film::getPrice(){
@@ -96,4 +104,12 @@ void Film::deleteComment(int commentId){
     if(commentId >= comments.size())
         throw BadRequest();
     comments[commentId - 1]->hidden();
+}
+
+int Film::getId(){
+    return id;
+}
+
+void Film::printShortDetail(){
+    cout<< id << " | " << name << " | " << length << " | " << director ;
 }

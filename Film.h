@@ -23,7 +23,7 @@ public:
     void unusable();
     bool find(std::string name,std::string minYear,std::string minRate,std::string price,std::string maxYear,std::string director);
     void printDetail(int id);
-    void printInformation();
+    void printInformation(std::vector< Film* > topFilms);
     int getPrice();
     double getRate();
     User* getAuthor();
@@ -31,6 +31,8 @@ public:
     void addComment(std::string content, User* user);
     void reply(int commentId, std::string content);
     void deleteComment(int commentId);
+    int getId();
+    void printShortDetail();
 private:
     User* aurtor;
     std::string name, summary, director;
