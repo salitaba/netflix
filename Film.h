@@ -6,6 +6,8 @@
 #include<vector>
 #include<set>
 
+#include"Comment.h"
+
 class User;
 
 class Film{
@@ -26,6 +28,7 @@ public:
     User* getAuthor();
     void rateTheRate(int rateNum, User* user);
     void addComment(std::string content, User* user);
+    void reply(int comment_id, std::string content);
 private:
     User* aurtor;
     std::string name, summary, director;
@@ -33,7 +36,7 @@ private:
     double rate = 0;
     bool usable = true;
     std::set< User* > userRated;
-    std::vector< std::pair< std::string, User* > > comments;
+    std::vector< Comment* > comments;
 };
 
 

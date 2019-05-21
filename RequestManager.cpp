@@ -23,6 +23,7 @@
 #define RATE "rate"
 #define CONTENT "content"
 #define AMOUNT "amount"
+#define COMMENT_ID "comment_id"
 
 using namespace std;
 
@@ -190,6 +191,8 @@ void RequestManager::post(Request request){
         this->commentFilm(request);
     if(request.getQuery() == "money")  
         this->moneyHandler(request);
+    if(request.getQuery() == "replies")
+        this->reply(request);
 
     cout<<"OK"<<endl;
 }
@@ -298,4 +301,16 @@ void RequestManager::moneyHandler(Request request){
         userLoggined->getMoney();
     else
         this->increaseMoney(request);
+}
+
+void RequestManager::reply(Request request){
+    vector< string > requiredFields {FILM_ID, COMMENT_ID, CONTENT};
+    request.check(requiredFields);
+
+    Film* film = this->getFilm(atoi(request.get(FILM_ID).c_str()));
+
+    if(film->getAuthor() != userLoggined)
+        throw PermissionDenied();
+    
+    film->reply(atoi(request.get(COMMENT_ID).c_str()), request.get(CONTENT));
 }

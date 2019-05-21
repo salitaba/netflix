@@ -78,5 +78,9 @@ void Film::rateTheRate(int rateNum, User* user){
 }
 
 void Film::addComment(string content, User* user){
-    comments.push_back(make_pair( content, user));
+    comments.push_back(new Comment(content, comments.size() +1, user));
+}
+
+void Film::reply(int comment_id, string content){
+    comments[comment_id - 1]->reply(content);
 }
