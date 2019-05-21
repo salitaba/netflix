@@ -81,6 +81,14 @@ void Film::addComment(string content, User* user){
     comments.push_back(new Comment(content, comments.size() +1, user));
 }
 
-void Film::reply(int comment_id, string content){
-    comments[comment_id - 1]->reply(content);
+void Film::reply(int commentId, string content){
+    if(commentId >= comments.size())
+        throw BadRequest();
+    comments[commentId - 1]->reply(content);
+}
+
+void Film::deleteComment(int commentId){
+    if(commentId >= comments.size())
+        throw BadRequest();
+    comments[commentId - 1]->hidden();
 }

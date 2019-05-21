@@ -6,6 +6,7 @@
 #include<vector>
 #include<set>
 
+#include"Exception.h"
 #include"Comment.h"
 
 class User;
@@ -29,6 +30,7 @@ public:
     void rateTheRate(int rateNum, User* user);
     void addComment(std::string content, User* user);
     void reply(int comment_id, std::string content);
+    void deleteComment(int comment_id);
 private:
     User* aurtor;
     std::string name, summary, director;

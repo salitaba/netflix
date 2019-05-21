@@ -203,6 +203,8 @@ void RequestManager::deleteMethod(Request request){
 
     if(request.getQuery() == "films")
         this->deleteFilm(request);
+    if(request.getQuery() == "comment")
+        this->deleteComment(request);
     cout<<"OK"<<endl;
 }
 
@@ -313,4 +315,16 @@ void RequestManager::reply(Request request){
         throw PermissionDenied();
     
     film->reply(atoi(request.get(COMMENT_ID).c_str()), request.get(CONTENT));
+}
+
+void RequestManager::deleteComment(Request request){
+    vector< string > requiredFields {FILM_ID, COMMENT_ID};
+    request.check(requiredFields);
+
+    Film* film = this->getFilm(atoi(request.get(FILM_ID).c_str()));
+
+    if(film->getAuthor() != userLoggined)
+        throw PermissionDenied();
+    
+    film->deleteComment(atoi(request.get(COMMENT_ID).c_str()));
 }
