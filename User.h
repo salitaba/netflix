@@ -30,6 +30,7 @@ public:
     std::string createReplyNotif();
     bool isId(int id);
     void addFollowers(User* user);
+    std::string createFollowNotif();
 private:
     std::string email, userName;
     int password;

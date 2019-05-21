@@ -122,4 +122,10 @@ bool User::isId(int _id){
 
 void User::addFollowers(User* user){
     followers.insert(user);
+
+    this->sendNotification(user->createFollowNotif());
+}
+
+string User::createFollowNotif(){
+    return "User " + userName + " with id " + to_string(id) + "follow you.";
 }
