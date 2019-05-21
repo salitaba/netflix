@@ -149,8 +149,19 @@ void User::showNotification(){
     cout<<"#. Notification Massage"<<endl;
     int cnt = 1;
     if(unreadedNotification.size() > 0)
-        for(int i = unreadedNotification.size() - 1; i >= 0 ;i--){
+        for(int i = unreadedNotification.size() - 1; i >= 0 ; i--){
             cout << cnt << ". " << unreadedNotification[i] << endl;
+            cnt++;
+        }
+    unreadedNotification.clear();
+}
+
+void User::showLimitedNotification(int limit){
+    cout<<"#. Notification Massage"<<endl;
+    int cnt = 1;
+    if(allNotification.size() > 0)
+        for(int i = allNotification.size() - 1; i >= 0 && cnt <= limit; i--){
+            cout << cnt << ". " << allNotification[i] << endl;
             cnt++;
         }
 }

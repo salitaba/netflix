@@ -42,6 +42,7 @@ public:
     void follow(Request request);
     User* getUser(int id);
     void showNotification();
+    void showLimitedNotification(Request request);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;

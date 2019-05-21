@@ -25,7 +25,7 @@
 #define AMOUNT "amount"
 #define COMMENT_ID "comment_id"
 #define USER_ID "user_id"
-
+#define LIMIT "limit"
 using namespace std;
 
 void RequestManager::handle(string input){
@@ -235,6 +235,8 @@ void RequestManager::getMethod(Request request){
         return this->seprateSearchFromShowDetailFilm(request);
     if(request.getQuery() == "notification")
         return this->showNotification();
+    if(request.getQuery() == "notification read")
+        return this->showLimitedNotification(request);
 }
 
 void RequestManager::published(Request request){
@@ -367,7 +369,7 @@ vector< Film* > RequestManager::topFilms(){
 }
 
 void RequestManager::follow(Request request){
-    vector< string > requiredFields;
+    vector< string > requiredFields{ USER_ID };
     request.check(requiredFields);
 
     this->getUser(atoi(request.get(USER_ID).c_str()))->addFollowers(userLoggined);
@@ -382,4 +384,11 @@ User* RequestManager::getUser(int id){
 
 void RequestManager::showNotification(){
     userLoggined->showNotification();
+}
+
+void RequestManager::showLimitedNotification(Request request){
+    vector< string > requiredFields{ LIMIT };
+    request.check(requiredFields);
+
+    userLoggined->showLimitedNotification(atoi(request.get(LIMIT).c_str()));  
 }
