@@ -131,5 +131,11 @@ string User::createFollowNotif(){
 }
 
 string User::createBuyFilmNotif(Film* film){
-    return "User " + userName + " with id " + to_string(id) + " buy your film " + film->getName() + " with id " + to_string(film->getId());
+    return "User " + userName + " with id " + to_string(id) + " buy your film " +
+            film->getName() + " with id " + to_string(film->getId());
+}
+
+string User::createRateNotif(Film* film){
+    return "User " + userName + " with id " + to_string(id) + " rate your film " + 
+            film->getName() + " with id " + to_string(film->getId());
 }

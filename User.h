@@ -32,6 +32,7 @@ public:
     void addFollowers(User* user);
     std::string createFollowNotif();
     std::string createBuyFilmNotif(Film* film);
+    std::string createRateNotif(Film* film);
 private:
     std::string email, userName;
     int password;

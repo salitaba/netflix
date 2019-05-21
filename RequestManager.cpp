@@ -286,6 +286,7 @@ void RequestManager::rateFilm(Request request){
         throw PermissionDenied();
 
     film->rateTheRate(atoi(request.get(RATE).c_str()), userLoggined);
+    film->getAuthor()->sendNotification(userLoggined->createRateNotif(film));
 }
 
 void RequestManager::commentFilm(Request request){
