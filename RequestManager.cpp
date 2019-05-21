@@ -237,9 +237,14 @@ void RequestManager::getMethod(Request request){
         return this->showNotification();
     if(request.getQuery() == "notification read")
         return this->showLimitedNotification(request);
+    if(request.getQuery() == "purchased")
+        return this->purchased(request);
 }
 
 void RequestManager::published(Request request){
+    if(userLoggined->isPublisher() == false)
+        throw PermissionDenied();
+
     string name = request.get(NAME, true), minYear = request.get(MIN_YEAR, true);
     string minRate = request.get(MIN_RATE, true), price = request.get(PRICE, true);
     string maxYear = request.get(MAX_YEAR, true), director = request.get(DIRECTOR, true);
@@ -391,4 +396,12 @@ void RequestManager::showLimitedNotification(Request request){
     request.check(requiredFields);
 
     userLoggined->showLimitedNotification(atoi(request.get(LIMIT).c_str()));  
+}
+
+void RequestManager::purchased(Request request){
+    string name = request.get(NAME, true), minYear = request.get(MIN_YEAR, true);
+    string minRate = request.get(MIN_RATE, true), price = request.get(PRICE, true);
+    string maxYear = request.get(MAX_YEAR, true), director = request.get(DIRECTOR, true);
+
+    userLoggined->findBuyedFilm(name, minYear, minRate, price, maxYear, director);
 }

@@ -43,6 +43,7 @@ public:
     User* getUser(int id);
     void showNotification();
     void showLimitedNotification(Request request);
+    void purchased(Request request);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;

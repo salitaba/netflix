@@ -36,6 +36,7 @@ public:
     std::string createCommentNotif(Film* film);
     void showNotification();
     void showLimitedNotification(int limit);
+    void findBuyedFilm(std::string name,std::string minYear,std::string minRate,std::string price,std::string maxYear,std::string director);
 private:
     std::string email, userName;
     int password;
