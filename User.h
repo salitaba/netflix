@@ -33,6 +33,7 @@ public:
     std::string createFollowNotif();
     std::string createBuyFilmNotif(Film* film);
     std::string createRateNotif(Film* film);
+    std::string createCommentNotif(Film* film);
 private:
     std::string email, userName;
     int password;

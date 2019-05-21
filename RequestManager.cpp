@@ -299,6 +299,7 @@ void RequestManager::commentFilm(Request request){
         throw PermissionDenied();
 
     film->addComment(request.get(CONTENT), userLoggined);
+    film->getAuthor()->sendNotification(userLoggined->createCommentNotif(film));
 }
 
 void RequestManager::increaseMoney(Request request){
