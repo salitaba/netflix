@@ -28,6 +28,8 @@ public:
     void sendNotification(std::string notification);
     std::string createPostFilmNotif();
     std::string createReplyNotif();
+    bool isId(int id);
+    void addFollowers(User* user);
 private:
     std::string email, userName;
     int password;

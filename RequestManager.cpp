@@ -24,6 +24,7 @@
 #define CONTENT "content"
 #define AMOUNT "amount"
 #define COMMENT_ID "comment_id"
+#define USER_ID "user_id"
 
 using namespace std;
 
@@ -364,5 +365,12 @@ void RequestManager::follow(Request request){
     vector< string > requiredFields;
     request.check(requiredFields);
 
+    this->getUser(atoi(request.get(USER_ID).c_str()))->addFollowers(userLoggined);
+}
 
+User* RequestManager::getUser(int id){
+    for(auto user : users)
+        if(user->isId(id) == true)
+            return user;
+    throw NotFound();
 }

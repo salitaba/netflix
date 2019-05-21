@@ -115,3 +115,11 @@ string User::createPostFilmNotif(){
 string User::createReplyNotif(){
     return "Publisher " + userName + " with id " + to_string(id) + " reply to your comment.";
 }
+
+bool User::isId(int _id){
+    return id == _id;
+}
+
+void User::addFollowers(User* user){
+    followers.insert(user);
+}
