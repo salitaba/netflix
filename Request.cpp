@@ -10,6 +10,8 @@ Request::Request(string request){
     splitedRequest.pop();
     query = splitedRequest.front();
     splitedRequest.pop();
+    if(splitedRequest.size() == 0) 
+        return;
     if(splitedRequest.front() != "?")
         throw BadRequest();
     splitedRequest.pop();

@@ -35,6 +35,7 @@ public:
     void rateFilm(Request request);
     void commentFilm(Request reqeust);
     void increaseMoney(Request request);
+    void moneyHandler(Request request);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;

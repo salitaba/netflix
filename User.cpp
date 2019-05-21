@@ -72,7 +72,7 @@ void User::buy(Film* film){
 }
 
 void User::sold(User* user, Film* film){
-    solds.insert(make_pair(user, film->getRate()));
+    solds.insert(make_pair(film->getPrice(), film->getRate()));
 }
 
 bool User::checkBuyFilm(Film* film){
@@ -83,4 +83,18 @@ bool User::checkBuyFilm(Film* film){
 
 void User::increaseMoney(int value){
     money += value;
+}
+
+void User::getMoney(){
+    for(auto userAndPrice : solds){
+        double rate = userAndPrice.second;
+        int price = userAndPrice.first;
+        if(rate < 5)
+            money += price * 0.8;
+        else if(rate >= 5 && rate < 8)
+            money += price * 0.9;
+        else
+            money += price * 0.95;
+    }
+    solds.clear();
 }

@@ -189,7 +189,7 @@ void RequestManager::post(Request request){
     if(request.getQuery() == "comments")
         this->commentFilm(request);
     if(request.getQuery() == "money")  
-        this->increaseMoney(request);
+        this->moneyHandler(request);
 
     cout<<"OK"<<endl;
 }
@@ -291,4 +291,11 @@ void RequestManager::increaseMoney(Request request){
     request.check(requiredFields);
 
     userLoggined->increaseMoney(atoi(request.get(AMOUNT).c_str()));
+}
+
+void RequestManager::moneyHandler(Request request){
+    if(request.get(AMOUNT).size() == 0)
+        userLoggined->getMoney();
+    else
+        this->increaseMoney(request);
 }

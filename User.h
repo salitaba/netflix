@@ -23,6 +23,7 @@ public:
     void sold(User* user, Film* film);
     bool checkBuyFilm(Film* film);
     void increaseMoney(int value);
+    void getMoney();
 private:
     std::string email, userName;
     int password;
@@ -32,7 +33,7 @@ private:
     bool publisher = false;
     std::vector< Film* >films;
     std::set< User* >followers;
-    std::set< std::pair<User*, int> >solds;
+    std::set< std::pair<int, double> >solds;
     std::set< Film* > buyedFilm;
 };
 
