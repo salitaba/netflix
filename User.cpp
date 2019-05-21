@@ -144,3 +144,13 @@ string User::createCommentNotif(Film* film){
     return "User " + userName + " with id " + to_string(id) + " comment on your film " + 
             film->getName() + " with id " + to_string(film->getId()) + ".";
 }
+
+void User::showNotification(){
+    cout<<"#. Notification Massage"<<endl;
+    int cnt = 1;
+    if(unreadedNotification.size() > 0)
+        for(int i = unreadedNotification.size() - 1; i >= 0 ;i--){
+            cout << cnt << ". " << unreadedNotification[i] << endl;
+            cnt++;
+        }
+}

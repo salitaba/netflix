@@ -34,6 +34,7 @@ public:
     std::string createBuyFilmNotif(Film* film);
     std::string createRateNotif(Film* film);
     std::string createCommentNotif(Film* film);
+    void showNotification();
 private:
     std::string email, userName;
     int password;

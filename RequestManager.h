@@ -41,6 +41,7 @@ public:
     std::vector< Film* > topFilms();
     void follow(Request request);
     User* getUser(int id);
+    void showNotification();
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;

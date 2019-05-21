@@ -233,6 +233,8 @@ void RequestManager::getMethod(Request request){
         return this->published(request);
     if(request.getQuery() == "films")
         return this->seprateSearchFromShowDetailFilm(request);
+    if(request.getQuery() == "notification")
+        return this->showNotification();
 }
 
 void RequestManager::published(Request request){
@@ -376,4 +378,8 @@ User* RequestManager::getUser(int id){
         if(user->isId(id) == true)
             return user;
     throw NotFound();
+}
+
+void RequestManager::showNotification(){
+    userLoggined->showNotification();
 }

@@ -8,12 +8,14 @@ Request::Request(string request){
         throw BadRequest();
     method = splitedRequest.front();
     splitedRequest.pop();
-    query = splitedRequest.front();
-    splitedRequest.pop();
+    while(splitedRequest.size() != 0 && splitedRequest.front() != "?"){
+        query += splitedRequest.front();
+        splitedRequest.pop();
+        if(splitedRequest.size() != 0 && splitedRequest.front() != "?")
+            query+=" ";
+    }
     if(splitedRequest.size() == 0) 
-        return;
-    if(splitedRequest.front() != "?")
-        throw BadRequest();
+        return ;
     splitedRequest.pop();
     this->convertToMap(splitedRequest);
 }
