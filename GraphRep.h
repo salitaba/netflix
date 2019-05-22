@@ -2,12 +2,16 @@
 #define GRAPHREP_H
 
 #include<map>
+#include<vector>
 
 class GraphRep{
+public:
     void add(int a, int b);
+    void addVertex();
+    int getNum(int a, int b);
 
 private:
-    std::map<int , std::map<int, int > > graph;
+    std::vector< std::vector<int> >graph;
 
 };
 

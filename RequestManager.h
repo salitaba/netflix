@@ -49,11 +49,13 @@ public:
     void purchased(Request request);
     void logout();
     void getMoney();
+    void addAdjence(Film* film);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;
     std::vector<User*> users;
     int userIdCounter = 0, filmIdCounter = 0;
+    GraphRep graph;
 };
 
 

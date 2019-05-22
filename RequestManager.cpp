@@ -119,11 +119,14 @@ void RequestManager::postFilm(Request request){
     if(userLoggined == NULL || userLoggined->isPublisher() == false)
         throw PermissionDenied();
 
+
     string name = request.get(NAME), year = request.get(YEAR);
     string length = request.get(LENGTH), price = request.get(PRICE);
     string summary = request.get(SUMMARY), director = request.get(DIRECTOR);
 
+    graph.addVertex();
     films.push_back(new Film(name, year, length, price, summary, director, this->getFilmId(), userLoggined));
+    this->addAdjence(films.back());
     userLoggined->addFilm(films.back());
 
     userLoggined->sendNotificationForAllFollowers();
@@ -369,15 +372,21 @@ void RequestManager::deleteComment(Request request){
 
 vector< Film* > RequestManager::topFilms(Film* film){
     vector < Film* > topFilm;
+    vector < Film* > filmsForMe;
+
     for(int i = 0 ;i < films.size() ;i++)
-        for(int j = i ;j < films.size() ;j++)
-            if(films[j]->getRate() != films[i]->getRate()){
-                if(films[j]->getRate() > films[i]->getRate())
+        for(int j = i ;j < films.size() ;j++){
+            int numForJ = graph.getNum(films[j]->getId(),film->getId()),
+                numForI = graph.getNum(films[i]->getId(),film->getId());
+            if( numForI != numForJ){
+                if(numForI < numForJ)
                     swap(films[i], films[j]);
             }else{
                 if(films[j]->getId() < films[i]->getId())
                     swap(films[i], films[j]);
             }
+        }
+            
     int counter = 1, id = 0;
     while(counter < 5 &&  id < films.size()){
         if(userLoggined->isBuyed(films[id]) == false && films[id]->isUsable() == true && films[id] != film)
@@ -434,4 +443,10 @@ void RequestManager::getMoney(){
 RequestManager::RequestManager(){
     int id = this->getUserId();
     users.push_back(new User("amin@admin.com", "admin", "admin", 18, id, "true"));
+}
+
+void RequestManager::addAdjence(Film* film){
+    for(auto film2 : films)
+        if(film2 != film && userLoggined->isBuyed(film2))
+            graph.add(film->getId(), film2->getId());
 }
