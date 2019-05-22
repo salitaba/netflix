@@ -87,17 +87,19 @@ void User::increaseMoney(int value){
     money += value;
 }
 
-void User::getMoney(){
+int User::getMoney(){
+    int profit = 0;
     for(auto userAndPrice : solds){
         double rate = userAndPrice.second;
-        int price = userAndPrice.first;
+        int price = userAndPrice.first; 
         if(rate < 5)
-            money += price * 0.8;
+            profit += price * 0.8;
         else if(rate >= 5 && rate < 8)
-            money += price * 0.9;
+            profit += price * 0.9;
         else
-            money += price * 0.95;
+            profit += price * 0.95;
     }
+    money += profit;
     solds.clear();
 }
 

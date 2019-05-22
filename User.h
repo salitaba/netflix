@@ -23,7 +23,7 @@ public:
     void sold(User* user, Film* film);
     bool checkBuyFilm(Film* film);
     void increaseMoney(int value);
-    void getMoney();
+    int getMoney();
     bool isBuyed(Film* film);
     void sendNotification(std::string notification);
     std::string createPostFilmNotif();

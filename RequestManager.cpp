@@ -330,9 +330,11 @@ void RequestManager::increaseMoney(Request request){
 }
 
 void RequestManager::moneyHandler(Request request){
-    if(request.get(AMOUNT, true).size() == 0)
-        userLoggined->getMoney();
-    else
+    if(request.get(AMOUNT, true).size() == 0){
+        int profit = userLoggined->getMoney();
+        this->findUserName("admin")->increaseMoney(-profit);
+
+    }else
         this->increaseMoney(request);
 }
 
