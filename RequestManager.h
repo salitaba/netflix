@@ -11,11 +11,12 @@
 
 class RequestManager{
 public:
+    RequestManager();
     void handle(std::string input);
     void split(std::string, std::vector<std::string>& elements);
     void handleEvents(Request);
     void signup(Request request);
-    bool findUserName(std::string userName);
+    User* findUserName(std::string userName);
     int getUserId();
     void login(Request request);
     void postFilm(Request request);
@@ -44,6 +45,8 @@ public:
     void showNotification();
     void showLimitedNotification(Request request);
     void purchased(Request request);
+    void logout();
+    void getMoney();
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;

@@ -28,8 +28,10 @@ void User::setPublisher(){
     publisher = true;
 }
 
-bool User::isUserName(string _userName){
-    return userName == _userName;
+User* User::isUserName(string _userName){
+    if(userName == _userName)
+        return this;
+    return NULL;
 }
 
 bool User::isPassword(string _password){
@@ -182,4 +184,8 @@ void User::addFilm(Film* film){
 void User::sendNotificationForAllFollowers(){
     for(auto user : followers)
         user->sendNotification(this->createPostFilmNotif());
+}
+
+void User::showMoney(){
+    cout << money << endl;
 }

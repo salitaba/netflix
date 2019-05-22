@@ -54,8 +54,8 @@ void RequestManager::split(string input, vector<string>& inputElement){
 void RequestManager::handleEvents(Request request){
     if( request.getMethod() == POST )
         return this->post(request);
-    if( request.getMethod() == PUT )
-        return this->put(request);
+    // if( request.getMethod() == PUT )
+    //     return this->put(request);
     if( request.getMethod() == DELETE ) 
         return this->deleteMethod(request);
     if( request.getMethod() == GET )
@@ -66,7 +66,6 @@ void RequestManager::handleEvents(Request request){
 
 void RequestManager::signup(Request request){
     vector<string> requirementField{EMAIL, USERNAME, PASSWORD, AGE};
-    vector<string> optionalField{"publisher"};
     request.check(requirementField);
     
 
@@ -77,7 +76,7 @@ void RequestManager::signup(Request request){
     string publisher = request.get("publisher", true, "false");
     
 
-    if(this->findUserName(username) == true)
+    if(this->findUserName(username) != NULL)
         throw BadRequest();
     User* newUser = new User(email, username, password, atoi(age.c_str()), this->getUserId(), publisher);
     userLoggined = newUser;
@@ -85,18 +84,18 @@ void RequestManager::signup(Request request){
 }
 
 
-bool RequestManager::findUserName(string userName){
+User* RequestManager::findUserName(string userName){
     for( auto user : users)
-        if(user->isUserName(userName) == true)
-            return true;
-    return false;
+        if(user->isUserName(userName) != NULL)
+            return user->isUserName(userName);
+    return NULL;
 }
 
 void RequestManager::login(Request request){
     vector<string> requirementField{USERNAME, PASSWORD};
     request.check(requirementField);
     for( auto user : users)
-        if(user->isUserName(request.get(USERNAME, false)) == true && 
+        if(user->isUserName(request.get(USERNAME, false)) != NULL && 
             user->isPassword(request.get(PASSWORD, false)) == true){
             userLoggined = user;
             return;
@@ -185,7 +184,14 @@ void RequestManager::post(Request request){
     
     if(userLoggined == NULL)
         throw PermissionDenied();
-
+    if(request.getQuery() == "logout")
+        this->logout();
+    if(request.getQuery() == "delete_films")
+        this->deleteFilm(request);
+    if(request.getQuery() == "delete_comments")
+        this->deleteComment(request);
+    if(request.getQuery() == "put_films")
+        this->editFilm(request);
     if(request.getQuery() == "followers")
         this->follow(request);
     if(request.getQuery() == "films")
@@ -226,7 +232,9 @@ void RequestManager::put(Request request){
 
 void RequestManager::getMethod(Request request){
     if(userLoggined == NULL)
-        throw PermissionDenied();    
+        throw PermissionDenied();
+    if(request.getQuery() == "money")
+        return this->getMoney();
     if(request.getQuery() == "followers")
         return this->showFollowers(request);
     if(request.getQuery() == "published")
@@ -286,6 +294,7 @@ void RequestManager::buyFilm(Request request){
     
     userLoggined->buy(film);
     film->getAuthor()->sendNotification(userLoggined->createBuyFilmNotif(film));
+    this->findUserName("admin")->increaseMoney(film->getPrice());
 }
 
 void RequestManager::rateFilm(Request request){
@@ -410,4 +419,17 @@ void RequestManager::purchased(Request request){
     string maxYear = request.get(MAX_YEAR, true), director = request.get(DIRECTOR, true);
 
     userLoggined->findBuyedFilm(name, minYear, minRate, price, maxYear, director);
+}
+
+void RequestManager::logout(){
+    userLoggined = NULL;
+}
+
+void RequestManager::getMoney(){
+    userLoggined->showMoney();
+}
+
+RequestManager::RequestManager(){
+    int id = this->getUserId();
+    users.push_back(new User("amin@admin.com", "admin", "admin", 18, id, "true"));
 }

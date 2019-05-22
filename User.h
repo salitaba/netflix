@@ -14,7 +14,7 @@ public:
     User (std::string email, std::string user, std::string password, int age, int _id, std::string publisher);
     void setPublisher();
     int hashCode(std::string const& str);
-    bool isUserName(std::string _userName);
+    User* isUserName(std::string _userName);
     bool isPassword(std::string _password);
     bool isPublisher();
     void showFollower();
@@ -39,6 +39,7 @@ public:
     void findBuyedFilm(std::string name,std::string minYear,std::string minRate,std::string price,std::string maxYear,std::string director);
     void addFilm(Film* film);
     void sendNotificationForAllFollowers();
+    void showMoney();
 private:
     std::string email, userName;
     int password;
