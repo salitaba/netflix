@@ -4,14 +4,14 @@
 class BadRequest: public std::exception{
 public:
     const char* what() const throw(){
-        return "Bad request!";
+        return "Bad Request";
     }
 };
 
 class PermissionDenied: public std::exception{
 public:
     const char* what() const throw(){
-        return "Persmision denied";
+        return "Permission Denied";
     }
 };
 

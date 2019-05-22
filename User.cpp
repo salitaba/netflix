@@ -51,7 +51,7 @@ void User::showFollower(){
 }
 
 void User::find(string name,string minYear,string minRate,string price,string maxYear,string director){
-    cout<<"#. Film Id | Film Name | Film length | Film price | Rate | Production Year | Film Director"<<endl;
+    cout<<"#. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director"<<endl;
     int counter = 1; 
     for(auto film : films){
         if( film->find(name, minYear, minRate, price, maxYear, director) == true)
@@ -146,7 +146,7 @@ string User::createCommentNotif(Film* film){
 }
 
 void User::showNotification(){
-    cout<<"#. Notification Massage"<<endl;
+    cout<<"#. Notification Message"<<endl;
     int cnt = 1;
     if(unreadedNotification.size() > 0)
         for(int i = unreadedNotification.size() - 1; i >= 0 ; i--){
@@ -157,7 +157,7 @@ void User::showNotification(){
 }
 
 void User::showLimitedNotification(int limit){
-    cout<<"#. Notification Massage"<<endl;
+    cout<<"#. Notification Message"<<endl;
     int cnt = 1;
     if(allNotification.size() > 0)
         for(int i = allNotification.size() - 1; i >= 0 && cnt <= limit; i--){
@@ -167,7 +167,7 @@ void User::showLimitedNotification(int limit){
 }
 
 void User::findBuyedFilm(string name,string minYear,string minRate,string price,string maxYear,string director){
-    cout<<"#. Film Id | Film Name | Film length | Film price | Rate | Production Year | Film Director"<<endl;
+    cout<<"#. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director"<<endl;
     int counter = 1; 
     for(auto film : buyedFilm){
         if( film->find(name, minYear, minRate, price, maxYear, director) == true)
@@ -177,4 +177,9 @@ void User::findBuyedFilm(string name,string minYear,string minRate,string price,
 
 void User::addFilm(Film* film){
     films.push_back(film);
+}
+
+void User::sendNotificationForAllFollowers(){
+    for(auto user : followers)
+        user->sendNotification(this->createPostFilmNotif());
 }

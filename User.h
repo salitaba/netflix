@@ -38,6 +38,7 @@ public:
     void showLimitedNotification(int limit);
     void findBuyedFilm(std::string name,std::string minYear,std::string minRate,std::string price,std::string maxYear,std::string director);
     void addFilm(Film* film);
+    void sendNotificationForAllFollowers();
 private:
     std::string email, userName;
     int password;

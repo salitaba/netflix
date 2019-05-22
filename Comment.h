@@ -15,6 +15,7 @@ public:
     void show();
     bool isId(int id);
     User* getUser();
+    bool isLive();
 private:
     std::string content;
     int id;

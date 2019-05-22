@@ -37,6 +37,7 @@ void Film::unusable(){
 }
 
 bool Film::find(string _name,string _minYear,string _minRate,string _price,string _maxYear,string _director){
+    if(usable == false) return false;
     if(_name.size() > 0 &&  name != _name) return false;
     if(_director.size() > 0 &&  director != _director ) return false;
     if(_minYear.size() > 0 &&  atoi(_minYear.c_str()) > year) return false;
@@ -51,15 +52,17 @@ void Film::printDetail(int counter){
 }
 
 void Film::printInformation(vector< Film* > topFilm){
-    cout << "Details of Film " << name << endl << "ID = " << id << endl << "Director = " << director << endl
+    cout << "Details of Film " << name << endl << "Id = " << id << endl << "Director = " << director << endl
          << "Length = " << length << endl << "Year = " << year << endl<< "Summary = " << summary << endl 
-         << "Price = " << price << endl;
+         << "Rate = " << rate << endl << "Price = " << price << endl ;
 
-    cout << endl << "Comments" << endl << endl;
+    cout << endl << "Comments" << endl ;
     
     for(auto comment : comments)
-        comment->show();
+        if(comment->isLive())
+            comment->show();
     
+    cout << endl;
     cout << "Recommendation Film" << endl
          << "#. Film Id | Film Name | Film Length | Film Director" << endl;
     for(int i = 0; i < topFilm.size(); i++){
@@ -96,14 +99,16 @@ void Film::addComment(string content, User* user){
 }
 
 void Film::reply(int commentId, string content){
-    if(commentId >= comments.size())
+    if(commentId > comments.size())
         throw BadRequest();
     comments[commentId - 1]->reply(content);
 }
 
 void Film::deleteComment(int commentId){
-    if(commentId >= comments.size())
-        throw BadRequest();
+    if(commentId > comments.size())
+        throw NotFound();
+    if(comments[commentId - 1]->isLive() == false)
+        throw NotFound();
     comments[commentId - 1]->hidden();
 }
 
@@ -117,10 +122,14 @@ void Film::printShortDetail(){
 
 Comment* Film::getComment(int id){
     for(auto comment : comments)
-        if(comment->isId(id) == true)
+        if(comment->isId(id) == true && comment->isLive())
             return comment;
 }
 
 string Film::getName(){
     return name;
+}
+
+bool Film::isUsable(){
+    return usable;
 }

@@ -23,10 +23,16 @@ void Comment::show(){
 }
 
 bool Comment::isId(int _id){
+    if(online == false)
+        return false;
     return id == _id;
 }
 
 User* Comment::getUser(){
     return user;
+}
+
+bool Comment::isLive(){
+    return online;
 }
 

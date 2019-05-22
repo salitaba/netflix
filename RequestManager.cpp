@@ -127,8 +127,7 @@ void RequestManager::postFilm(Request request){
     films.push_back(new Film(name, year, length, price, summary, director, this->getFilmId(), userLoggined));
     userLoggined->addFilm(films.back());
 
-    for(auto user : users)
-        user->sendNotification(userLoggined->createPostFilmNotif());
+    userLoggined->sendNotificationForAllFollowers();
 }
 
 void RequestManager::editFilm(Request request){
@@ -152,7 +151,7 @@ void RequestManager::editFilm(Request request){
 
 Film* RequestManager::getFilm(int id){
     for(auto film : films)
-        if(film->isId(id) == true)
+        if(film->isId(id) == true && film->isUsable() == true)
             return film;
     throw NotFound();
 }
@@ -211,7 +210,7 @@ void RequestManager::deleteMethod(Request request){
 
     if(request.getQuery() == "films")
         this->deleteFilm(request);
-    if(request.getQuery() == "comment")
+    if(request.getQuery() == "comments")
         this->deleteComment(request);
     cout<<"OK"<<endl;
 }
@@ -255,9 +254,10 @@ void RequestManager::published(Request request){
 void RequestManager::seprateSearchFromShowDetailFilm(Request request){
     string filmId = request.get(FILM_ID, true);
 
-    if(filmId.size() > 0)
-        this->getFilm(atoi(filmId.c_str()))->printInformation(this->topFilms());
-    else
+    if(filmId.size() > 0){
+        Film* film = this->getFilm(atoi(filmId.c_str()));
+        film->printInformation(this->topFilms(film));
+    }else
         this->searchFilm(request);
 }
 
@@ -267,6 +267,9 @@ void RequestManager::searchFilm(Request request){
     string name = request.get(NAME, true), minYear = request.get(MIN_YEAR, true);
     string minRate = request.get(MIN_RATE, true), price = request.get(PRICE, true);
     string maxYear = request.get(MAX_YEAR, true), director = request.get(DIRECTOR, true);
+
+
+    cout<<"#. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director"<<endl;
 
     for(auto film : films)
         if(film->find(name, minYear, minRate, price, maxYear, director))
@@ -318,7 +321,7 @@ void RequestManager::increaseMoney(Request request){
 }
 
 void RequestManager::moneyHandler(Request request){
-    if(request.get(AMOUNT).size() == 0)
+    if(request.get(AMOUNT, true).size() == 0)
         userLoggined->getMoney();
     else
         this->increaseMoney(request);
@@ -353,7 +356,7 @@ void RequestManager::deleteComment(Request request){
     film->deleteComment(atoi(request.get(COMMENT_ID).c_str()));
 }
 
-vector< Film* > RequestManager::topFilms(){
+vector< Film* > RequestManager::topFilms(Film* film){
     vector < Film* > topFilm;
     for(int i = 0 ;i < films.size() ;i++)
         for(int j = i ;j < films.size() ;j++)
@@ -366,7 +369,7 @@ vector< Film* > RequestManager::topFilms(){
             }
     int counter = 1, id = 0;
     while(counter < 5 &&  id < films.size()){
-        if(userLoggined->isBuyed(films[id]) == false)
+        if(userLoggined->isBuyed(films[id]) == false && films[id]->isUsable() == true && films[id] != film)
             topFilm.push_back(films[id]), counter++;
         id++;
     }

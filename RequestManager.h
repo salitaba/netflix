@@ -38,7 +38,7 @@ public:
     void moneyHandler(Request request);
     void reply(Request request);
     void deleteComment(Request request);
-    std::vector< Film* > topFilms();
+    std::vector< Film* > topFilms(Film* film);
     void follow(Request request);
     User* getUser(int id);
     void showNotification();
