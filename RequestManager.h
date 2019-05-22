@@ -1,13 +1,15 @@
 #ifndef REQUESTMANAGER_H
 #define REQUESTMANAGER_H
 
-#include"Film.h"
-#include"User.h"
-#include"Request.h"
 
 #include<string>
 #include<vector>
 #include<iostream>
+
+#include"Film.h"
+#include"User.h"
+#include"Request.h"
+#include"GraphRep.h"
 
 class RequestManager{
 public:
