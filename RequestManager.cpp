@@ -126,7 +126,6 @@ void RequestManager::postFilm(Request request){
 
     graph.addVertex();
     films.push_back(new Film(name, year, length, price, summary, director, this->getFilmId(), userLoggined));
-    this->addAdjence(films.back());
     userLoggined->addFilm(films.back());
 
     userLoggined->sendNotificationForAllFollowers();
@@ -298,6 +297,8 @@ void RequestManager::buyFilm(Request request){
     userLoggined->buy(film);
     film->getAuthor()->sendNotification(userLoggined->createBuyFilmNotif(film));
     this->findUserName("admin")->increaseMoney(film->getPrice());
+    this->addAdjence(film);
+    
 }
 
 void RequestManager::rateFilm(Request request){

@@ -10,6 +10,7 @@ GET published
 
 POST signup ? username customer password 123 email user@gmail.com age 20
 POST money ? amount 999999
+POST buy ? film_id 3
 POST buy ? film_id 2
 POST comments ? film_id 2 content perfeeeect.
 POST comments ? film_id 2 content Perfection
@@ -21,4 +22,6 @@ POST replies ? film_id 2 comment_id 2 content Tnx
 POST replies ? film_id 2 comment_id 2 content you
 GET films ? film_id 2
 
+POST signup ? username ali password 123 email pub@gmail.com age 20 publisher true
+GET films ? film_id 2
 
