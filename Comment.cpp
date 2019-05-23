@@ -19,7 +19,7 @@ void Comment::reply(string content){
 void Comment::show(){
     cout << id << ". " << content << endl;
     for(int i = 0 ; i < replies.size() ;i++)
-        cout << id << "." <<  i + 1 << "." << replies[i] << endl;
+        cout << id << "." <<  i + 1 << ". " << replies[i] << endl;
 }
 
 bool Comment::isId(int _id){

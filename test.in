@@ -1,0 +1,24 @@
+POST signup ? username pub password 123 email pub@gmail.com age 20 publisher true
+
+POST films ? name film1 year 1999 length 120 price 10000 summary summary|of|film1 director director_of_film1
+GET published
+POST films ? name film2 year 2000 length 120 price 20000 summary summary|of|film2 director director_of_film2
+GET published
+POST films ? name film3 year 2001 length 120 price 30000 summary summary|of|film3 director director_of_film3
+GET published
+
+
+POST signup ? username customer password 123 email user@gmail.com age 20
+POST money ? amount 999999
+POST buy ? film_id 2
+POST comments ? film_id 2 content perfeeeect.
+POST comments ? film_id 2 content Perfection
+POST rate ? film_id 2 score 10
+
+
+POST login ? username pub password 123
+POST replies ? film_id 2 comment_id 2 content Tnx
+POST replies ? film_id 2 comment_id 2 content you
+GET films ? film_id 2
+
+

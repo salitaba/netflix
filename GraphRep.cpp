@@ -2,6 +2,10 @@
 
 using namespace std;
 
+GraphRep::GraphRep(){
+    graph.push_back(vector<int>(0));
+}
+
 void GraphRep::add(int a, int b){
     graph[a][b]++;
     graph[b][a]++;

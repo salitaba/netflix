@@ -6,6 +6,7 @@
 
 class GraphRep{
 public:
+    GraphRep();
     void add(int a, int b);
     void addVertex();
     int getNum(int a, int b);
