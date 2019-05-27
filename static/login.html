@@ -1,14 +1,60 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <h1>AP HTTP</h1>
-    <h2>Login</h2>
-    <div>
-      <form action="/login" method="post">
-        <input name="username" type="text" placeholder="Username" />
-        <input name="password" type="password" placeholder="Password" />
-        <button type="submit" >Login</button>
-      </form>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="MUI.css" rel="stylesheet" type="text/css" />
+  <script src="MUI.js"></script>
+  <script src="include.js"></script>
+  <style>
+    .outer {
+      display: table;
+      position: absolute;
+      left: 0;
+      height: 80%;
+      width: 100%;
+    }
+
+    .middle {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+
+<body>
+  <div w3-include-html="nav.html" style="z-index: 10"></div>
+  <div class="outer">
+    <div class="middle">
+      <div class="mui-container-fluid">
+        <div class="mui-col-md-4 mui-col-md-offset-4"
+          style=" background-color:rgb(187, 202, 251); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+          <form class="mui-form" action="/login_upload" method="POST">
+            <legend style="text-align: center; color:blue; font-size: 2em; font-weight: bold;">Login
+            </legend>
+            <div class="mui-textfield mui-textfield--float-label">
+              <input type="text" name="username" required>
+              <label>User name</label>
+            </div>
+            <div class="mui-textfield mui-textfield--float-label">
+              <input type="text" name="password" required>
+              <label>password</label>
+            </div>
+            <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+          </form>
+        </div>
+      </div>
     </div>
-  </body>
+  </div>
+
+  <script>
+    includeHTML();
+  </script>
+</body>
+
+
 </html>
