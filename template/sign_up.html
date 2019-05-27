@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../static/MUI.css" rel="stylesheet" type="text/css" />
+    <script src="../static/MUI.js"></script>
+    <title>Document</title>
+</head>
+
+
+<body>
+    <div class="mui-container-fluid">
+        <div class="mui-col-md-4 mui-col-md-offset-4" style=" background-color:rgb(187, 202, 251); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <form class="mui-form" action="/sign_up_upload" method="POST">
+                <legend style="text-align: center; color:blue; font-size: 2em; font-weight: bold;">Sign up</legend>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input type="text" name="userName" required>
+                    <label>User name</label>
+                </div>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input type="text" name="age" required>
+                    <label>age</label>
+                </div>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input type="text" name="password" required>
+                    <label>password</label>
+                </div>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input type="text" name="repeatPassword" required>
+                    <label>repeat password</label>
+                </div>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input type="email" name="email" required>
+                    <label>Email Address</label>
+                </div>
+                <div class="mui-checkbox">
+                    <label>
+                        <input type="checkbox" name=publisher required>
+                        Publisher
+                    </label>
+                </div>
+                <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+            </form>
+        </div>
+
+    </div>
+</body>
+
+
+</html>
