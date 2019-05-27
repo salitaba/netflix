@@ -1,12 +1,19 @@
-<div class="mui-appbar">
-    <div class="mui-container-fluid">
-        <table width="100%">
-            <tr style="vertical-align:middle;">
-                <td class="mui--appbar-height">Home</td>
-                <td class="mui--appbar-height">Profile</td>
-                <td class="mui--appbar-height">Film</td>
-                <td class="mui--appbar-height" align="right">Logout</td>
-            </tr>
-        </table>
-    </div>
-</div>
+<style>
+    .nav_bar>li>a {
+        color: white;
+        font-weight: bold;
+    }
+
+    .nav_bar>li>a:hover {
+        background: rgba(0, 0, 0, 0.05)
+    }
+</style>
+
+
+<ul class="mui-tabs__bar nav_bar" style="background-color:#2196F3; height: 20%;">
+    <li><a href="/">Home</a></li>
+    <li><a href="/films">Films</a></li>
+    <li><a href="/dashboard">Dashboard</a></li>
+    <li style="float:right"><a href="/logout">Logout</a></li>
+    <li style="float:right"><a href="/login">Login</a></li>
+</ul>

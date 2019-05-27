@@ -5,17 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="import" href="nav.html">
     <link href="MUI.css" rel="stylesheet" type="text/css" />
     <script src="MUI.js"></script>
     <script src="include.js"></script>
     <style>
         .outer {
             display: table;
-            position: absolute;
-            top: 0;
+            position:absolute;
             left: 0;
-            height: 100%;
+            height: 80%;
             width: 100%;
         }
 
@@ -29,7 +27,7 @@
 
 
 <body>
-    <div w3-include-html="nav.html"></div>
+    <div w3-include-html="nav.html" style="z-index: 10"></div>
     <div class="outer">
         <div class="middle">
             <div class="mui-container-fluid">
