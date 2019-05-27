@@ -1,13 +1,13 @@
+#include <cstdlib>  // for rand and srand
+#include <ctime>    // for time
+#include <iostream>
 #include "handlers.hpp"
 #include "my_server.hpp"
-#include <cstdlib> // for rand and srand
-#include <ctime>   // for time
-#include <iostream>
 
 using namespace std;
 
 int main(int argc, char **argv) {
-  srand(time(NULL)); // for rand
+  srand(time(NULL));  // for rand
   try {
     MyServer server(argc > 1 ? atoi(argv[1]) : 5000);
     server.setNotFoundErrPage("static/404.html");
