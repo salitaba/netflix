@@ -31,7 +31,7 @@ using namespace std;
 
 void RequestManager::handle(string input){
     try{
-        Request query(input);
+        ali::Request query(input);
         this->handleEvents(query);
     }catch(exception &e){
         cout<<e.what()<<endl;
@@ -51,7 +51,7 @@ void RequestManager::split(string input, vector<string>& inputElement){
     }
 }
 
-void RequestManager::handleEvents(Request request){
+void RequestManager::handleEvents(ali::Request request){
     if( request.getMethod() == POST )
         return this->post(request);
     // if( request.getMethod() == PUT )
@@ -64,7 +64,7 @@ void RequestManager::handleEvents(Request request){
 
 }
 
-void RequestManager::signup(Request request){
+void RequestManager::signup(ali::Request request){
     vector<string> requirementField{EMAIL, USERNAME, PASSWORD, AGE};
     request.check(requirementField);
     
@@ -91,7 +91,7 @@ User* RequestManager::findUserName(string userName){
     return NULL;
 }
 
-void RequestManager::login(Request request){
+void RequestManager::login(ali::Request request){
     vector<string> requirementField{USERNAME, PASSWORD};
     request.check(requirementField);
     for( auto user : users)
@@ -113,7 +113,7 @@ int RequestManager::getFilmId(){
     return filmIdCounter;
 }
 
-void RequestManager::postFilm(Request request){
+void RequestManager::postFilm(ali::Request request){
     vector<string> requirementField{NAME, YEAR, LENGTH, PRICE, SUMMARY, DIRECTOR};
     request.check(requirementField);
     if(userLoggined == NULL || userLoggined->isPublisher() == false)
@@ -131,7 +131,7 @@ void RequestManager::postFilm(Request request){
     userLoggined->sendNotificationForAllFollowers();
 }
 
-void RequestManager::editFilm(Request request){
+void RequestManager::editFilm(ali::Request request){
     vector<string> requirementField{FILM_ID};
     request.check(requirementField);
     if(userLoggined == NULL || userLoggined->isPublisher() == false)
@@ -157,7 +157,7 @@ Film* RequestManager::getFilm(int id){
     throw NotFound();
 }
 
-void RequestManager::deleteFilm(Request request){
+void RequestManager::deleteFilm(ali::Request request){
     vector<string> requirement{FILM_ID};
     request.check(requirement);
 
@@ -170,7 +170,7 @@ void RequestManager::deleteFilm(Request request){
     film->unusable();
 }
 
-void RequestManager::showFollowers(Request request){
+void RequestManager::showFollowers(ali::Request request){
     
     if(userLoggined == NULL)
         throw PermissionDenied();
@@ -178,7 +178,7 @@ void RequestManager::showFollowers(Request request){
     userLoggined->showFollower();
 }
 
-void RequestManager::post(Request request){
+void RequestManager::post(ali::Request request){
     if (request.getQuery() == "signup")
         this->signup(request);
     if(request.getQuery() == "login")
@@ -212,7 +212,7 @@ void RequestManager::post(Request request){
     cout<<"OK"<<endl;
 }
 
-void RequestManager::deleteMethod(Request request){
+void RequestManager::deleteMethod(ali::Request request){
     if(userLoggined == NULL)
         throw PermissionDenied();
 
@@ -223,7 +223,7 @@ void RequestManager::deleteMethod(Request request){
     cout<<"OK"<<endl;
 }
 
-void RequestManager::put(Request request){
+void RequestManager::put(ali::Request request){
     if(userLoggined == NULL)
         throw PermissionDenied();
 
@@ -232,7 +232,7 @@ void RequestManager::put(Request request){
     cout<<"OK"<<endl;
 }
 
-void RequestManager::getMethod(Request request){
+void RequestManager::getMethod(ali::Request request){
     if(userLoggined == NULL)
         throw PermissionDenied();
     if(request.getQuery() == "money")
@@ -251,7 +251,7 @@ void RequestManager::getMethod(Request request){
         return this->purchased(request);
 }
 
-void RequestManager::published(Request request){
+void RequestManager::published(ali::Request request){
     if(userLoggined->isPublisher() == false)
         throw PermissionDenied();
 
@@ -261,7 +261,7 @@ void RequestManager::published(Request request){
     userLoggined->find(name, minYear, minRate, price, maxYear, director);
 }
 
-void RequestManager::seprateSearchFromShowDetailFilm(Request request){
+void RequestManager::seprateSearchFromShowDetailFilm(ali::Request request){
     string filmId = request.get(FILM_ID, true);
 
     if(filmId.size() > 0){
@@ -271,7 +271,7 @@ void RequestManager::seprateSearchFromShowDetailFilm(Request request){
         this->searchFilm(request);
 }
 
-void RequestManager::searchFilm(Request request){
+void RequestManager::searchFilm(ali::Request request){
     int counter = 1;
 
     string name = request.get(NAME, true), minYear = request.get(MIN_YEAR, true);
@@ -288,7 +288,7 @@ void RequestManager::searchFilm(Request request){
 
 }
 
-void RequestManager::buyFilm(Request request){
+void RequestManager::buyFilm(ali::Request request){
     vector< string > requirementField{ FILM_ID };
     request.check(requirementField);
 
@@ -301,7 +301,7 @@ void RequestManager::buyFilm(Request request){
     
 }
 
-void RequestManager::rateFilm(Request request){
+void RequestManager::rateFilm(ali::Request request){
     vector< string > requiredFields{FILM_ID, SCORE};
     request.check(requiredFields);
 
@@ -313,7 +313,7 @@ void RequestManager::rateFilm(Request request){
     film->getAuthor()->sendNotification(userLoggined->createRateNotif(film));
 }
 
-void RequestManager::commentFilm(Request request){
+void RequestManager::commentFilm(ali::Request request){
     vector< string > requiredFieldS{FILM_ID, CONTENT};
     request.check(requiredFieldS);
 
@@ -326,14 +326,14 @@ void RequestManager::commentFilm(Request request){
     film->getAuthor()->sendNotification(userLoggined->createCommentNotif(film));
 }
 
-void RequestManager::increaseMoney(Request request){
+void RequestManager::increaseMoney(ali::Request request){
     vector< string > requiredFields {AMOUNT};
     request.check(requiredFields);
 
     userLoggined->increaseMoney(atoi(request.get(AMOUNT).c_str()));
 }
 
-void RequestManager::moneyHandler(Request request){
+void RequestManager::moneyHandler(ali::Request request){
     if(request.get(AMOUNT, true).size() == 0){
         int profit = userLoggined->getMoney();
         this->findUserName("admin")->increaseMoney(-profit);
@@ -342,7 +342,7 @@ void RequestManager::moneyHandler(Request request){
         this->increaseMoney(request);
 }
 
-void RequestManager::reply(Request request){
+void RequestManager::reply(ali::Request request){
     vector< string > requiredFields {FILM_ID, COMMENT_ID, CONTENT};
     request.check(requiredFields);
 
@@ -359,7 +359,7 @@ void RequestManager::reply(Request request){
     user->sendNotification(userLoggined->createReplyNotif());
 }
 
-void RequestManager::deleteComment(Request request){
+void RequestManager::deleteComment(ali::Request request){
     vector< string > requiredFields {FILM_ID, COMMENT_ID};
     request.check(requiredFields);
 
@@ -397,7 +397,7 @@ vector< Film* > RequestManager::topFilms(Film* film){
     return topFilm;
 }
 
-void RequestManager::follow(Request request){
+void RequestManager::follow(ali::Request request){
     vector< string > requiredFields{ USER_ID };
     request.check(requiredFields);
 
@@ -418,14 +418,14 @@ void RequestManager::showNotification(){
     userLoggined->showNotification();
 }
 
-void RequestManager::showLimitedNotification(Request request){
+void RequestManager::showLimitedNotification(ali::Request request){
     vector< string > requiredFields{ LIMIT };
     request.check(requiredFields);
 
     userLoggined->showLimitedNotification(atoi(request.get(LIMIT).c_str()));  
 }
 
-void RequestManager::purchased(Request request){
+void RequestManager::purchased(ali::Request request){
     string name = request.get(NAME, true), minYear = request.get(MIN_YEAR, true);
     string minRate = request.get(MIN_RATE, true), price = request.get(PRICE, true);
     string maxYear = request.get(MAX_YEAR, true), director = request.get(DIRECTOR, true);

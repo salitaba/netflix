@@ -8,7 +8,7 @@
 
 #include"Film.h"
 #include"User.h"
-// #include"Request.h"
+#include"Request.h"
 #include"GraphRep.h"
 
 class RequestManager{
@@ -16,37 +16,37 @@ public:
     RequestManager();
     void handle(std::string input);
     void split(std::string, std::vector<std::string>& elements);
-    void handleEvents(Request);
-    void signup(Request request);
+    void handleEvents(ali::Request);
+    void signup(ali::Request request);
     User* findUserName(std::string userName);
     int getUserId();
-    void login(Request request);
-    void postFilm(Request request);
+    void login(ali::Request request);
+    void postFilm(ali::Request request);
     int getFilmId();
-    void editFilm(Request request);
+    void editFilm(ali::Request request);
     Film* getFilm(int id);
-    void deleteFilm(Request request);
-    void showFollowers(Request request);
-    void post(Request request);
-    void deleteMethod(Request request);
-    void put(Request request);
-    void getMethod(Request request);
-    void published(Request request);
-    void searchFilm(Request request);
-    void seprateSearchFromShowDetailFilm(Request request);
-    void buyFilm(Request request);
-    void rateFilm(Request request);
-    void commentFilm(Request reqeust);
-    void increaseMoney(Request request);
-    void moneyHandler(Request request);
-    void reply(Request request);
-    void deleteComment(Request request);
+    void deleteFilm(ali::Request request);
+    void showFollowers(ali::Request request);
+    void post(ali::Request request);
+    void deleteMethod(ali::Request request);
+    void put(ali::Request request);
+    void getMethod(ali::Request request);
+    void published(ali::Request request);
+    void searchFilm(ali::Request request);
+    void seprateSearchFromShowDetailFilm(ali::Request request);
+    void buyFilm(ali::Request request);
+    void rateFilm(ali::Request request);
+    void commentFilm(ali::Request reqeust);
+    void increaseMoney(ali::Request request);
+    void moneyHandler(ali::Request request);
+    void reply(ali::Request request);
+    void deleteComment(ali::Request request);
     std::vector< Film* > topFilms(Film* film);
-    void follow(Request request);
+    void follow(ali::Request request);
     User* getUser(int id);
     void showNotification();
-    void showLimitedNotification(Request request);
-    void purchased(Request request);
+    void showLimitedNotification(ali::Request request);
+    void purchased(ali::Request request);
     void logout();
     void getMoney();
     void addAdjence(Film* film);

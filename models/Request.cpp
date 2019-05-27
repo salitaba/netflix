@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Request::Request(string request){
+ali::Request::Request(string request){
     queue<string> splitedRequest = this->split(request);
     method = splitedRequest.front();
     splitedRequest.pop();
@@ -18,7 +18,7 @@ Request::Request(string request){
     this->convertToMap(splitedRequest);
 }
 
-queue<string> Request::split(string input){
+queue<string> ali::Request::split(string input){
     queue<string>inputElement;
     int index = 0;
     while(index < input.size()){
@@ -34,15 +34,15 @@ queue<string> Request::split(string input){
     return inputElement;
 }
 
-string Request::getMethod(){
+string ali::Request::getMethod(){
     return method;
 }
 
-string Request::getQuery(){
+string ali::Request::getQuery(){
     return query;
 }
 
-void Request::convertToMap(queue<string> keyValue){
+void ali::Request::convertToMap(queue<string> keyValue){
     if(keyValue.size() % 2 == 1)
         throw BadRequest();
     while(keyValue.size() > 0){
@@ -53,7 +53,7 @@ void Request::convertToMap(queue<string> keyValue){
     }              
 }
 
-void Request::check(vector<string> requirementField){
+void ali::Request::check(vector<string> requirementField){
     for(auto field : requirementField)
         if(key[field].size() == 0){
             throw BadRequest();
@@ -61,13 +61,13 @@ void Request::check(vector<string> requirementField){
             
 }
 
-string Request::get(string _key, bool optional){
+string ali::Request::get(string _key, bool optional){
     if(optional == false && key[_key].size() == 0)
         throw BadRequest();
     return key[_key];
 }
 
-string Request::get(string _key, bool optional, string defaultValue){
+string ali::Request::get(string _key, bool optional, string defaultValue){
     if(optional == false && key[_key].size() == 0)
         throw BadRequest();
     if(key[_key].size() == 0)
