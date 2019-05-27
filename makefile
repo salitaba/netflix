@@ -1,28 +1,44 @@
-CC = g++ -std=c++11
+CC=g++
+STD=-std=c++11 -Wall -pedantic
+CF=$(STD)
+BUILD_DIR=build
+TEMPLATE_DIR=.template
 
-main: main.o Comment.o Film.o User.o Request.o RequestManager.o GraphRep.o
-	$(CC) main.o Comment.o User.o Request.o RequestManager.o Film.o GraphRep.o
+all: $(BUILD_DIR) myserver.out
 
-main.o : main.cpp
-	$(CC) -c main.cpp
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
-Comment.o : Comment.cpp Comment.h 
-	$(CC) -c Comment.cpp
+$(BUILD_DIR)/template_parser.o: utils/template_parser.cpp utils/template_parser.hpp utils/request.cpp utils/request.hpp utils/utilities.hpp utils/utilities.cpp
+	$(CC) $(CF) -c utils/template_parser.cpp -o $(BUILD_DIR)/template_parser.o
 
-Film.o : Film.cpp Film.h Comment.cpp Comment.h
-	$(CC) -c Film.cpp
+$(BUILD_DIR)/response.o: utils/response.cpp utils/response.hpp utils/include.hpp
+	$(CC) $(CF) -c utils/response.cpp -o $(BUILD_DIR)/response.o
 
-Request.o : Request.cpp Request.h 
-	$(CC) -c Request.cpp
+$(BUILD_DIR)/request.o: utils/request.cpp utils/request.hpp utils/include.hpp utils/utilities.hpp
+	$(CC) $(CF) -c utils/request.cpp -o $(BUILD_DIR)/request.o
 
-User.o : User.cpp User.h Comment.h Comment.cpp Film.h Film.cpp
-	$(CC) -c User.cpp
+$(BUILD_DIR)/utilities.o: utils/utilities.cpp utils/utilities.hpp
+	$(CC) $(CF) -c utils/utilities.cpp -o $(BUILD_DIR)/utilities.o
 
-RequestManager.o : RequestManager.cpp RequestManager.h User.h Film.h Request.h Comment.h GraphRep.h GraphRep.cpp
-	$(CC) -c RequestManager.cpp
+$(BUILD_DIR)/server.o: server/server.cpp server/server.hpp server/route.hpp utils/utilities.hpp utils/response.hpp utils/request.hpp utils/include.hpp utils/template_parser.hpp utils/template_parser.cpp
+	$(CC) $(CF) -c server/server.cpp -o $(BUILD_DIR)/server.o
 
-GraphRep.o : GraphRep.h GraphRep.cpp
-	$(CC) -c GraphRep.cpp
+$(BUILD_DIR)/route.o: server/route.cpp server/route.hpp utils/utilities.hpp utils/response.hpp utils/request.hpp utils/include.hpp
+	$(CC) $(CF) -c server/route.cpp -o $(BUILD_DIR)/route.o
 
-clean :
-	rm *.o
+$(BUILD_DIR)/handlers.o: examples/handlers.cpp server/server.hpp utils/utilities.hpp utils/response.hpp utils/request.hpp utils/include.hpp
+	$(CC) $(CF) -c examples/handlers.cpp -o $(BUILD_DIR)/handlers.o
+
+$(BUILD_DIR)/my_server.o: examples/my_server.cpp server/server.hpp utils/utilities.hpp utils/response.hpp utils/request.hpp utils/include.hpp
+	$(CC) $(CF) -c examples/my_server.cpp -o $(BUILD_DIR)/my_server.o
+
+$(BUILD_DIR)/main.o: examples/main.cpp server/server.hpp utils/utilities.hpp utils/response.hpp utils/request.hpp utils/include.hpp
+	$(CC) $(CF) -c examples/main.cpp -o $(BUILD_DIR)/main.o
+
+myserver.out: $(BUILD_DIR)/my_server.o $(BUILD_DIR)/main.o $(BUILD_DIR)/handlers.o $(BUILD_DIR)/response.o $(BUILD_DIR)/request.o $(BUILD_DIR)/utilities.o $(BUILD_DIR)/server.o $(BUILD_DIR)/route.o $(BUILD_DIR)/template_parser.o
+	$(CC) $(CF) $(BUILD_DIR)/my_server.o $(BUILD_DIR)/main.o $(BUILD_DIR)/handlers.o $(BUILD_DIR)/response.o $(BUILD_DIR)/request.o $(BUILD_DIR)/utilities.o $(BUILD_DIR)/server.o $(BUILD_DIR)/route.o $(BUILD_DIR)/template_parser.o  -o myserver.out
+
+.PHONY: clean
+clean:
+	rm -rf $(BUILD_DIR) $(TEMPLATE_DIR) *.o *.out &> /dev/null
