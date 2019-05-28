@@ -36,9 +36,32 @@ $(BUILD_DIR)/my_server.o: controler/my_server.cpp server/server.hpp utils/utilit
 $(BUILD_DIR)/main.o: main.cpp server/server.hpp utils/utilities.hpp utils/response.hpp utils/request.hpp utils/include.hpp
 	$(CC) $(CF) -c main.cpp -o $(BUILD_DIR)/main.o
 
-myserver.out: $(BUILD_DIR)/my_server.o $(BUILD_DIR)/main.o $(BUILD_DIR)/handlers.o $(BUILD_DIR)/response.o $(BUILD_DIR)/request.o $(BUILD_DIR)/utilities.o $(BUILD_DIR)/server.o $(BUILD_DIR)/route.o $(BUILD_DIR)/template_parser.o
-	$(CC) $(CF) $(BUILD_DIR)/my_server.o $(BUILD_DIR)/main.o $(BUILD_DIR)/handlers.o $(BUILD_DIR)/response.o $(BUILD_DIR)/request.o $(BUILD_DIR)/utilities.o $(BUILD_DIR)/server.o $(BUILD_DIR)/route.o $(BUILD_DIR)/template_parser.o  -o myserver.out
+myserver.out: $(BUILD_DIR)/my_server.o $(BUILD_DIR)/main.o $(BUILD_DIR)/handlers.o $(BUILD_DIR)/response.o $(BUILD_DIR)/request.o $(BUILD_DIR)/utilities.o $(BUILD_DIR)/server.o $(BUILD_DIR)/route.o $(BUILD_DIR)/template_parser.o  $(BUILD_DIR)/Comment.o $(BUILD_DIR)/User.o $(BUILD_DIR)/Request.o $(BUILD_DIR)/RequestManager.o $(BUILD_DIR)/Film.o $(BUILD_DIR)/GraphRep.o
+	$(CC) $(CF) $(BUILD_DIR)/my_server.o $(BUILD_DIR)/main.o $(BUILD_DIR)/handlers.o $(BUILD_DIR)/response.o $(BUILD_DIR)/request.o $(BUILD_DIR)/utilities.o $(BUILD_DIR)/server.o $(BUILD_DIR)/route.o $(BUILD_DIR)/template_parser.o $(BUILD_DIR)/Comment.o $(BUILD_DIR)/User.o $(BUILD_DIR)/Request.o $(BUILD_DIR)/RequestManager.o $(BUILD_DIR)/Film.o $(BUILD_DIR)/GraphRep.o -o myserver.out
 
 .PHONY: clean
 clean:
 	rm -rf $(BUILD_DIR) $(TEMPLATE_DIR) *.o *.out &> /dev/null
+	rm *.o
+
+
+
+CC = g++ -std=c++11
+
+$(BUILD_DIR)/Comment.o : models/Comment.cpp models/Comment.h 
+	$(CC) -c models/Comment.cpp -o $(BUILD_DIR)/Comment.o
+
+$(BUILD_DIR)/Film.o : models/Film.cpp models/Film.h models/Comment.cpp models/Comment.h
+	$(CC) -c models/Film.cpp -o $(BUILD_DIR)/Film.o
+
+$(BUILD_DIR)/Request.o : models/Request.cpp models/Request.h 
+	$(CC) -c models/Request.cpp -o $(BUILD_DIR)/Request.o
+
+$(BUILD_DIR)/User.o : models/User.cpp models/User.h models/Comment.h models/Comment.cpp models/Film.h models/Film.cpp
+	$(CC) -c models/User.cpp -o $(BUILD_DIR)/User.o
+
+$(BUILD_DIR)/RequestManager.o : models/RequestManager.cpp models/RequestManager.h models/User.h models/Film.h models/Request.h models/Comment.h models/GraphRep.h models/GraphRep.cpp
+	$(CC) -c models/RequestManager.cpp -o $(BUILD_DIR)/RequestManager.o
+
+$(BUILD_DIR)/GraphRep.o : models/GraphRep.h models/GraphRep.cpp
+	$(CC) -c models/GraphRep.cpp -o $(BUILD_DIR)/GraphRep.o

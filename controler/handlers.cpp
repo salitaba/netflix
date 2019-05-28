@@ -24,12 +24,19 @@ Response *RandomNumberHandler::callback(Request *req) {
   return res;
 }
 
+LoginHandler::LoginHandler(RequestManager *_requestManger) {
+  requestManager = _requestManger;
+}
+
 Response *LoginHandler::callback(Request *req) {
   string username = req->getBodyParam("username");
   string password = req->getBodyParam("password");
-  if (username == "root")
-    throw Server::Exception("Remote root access has been disabled.");
-  cout << "username: " << username << ",\tpassword: " << password << endl;
+  User *user = requestManager->findUserName(username);
+  if (user != NULL && user->isPassword(password)) {
+    Response *res = Response::redirect("/home");
+    res->setSessionId(username);
+    return res;
+  }
   Response *res = Response::redirect("/rand");
   res->setSessionId("SID");
   return res;

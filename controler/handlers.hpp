@@ -4,8 +4,8 @@
 #include <cstdlib>  // for rand and srand
 #include <ctime>    // for time
 #include <iostream>
+#include "../models/RequestManager.h"
 #include "../server/server.hpp"
-// #include "../models/RequestManager.h"
 
 class RandomNumberHandler : public RequestHandler {
  public:
@@ -14,7 +14,10 @@ class RandomNumberHandler : public RequestHandler {
 
 class LoginHandler : public RequestHandler {
  public:
+  LoginHandler(RequestManager *requestManager);
   Response *callback(Request *);
+ private:
+  RequestManager *requestManager;
 };
 
 class UploadHandler : public RequestHandler {
