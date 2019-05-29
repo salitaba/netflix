@@ -13,7 +13,8 @@ int main(int argc, char **argv) {
   try {
     MyServer server(argc > 1 ? atoi(argv[1]) : 5000);
     server.setNotFoundErrPage("static/404.html");
-    server.get("/login", new ShowPage("static/login.html"));
+    server.get("/login.html", new ShowPage("static/login.html")); 
+    server.get("/login", new LoginHandler(requestManager));
     server.post("/login", new LoginHandler(requestManager));
     server.get("/up", new ShowPage("static/upload_form.html"));
     server.post("/up", new UploadHandler());

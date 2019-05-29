@@ -4,6 +4,9 @@
 #include <cstdlib>  // for rand and srand
 #include <ctime>    // for time
 #include <iostream>
+#include <map>
+#include <set>
+#include <string>
 #include "../models/RequestManager.h"
 #include "../server/server.hpp"
 
@@ -16,9 +19,11 @@ class LoginHandler : public RequestHandler {
  public:
   LoginHandler(RequestManager *requestManager);
   Response *callback(Request *);
+  bool haveSesionId(std::string);
 
  private:
   RequestManager *requestManager;
+  std::set<std::string> sessionIds;
 };
 
 class UploadHandler : public RequestHandler {

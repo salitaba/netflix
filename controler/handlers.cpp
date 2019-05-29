@@ -29,6 +29,9 @@ LoginHandler::LoginHandler(RequestManager *_requestManger) {
 }
 
 Response *LoginHandler::callback(Request *req) {
+  if (this->haveSesionId(req->getSessionId()) == true)
+    return Response::redirect("/home");
+  if (req->getMethod() == Method::GET) return Response::redirect("/login.html");
   string username = req->getBodyParam("username");
   string password = req->getBodyParam("password");
   User *user = requestManager->findUserName(username);
@@ -39,6 +42,11 @@ Response *LoginHandler::callback(Request *req) {
   }
   Response *res = Response::redirect("/login");
   return res;
+}
+
+bool LoginHandler::haveSesionId(string s) {
+  if (sessionIds.find(s) != sessionIds.end()) return true;
+  return false;
 }
 
 Response *UploadHandler::callback(Request *req) {
@@ -70,7 +78,7 @@ Response *SignupHandler::callback(Request *req) {
   string email = req->getBodyParam("email");
   string password = req->getBodyParam("password");
   string publisher = req->getBodyParam("publisher");
-  // cout << "######" << publisher << endl;   
+  // cout << "######" << publisher << endl;
   // cout<<req->getHeadersString()<<endl;
   User *user = requestManager->findUserName(username);
   if (user != NULL) {
