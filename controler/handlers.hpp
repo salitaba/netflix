@@ -16,6 +16,7 @@ class LoginHandler : public RequestHandler {
  public:
   LoginHandler(RequestManager *requestManager);
   Response *callback(Request *);
+
  private:
   RequestManager *requestManager;
 };
@@ -29,6 +30,15 @@ class ColorHandler : public TemplateHandler {
  public:
   ColorHandler(std::string filePath);
   std::map<std::string, std::string> handle(Request *req);
+};
+
+class SignupHandler : public RequestHandler {
+ public:
+  SignupHandler(RequestManager *requestManager);
+  Response *callback(Request *);
+
+ private:
+  RequestManager *requestManager;
 };
 
 #endif

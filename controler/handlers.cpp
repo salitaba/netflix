@@ -37,8 +37,7 @@ Response *LoginHandler::callback(Request *req) {
     res->setSessionId(username);
     return res;
   }
-  Response *res = Response::redirect("/rand");
-  res->setSessionId("SID");
+  Response *res = Response::redirect("/login");
   return res;
 }
 
@@ -58,4 +57,29 @@ map<string, string> ColorHandler::handle(Request *req) {
   context["name"] = newName;
   context["color"] = req->getQueryParam("color");
   return context;
+}
+
+SignupHandler::SignupHandler(RequestManager *_requestManger) {
+  requestManager = _requestManger;
+}
+
+Response *SignupHandler::callback(Request *req) {
+  string username = req->getBodyParam("username");
+  string repeatPassword = req->getBodyParam("repeatPassword");
+  string age = req->getBodyParam("age");
+  string email = req->getBodyParam("email");
+  string password = req->getBodyParam("password");
+  string publisher = req->getBodyParam("publisher");
+  // cout << "######" << publisher << endl;   
+  // cout<<req->getHeadersString()<<endl;
+  User *user = requestManager->findUserName(username);
+  if (user != NULL) {
+    Response *res = Response::redirect("/signup");
+    res->setSessionId(username);
+    return res;
+  }
+  requestManager->handle(req);
+  Response *res = Response::redirect("/login");
+  res->setSessionId(username);
+  return res;
 }

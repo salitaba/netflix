@@ -10,11 +10,12 @@
 #include"User.h"
 #include"Request.h"
 #include"GraphRep.h"
+#include"../utils/request.hpp"
 
 class RequestManager{
 public:
     RequestManager();
-    void handle(std::string input);
+    void handle(Request *req);
     void split(std::string, std::vector<std::string>& elements);
     void handleEvents(ali::Request);
     void signup(ali::Request request);

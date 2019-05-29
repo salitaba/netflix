@@ -18,10 +18,8 @@ User::User(string _email, string _userName, string _password, int _age, int _id,
     password = this->hashCode(_password);
     age = _age;
     id = _id;
-    if(_publisher == "true")
+    if(_publisher == "on")
         publisher = true;
-    else if(_publisher != "false")
-        throw BadRequest();
 }
 
 void User::setPublisher(){

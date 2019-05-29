@@ -7,12 +7,13 @@
 #include <string>
 
 #include "Exception.h"
+#include "../utils/request.hpp"
 
 namespace ali {
 
 class Request {
  public:
-  Request(std::string);
+  Request(::Request *req);
   std::queue<std::string> split(std::string input);
   void convertToMap(std::queue<std::string> keyValue);
   std::string getMethod();
