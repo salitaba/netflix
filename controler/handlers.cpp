@@ -40,8 +40,7 @@ Response *LoginHandler::callback(Request *req) {
     res->setSessionId(username);
     return res;
   }
-  Response *res = Response::redirect("/login");
-  return res;
+  throw Server::Exception("username or password wrong!");
 }
 
 bool LoginHandler::haveSesionId(string s) {
@@ -78,16 +77,13 @@ Response *SignupHandler::callback(Request *req) {
   string email = req->getBodyParam("email");
   string password = req->getBodyParam("password");
   string publisher = req->getBodyParam("publisher");
-  // cout << "######" << publisher << endl;
-  // cout<<req->getHeadersString()<<endl;
   User *user = requestManager->findUserName(username);
-  if (user != NULL) {
-    Response *res = Response::redirect("/signup");
-    res->setSessionId(username);
-    return res;
-  }
+  if (user != NULL)
+    throw Server::Exception("username already exited!");
+  if(password != repeatPassword)
+    throw Server::Exception("password is not match repeat password!");
   requestManager->handle(req);
-  Response *res = Response::redirect("/login");
+  Response *res = Response::redirect("/home");
   res->setSessionId(username);
   return res;
 }
