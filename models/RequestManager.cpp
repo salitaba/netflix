@@ -34,7 +34,7 @@ void RequestManager::handle(Request* req) {
     ali::Request query(req);
     this->handleEvents(query);
   } catch (exception& e) {
-    cout << e.what() << endl;
+    Server::Exception(e.what());
   }
 }
 

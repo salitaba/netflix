@@ -11,6 +11,7 @@
 #include"Request.h"
 #include"GraphRep.h"
 #include"../utils/request.hpp"
+#include"../server/server.hpp"
 
 class RequestManager{
 public:

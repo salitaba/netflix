@@ -24,12 +24,14 @@ Response *RandomNumberHandler::callback(Request *req) {
   return res;
 }
 
-LoginHandler::LoginHandler(RequestManager *_requestManger) {
+LoginHandler::LoginHandler(RequestManager *_requestManger,
+                           Repository *_repository) {
   requestManager = _requestManger;
+  repository = _repository;
 }
 
 Response *LoginHandler::callback(Request *req) {
-  if (this->haveSesionId(req->getSessionId()) == true)
+  if (repository->haveSessionId(req->getSessionId()) == true)
     return Response::redirect("/home");
   if (req->getMethod() == Method::GET) return Response::redirect("/login.html");
   string username = req->getBodyParam("username");
@@ -37,15 +39,10 @@ Response *LoginHandler::callback(Request *req) {
   User *user = requestManager->findUserName(username);
   if (user != NULL && user->isPassword(password)) {
     Response *res = Response::redirect("/home");
-    res->setSessionId(username);
+    res->setSessionId(to_string(repository->getSessionId(username)));
     return res;
   }
   throw Server::Exception("username or password wrong!");
-}
-
-bool LoginHandler::haveSesionId(string s) {
-  if (sessionIds.find(s) != sessionIds.end()) return true;
-  return false;
 }
 
 Response *UploadHandler::callback(Request *req) {
@@ -66,8 +63,10 @@ map<string, string> ColorHandler::handle(Request *req) {
   return context;
 }
 
-SignupHandler::SignupHandler(RequestManager *_requestManger) {
+SignupHandler::SignupHandler(RequestManager *_requestManger,
+                             Repository *_repository) {
   requestManager = _requestManger;
+  repository = _repository;
 }
 
 Response *SignupHandler::callback(Request *req) {
@@ -78,12 +77,38 @@ Response *SignupHandler::callback(Request *req) {
   string password = req->getBodyParam("password");
   string publisher = req->getBodyParam("publisher");
   User *user = requestManager->findUserName(username);
-  if (user != NULL)
-    throw Server::Exception("username already exited!");
-  if(password != repeatPassword)
+  if (user != NULL) throw Server::Exception("username already exited!");
+  if (password != repeatPassword)
     throw Server::Exception("password is not match repeat password!");
+
   requestManager->handle(req);
   Response *res = Response::redirect("/home");
-  res->setSessionId(username);
+  int sessionId = repository->getSessionId(username);
+
+  res->setSessionId(to_string(sessionId));
+
   return res;
+}
+
+bool Repository::haveSessionId(string s) {
+  if (s.size() > 0 && idToUsername[s].size() > 0) return true;
+  return false;
+}
+
+int Repository::getSessionId(string username) {
+  if (username.size() > 0 && userLoggined.size() > 0 &&
+      userLoggined.find(username) != userLoggined.end())
+    return atoi(usernameToId[username].c_str());
+  counter++;
+  cout << "@@" << endl;
+  
+  userLoggined.insert(username);
+  cout << "@@" << endl;
+
+  idToUsername[to_string(counter)] = username;
+  cout << "@@" << endl;
+
+  usernameToId[username] = to_string(counter);
+  cout << "@@" << endl;  
+  return counter;
 }

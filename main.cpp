@@ -9,13 +9,14 @@ using namespace std;
 
 int main(int argc, char **argv) {
   RequestManager *requestManager = new RequestManager();
+  Repository *repository = new Repository();
   srand(time(NULL));  // for rand
   try {
     MyServer server(argc > 1 ? atoi(argv[1]) : 5000);
     server.setNotFoundErrPage("static/404.html");
     server.get("/login.html", new ShowPage("static/login.html")); 
-    server.get("/login", new LoginHandler(requestManager));
-    server.post("/login", new LoginHandler(requestManager));
+    server.get("/login", new LoginHandler(requestManager, repository));
+    server.post("/login", new LoginHandler(requestManager, repository));
     server.get("/up", new ShowPage("static/upload_form.html"));
     server.post("/up", new UploadHandler());
     server.get("/rand", new RandomNumberHandler());
@@ -28,7 +29,7 @@ int main(int argc, char **argv) {
     server.get("/include.js", new ShowPage("static/include.js"));
     server.get("/home", new ShowPage("static/home.png"));
     server.get("/signup", new ShowPage("static/sign_up.html"));
-    server.post("/signup", new SignupHandler(requestManager));
+    server.post("/signup", new SignupHandler(requestManager, repository));
     server.run();
   } catch (Server::Exception e) {
     cerr << e.getMessage() << endl;

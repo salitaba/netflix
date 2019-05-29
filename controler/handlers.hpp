@@ -10,6 +10,18 @@
 #include "../models/RequestManager.h"
 #include "../server/server.hpp"
 
+class Repository {
+ public:
+  bool haveSessionId(std::string);
+  int getSessionId(std::string);
+ private:
+  std::set<std::string> userLoggined;
+  std::map<std::string, std::string>idToUsername;
+  std::map<std::string, std::string>usernameToId;
+  int counter = 0;
+};
+
+
 class RandomNumberHandler : public RequestHandler {
  public:
   Response *callback(Request *);
@@ -17,13 +29,12 @@ class RandomNumberHandler : public RequestHandler {
 
 class LoginHandler : public RequestHandler {
  public:
-  LoginHandler(RequestManager *requestManager);
+  LoginHandler(RequestManager *requestManager, Repository *repository);
   Response *callback(Request *);
-  bool haveSesionId(std::string);
 
  private:
   RequestManager *requestManager;
-  std::set<std::string> sessionIds;
+  Repository *repository;
 };
 
 class UploadHandler : public RequestHandler {
@@ -39,11 +50,13 @@ class ColorHandler : public TemplateHandler {
 
 class SignupHandler : public RequestHandler {
  public:
-  SignupHandler(RequestManager *requestManager);
+  SignupHandler(RequestManager *requestManager, Repository *repository);
   Response *callback(Request *);
 
  private:
+  Repository *repository;
   RequestManager *requestManager;
 };
+
 
 #endif
