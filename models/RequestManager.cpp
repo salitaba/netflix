@@ -77,8 +77,10 @@ void RequestManager::signup(ali::Request request) {
 }
 
 User* RequestManager::findUserName(string userName) {
-  for (auto user : users)
-    if (user->isUserName(userName) != NULL) return user->isUserName(userName);
+  cout<<users.size()<<endl;
+  for (auto user : users){
+    if (user->isUserName(userName) != NULL) return user;
+  }
   return NULL;
 }
 

@@ -25,11 +25,13 @@ int main(int argc, char **argv) {
     server.get("/colors", new ColorHandler("template/colors.html"));
     server.get("/MUI.css", new ShowPage("static/MUI.css"));
     server.get("/nav.html", new ShowPage("static/nav.html"));
+    server.get("/nav_loggined.html", new ShowPage("static/nav_loggined.html"));
     server.get("/MUI.js", new ShowPage("static/MUI.js"));    
     server.get("/include.js", new ShowPage("static/include.js"));
-    server.get("/home", new ShowPage("static/home.png"));
+    server.get("/home", new HomeHandler(repository, requestManager));
     server.get("/signup", new ShowPage("static/sign_up.html"));
     server.post("/signup", new SignupHandler(requestManager, repository));
+    server.get("/bootstrap.css", new ShowPage("static/bootstrap.css"));
     server.run();
   } catch (Server::Exception e) {
     cerr << e.getMessage() << endl;

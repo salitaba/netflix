@@ -82,9 +82,11 @@ Response *SignupHandler::callback(Request *req) {
     throw Server::Exception("password is not match repeat password!");
 
   requestManager->handle(req);
+  User *userr = requestManager->findUserName(username);
+  userr->addFilm(new Film("ali", "1888", "2min", "2000", "the best book",
+                          "AliTaba", 1, userr));
   Response *res = Response::redirect("/home");
   int sessionId = repository->getSessionId(username);
-
   res->setSessionId(to_string(sessionId));
 
   return res;
@@ -100,15 +102,54 @@ int Repository::getSessionId(string username) {
       userLoggined.find(username) != userLoggined.end())
     return atoi(usernameToId[username].c_str());
   counter++;
-  cout << "@@" << endl;
-  
   userLoggined.insert(username);
-  cout << "@@" << endl;
-
   idToUsername[to_string(counter)] = username;
-  cout << "@@" << endl;
-
   usernameToId[username] = to_string(counter);
-  cout << "@@" << endl;  
   return counter;
+}
+
+string Repository::findUser(string sessionId) {
+  if (sessionId.size() > 0 && idToUsername[sessionId].size() > 0)
+    return idToUsername[sessionId];
+  return "";
+}
+
+HomeHandler::HomeHandler(Repository *_repository,
+                         RequestManager *_requestManger) {
+  repository = _repository;
+  requestManager = _requestManger;
+}
+
+Response *HomeHandler::callback(Request *req) {
+  string sessionId = req->getSessionId();
+  if (repository->haveSessionId(sessionId) == false)
+    throw Server::Exception("don't have loggined!");
+  User *user = requestManager->findUserName(repository->findUser(sessionId));
+  string body, s;
+  ifstream headerFile;
+  headerFile.open("template/home_header.html");
+  while (headerFile >> s) {
+    body += s + "\n";
+  }
+  if (user->isPublisher() == true) {
+    vector<Film *> films = user->find();
+    cout << "Film size : " << films.size() << endl;
+    int counter = 1;
+    for (auto film : films) {
+      cout << "is film Exite ?" << endl;
+      map<string, string> detail = film->getDetail();
+      body += "<tr>\n";
+      body += "<th scope=\"row\">" + to_string(counter) + "</th>\n";
+      body += "<td>" + detail["name"] + "</td>\n";
+      body += "<td>" + detail["length"] + "</td>\n";
+      body += "<td>" + detail["director"] + "</td>\n";
+      body += "</tr>\n";
+      counter++;
+    }
+  }
+  body += "</tbody>  </table> </body> </html>";
+  Response *res = new Response;
+  res->setBody(body);
+  res->setHeader("Content-Type", "text/html");
+  return res;
 }

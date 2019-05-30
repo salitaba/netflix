@@ -3,9 +3,11 @@
 
 #include <cstdlib>  // for rand and srand
 #include <ctime>    // for time
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <set>
+#include <sstream>
 #include <string>
 #include "../models/RequestManager.h"
 #include "../server/server.hpp"
@@ -14,13 +16,14 @@ class Repository {
  public:
   bool haveSessionId(std::string);
   int getSessionId(std::string);
+  std::string findUser(std::string sessionId);
+
  private:
   std::set<std::string> userLoggined;
-  std::map<std::string, std::string>idToUsername;
-  std::map<std::string, std::string>usernameToId;
+  std::map<std::string, std::string> idToUsername;
+  std::map<std::string, std::string> usernameToId;
   int counter = 0;
 };
-
 
 class RandomNumberHandler : public RequestHandler {
  public:
@@ -58,5 +61,14 @@ class SignupHandler : public RequestHandler {
   RequestManager *requestManager;
 };
 
+class HomeHandler : public RequestHandler {
+ public:
+  HomeHandler(Repository *, RequestManager *);
+  Response *callback(Request *req);
+
+ private:
+  Repository *repository;
+  RequestManager *requestManager;
+};
 
 #endif

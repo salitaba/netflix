@@ -50,13 +50,15 @@ void User::showFollower(){
     }
 }
 
-void User::find(string name,string minYear,string minRate,string price,string maxYear,string director){
+vector<Film*> User::find(string name,string minYear,string minRate,string price,string maxYear,string director){
     cout<<"#. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director"<<endl;
+    vector<Film*> answer;;
     int counter = 1; 
     for(auto film : films){
         if( film->find(name, minYear, minRate, price, maxYear, director) == true)
-            film->printDetail(counter), counter++;
+            film->printDetail(counter), counter++, answer.push_back(film);
     }
+    return answer;
 }
 
 void User::buy(Film* film){

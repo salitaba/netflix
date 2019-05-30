@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/bootstrap.css">
+    <link href="MUI.css" rel="stylesheet" type="text/css" />
+    <script src="MUI.js"></script>
+    <style>
+        .outer {
+            display: table;
+            position: absolute;
+            left: 0;
+            height: 80%;
+            width: 100%;
+        }
+        
+        .middle {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+
+<body>
+    <style>
+        .nav_bar>li>a {
+            color: white;
+            font-weight: bold;
+        }
+        
+        .nav_bar>li>a:hover {
+            background: rgba(0, 0, 0, 0.05)
+        }
+    </style>
+
+
+    <ul class="mui-tabs__bar nav_bar" style="background-color:#2196F3; height: 20%;">
+        <li><a href="/">Home</a></li>
+        <li><a href="/films">Films</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li style="float:right"><a href="/logout">Logout</a></li>
+        <li style="float:right"><a href="/login">Login</a></li>
+    </ul>
+
+    <table class="table table-hover shadow p-3 mb-5 bg-white rounded">
+        <thead>
+            <tr>
+                <th scope=" col ">film</th>
+                <th scope="col ">name</th>
+                <th scope="col ">length</th>
+                <th scope="col ">director</th>
+            </tr>
+        </thead>
+        <tbody>
