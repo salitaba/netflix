@@ -191,3 +191,7 @@ void User::sendNotificationForAllFollowers(){
 void User::showMoney(){
     cout << money << endl;
 }
+
+string User::getName(){
+    return userName;
+}

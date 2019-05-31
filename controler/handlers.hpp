@@ -14,9 +14,10 @@
 
 class Repository {
  public:
-  bool haveSessionId(std::string);
-  int getSessionId(std::string);
+  bool haveSessionId(std::string sessionId);
+  int getSessionId(std::string username);
   std::string findUser(std::string sessionId);
+  void logout(std::string sessionId);
 
  private:
   std::set<std::string> userLoggined;
@@ -67,6 +68,15 @@ class HomeHandler : public RequestHandler {
   Response *callback(Request *req);
 
  private:
+  Repository *repository;
+  RequestManager *requestManager;
+};
+
+class LogoutHandler : public RequestHandler{
+  public:
+    LogoutHandler(Repository *, RequestManager *);
+    Response *callback(Request *req);
+  private:
   Repository *repository;
   RequestManager *requestManager;
 };

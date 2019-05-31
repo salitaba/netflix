@@ -406,3 +406,9 @@ void RequestManager::addAdjence(Film* film) {
     if (film2 != film && userLoggined->isBuyed(film2))
       graph.add(film->getId(), film2->getId());
 }
+
+void RequestManager::setUser(string username){
+  User *user = this->findUserName(username);
+  if(user == NULL) throw NotFound();
+  userLoggined = user;
+}

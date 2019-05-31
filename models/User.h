@@ -44,6 +44,7 @@ class User {
   void addFilm(Film* film);
   void sendNotificationForAllFollowers();
   void showMoney();
+  std::string getName();
 
  private:
   std::string email, userName;

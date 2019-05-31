@@ -114,6 +114,13 @@ string Repository::findUser(string sessionId) {
   return "";
 }
 
+void Repository::logout(string sessionId) {
+  string username = idToUsername[sessionId];
+  idToUsername[sessionId] = "";
+  userLoggined.erase(username);
+  usernameToId[username] = "";
+}
+
 HomeHandler::HomeHandler(Repository *_repository,
                          RequestManager *_requestManger) {
   repository = _repository;
@@ -124,6 +131,7 @@ Response *HomeHandler::callback(Request *req) {
   string sessionId = req->getSessionId();
   if (repository->haveSessionId(sessionId) == false)
     throw Server::Exception("don't have loggined!");
+  requestManager->setUser(repository->findUser(sessionId));
   User *user = requestManager->findUserName(repository->findUser(sessionId));
   string body, s;
   ifstream headerFile;
@@ -138,18 +146,41 @@ Response *HomeHandler::callback(Request *req) {
     for (auto film : films) {
       cout << "is film Exite ?" << endl;
       map<string, string> detail = film->getDetail();
-      body += "<tr>\n";
-      body += "<th scope=\"row\">" + to_string(counter) + "</th>\n";
-      body += "<td>" + detail["name"] + "</td>\n";
-      body += "<td>" + detail["length"] + "</td>\n";
-      body += "<td>" + detail["director"] + "</td>\n";
+      body += "<tr class='clickable-row' data-href='logout'>\n";
+      body += "<th class='align-middle' scope=\"row\">" + to_string(counter) + "</th>\n";
+      body += "<td class='align-middle'>" + detail["name"] + "</td>\n";
+      body += "<td class='align-middle'>" + detail["price"] + " $</td>\n";
+      body += "<td class='align-middle'>" + detail["year"] + "</td>\n";
+      body += "<td class='align-middle'>" + detail["length"] + "</td>\n";
+      body += "<td class='align-middle'>" + detail["rate"] + "</td>\n";
+      body += "<td class='align-middle'>" + detail["director"] + "</td>\n";
+      body += "<td class='align-middle'> <a class='btn btn-primary' role='button' href='show_film?user=" + detail["username"] + "&film_id=" + detail["id"] + "'> Show film </a> </td>\n";
+      body += "<td class='align-middle'> <a class='btn btn-primary' role='button' href='delete_film?user=" + detail["username"] + "&film_id=" + detail["id"] + "'> Delete film </a> </td>\n";
       body += "</tr>\n";
       counter++;
     }
   }
-  body += "</tbody>  </table> </body> </html>";
+  body += "</tbody>  </table> </div> </body> </html>";
   Response *res = new Response;
   res->setBody(body);
   res->setHeader("Content-Type", "text/html");
   return res;
 }
+
+LogoutHandler::LogoutHandler(Repository *_repository,
+                             RequestManager *_requestManger) {
+  repository = _repository;
+  requestManager = _requestManger;
+}
+
+Response *LogoutHandler::callback(Request *req) {
+  string sessionId = req->getSessionId();
+  if (repository->haveSessionId(sessionId) == true) {
+    repository->logout(sessionId);
+  }
+  Response *res = Response::redirect("/login");
+  res->setSessionId("");
+  return res;
+  // requestManager->handle()
+}
+

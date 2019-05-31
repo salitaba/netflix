@@ -1,4 +1,5 @@
 #include "Film.h"
+#include "User.h"
 
 using namespace std;
 
@@ -126,5 +127,6 @@ map<string, string> Film::getDetail() {
     detail["rate"] = to_string(int(rate));
     detail["summary"] = summary;
     detail["director"] = director;
+    detail["username"] = aurtor->getName();
     return detail;
 }

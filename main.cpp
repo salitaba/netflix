@@ -32,6 +32,8 @@ int main(int argc, char **argv) {
     server.get("/signup", new ShowPage("static/sign_up.html"));
     server.post("/signup", new SignupHandler(requestManager, repository));
     server.get("/bootstrap.css", new ShowPage("static/bootstrap.css"));
+    server.get("/logout", new LogoutHandler(repository, requestManager));
+    server.get("/bootstrap.min.css.map", new ShowPage("static/bootstrap.min.css.map"));
     server.run();
   } catch (Server::Exception e) {
     cerr << e.getMessage() << endl;

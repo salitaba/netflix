@@ -52,6 +52,7 @@ public:
     void logout();
     void getMoney();
     void addAdjence(Film* film);
+    void setUser(std::string username);
 private:
     User *userLoggined = NULL;
     std::vector<Film*> films;
