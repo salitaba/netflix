@@ -81,4 +81,14 @@ class LogoutHandler : public RequestHandler{
   RequestManager *requestManager;
 };
 
+class DeleteFilmHandler : public RequestHandler {
+ public:
+  DeleteFilmHandler(Repository *repository, RequestManager *requestManager);
+  Response *callback(Request *);
+
+ private:
+  RequestManager *requestManager;
+  Repository *repository;
+};
+
 #endif

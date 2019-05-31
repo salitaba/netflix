@@ -82,13 +82,19 @@ Response *SignupHandler::callback(Request *req) {
     throw Server::Exception("password is not match repeat password!");
 
   requestManager->handle(req);
-  User *userr = requestManager->findUserName(username);
-  userr->addFilm(new Film("ali", "1888", "2min", "2000", "the best book",
-                          "AliTaba", 1, userr));
+  Request addFilm("POST");
+  addFilm.setQuery("?film_id=1&name=ali&year=1888&length=20&director=AliTaba&summary=the_best_book&price=2000&");
+  addFilm.setPath("/films");
+  requestManager->handle(&addFilm);
+  
+  // User *userr = requestManager->findUserName(username);
+  // userr->addFilm(new Film("ali", "1888", "2min", "2000", "the best book",
+  //                         "AliTaba", 1, userr));
+
+
   Response *res = Response::redirect("/home");
   int sessionId = repository->getSessionId(username);
   res->setSessionId(to_string(sessionId));
-
   return res;
 }
 
@@ -155,7 +161,7 @@ Response *HomeHandler::callback(Request *req) {
       body += "<td class='align-middle'>" + detail["rate"] + "</td>\n";
       body += "<td class='align-middle'>" + detail["director"] + "</td>\n";
       body += "<td class='align-middle'> <a class='btn btn-primary' role='button' href='show_film?user=" + detail["username"] + "&film_id=" + detail["id"] + "'> Show film </a> </td>\n";
-      body += "<td class='align-middle'> <a class='btn btn-primary' role='button' href='delete_film?user=" + detail["username"] + "&film_id=" + detail["id"] + "'> Delete film </a> </td>\n";
+      body += "<td class='align-middle'> <a class='btn btn-primary' role='button' href='delete_films?user=" + detail["username"] + "&film_id=" + detail["id"] + "'> Delete film </a> </td>\n";
       body += "</tr>\n";
       counter++;
     }
@@ -181,6 +187,19 @@ Response *LogoutHandler::callback(Request *req) {
   Response *res = Response::redirect("/login");
   res->setSessionId("");
   return res;
-  // requestManager->handle()
 }
 
+DeleteFilmHandler::DeleteFilmHandler(Repository *_repository, RequestManager *_requestManager){
+  repository = _repository;
+  requestManager = _requestManager;
+}
+
+Response *DeleteFilmHandler::callback(Request *req) {
+  string sessionId = req->getSessionId();
+  if(repository->haveSessionId(sessionId) == false) {
+    throw Server::Exception("you are not loggin!");
+  }
+  requestManager->handle(req);
+  Response *res = Response::redirect("/home");
+  return res;
+}

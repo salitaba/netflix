@@ -34,7 +34,7 @@ void RequestManager::handle(Request* req) {
     ali::Request query(req);
     this->handleEvents(query);
   } catch (exception& e) {
-    Server::Exception(e.what());
+    cerr<<e.what();
   }
 }
 
@@ -77,8 +77,8 @@ void RequestManager::signup(ali::Request request) {
 }
 
 User* RequestManager::findUserName(string userName) {
-  cout<<users.size()<<endl;
-  for (auto user : users){
+  cout << users.size() << endl;
+  for (auto user : users) {
     if (user->isUserName(userName) != NULL) return user;
   }
   return NULL;
@@ -157,9 +157,12 @@ void RequestManager::deleteFilm(ali::Request request) {
     throw PermissionDenied();
 
   int id = atoi(request.get(FILM_ID).c_str());
+  cout << "* FILM ID : " << id << endl;
+  // cout << films[0]->isUsable() << endl;
   Film* film = this->getFilm(id);
-
+  cout<< "FILM DELETED" << endl;
   film->unusable();
+  cout << "FILM IS USABLE? : " << film->isUsable() << endl;
 }
 
 void RequestManager::showFollowers(ali::Request request) {
@@ -174,7 +177,6 @@ void RequestManager::post(ali::Request request) {
 
   if (userLoggined == NULL) throw PermissionDenied();
   if (request.getQuery() == "logout") this->logout();
-  if (request.getQuery() == "delete_films") this->deleteFilm(request);
   if (request.getQuery() == "delete_comments") this->deleteComment(request);
   if (request.getQuery() == "put_films") this->editFilm(request);
   if (request.getQuery() == "followers") this->follow(request);
@@ -205,6 +207,7 @@ void RequestManager::put(ali::Request request) {
 
 void RequestManager::getMethod(ali::Request request) {
   if (userLoggined == NULL) throw PermissionDenied();
+  if (request.getQuery() == "delete_films") this->deleteFilm(request);
   if (request.getQuery() == "money") return this->getMoney();
   if (request.getQuery() == "followers") return this->showFollowers(request);
   if (request.getQuery() == "published") return this->published(request);
@@ -407,8 +410,8 @@ void RequestManager::addAdjence(Film* film) {
       graph.add(film->getId(), film2->getId());
 }
 
-void RequestManager::setUser(string username){
-  User *user = this->findUserName(username);
-  if(user == NULL) throw NotFound();
+void RequestManager::setUser(string username) {
+  User* user = this->findUserName(username);
+  if (user == NULL) throw NotFound();
   userLoggined = user;
 }

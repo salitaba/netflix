@@ -3,17 +3,15 @@
 using namespace std;
 
 ali::Request::Request(::Request *request) {
-	if(request->getMethod() == Method::POST)
-		method = "POST";
-	else
-		method = "GET";
+  if (request->getMethod() == Method::POST)
+    method = "POST";
+  else
+    method = "GET";
   query = request->getPath();
   query = query.substr(1);
-  //   cout << "$$$$ : " << query << endl;
-  queue<string> splitedRequest = this->split(request->getBody());
-  //   cout << request->getBody() << endl;
+  string queries = request->getBody() + request->getQueryString();
+  queue<string> splitedRequest = this->split(queries);
   if (splitedRequest.size() == 0) return;
-  //   cout << splitedRequest.size() << endl;
   this->convertToMap(splitedRequest);
 }
 
@@ -23,7 +21,7 @@ queue<string> ali::Request::split(string input) {
   while (index < input.size()) {
     string now = "";
     while (index < input.size() && input[index] != ' ' && input[index] != '=' &&
-           input[index] != '&') {
+           input[index] != '&' && input[index] != '?') {
       now += input[index];
       index++;
     }
@@ -44,10 +42,11 @@ void ali::Request::convertToMap(queue<string> keyValue) {
   while (keyValue.size() > 0) {
     string keyy = keyValue.front();
     keyValue.pop();
+    cout << "KEY " << keyy << " KEY SIZE "<< keyy.size() << endl;
     key[keyy] = keyValue.front();
+    cout << "VALUE " << key[keyy] << " VALUE SIZE "<< key[keyy].size() << endl;
     keyValue.pop();
   }
-  //   cout<<"OK"<<endl;
 }
 
 void ali::Request::check(vector<string> requirementField) {
