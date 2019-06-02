@@ -160,7 +160,7 @@ Response *HomeHandler::callback(Request *req) {
       body += "<td class='align-middle'>" + detail["length"] + "</td>\n";
       body += "<td class='align-middle'>" + detail["rate"] + "</td>\n";
       body += "<td class='align-middle'>" + detail["director"] + "</td>\n";
-      body += "<td class='align-middle'> <a class='btn btn-primary' role='button' href='show_film?user=" + detail["username"] + "&film_id=" + detail["id"] + "'> Show film </a> </td>\n";
+      body += "<td class='align-middle'> <a class='btn btn-primary' role='button' href='films?film_id=" + detail["id"] + "'> Show film </a> </td>\n";
       body += "<td class='align-middle'> <a class='btn btn-primary' role='button' href='delete_films?user=" + detail["username"] + "&film_id=" + detail["id"] + "'> Delete film </a> </td>\n";
       body += "</tr>\n";
       counter++;
@@ -199,7 +199,31 @@ Response *DeleteFilmHandler::callback(Request *req) {
   if(repository->haveSessionId(sessionId) == false) {
     throw Server::Exception("you are not loggin!");
   }
+  string username = repository->findUser(sessionId);
+  requestManager->setUser(username);
   requestManager->handle(req);
   Response *res = Response::redirect("/home");
+  return res;
+}
+
+ShowFilmsHandler::ShowFilmsHandler(Repository *_repository, RequestManager *_requestManager){
+  repository = _repository;
+  requestManager = _requestManager;
+}
+
+Response *ShowFilmsHandler::callback(Request *req) {
+  string sessionId = req->getSessionId();
+  if(repository->haveSessionId(sessionId) == false) {
+    throw Server::Exception("you are not loggin!");
+  }
+  string username = repository->findUser(sessionId);
+  requestManager->setUser(username);
+  Response *res = new Response;
+  int filmId = atoi(req->getQueryParam("film_id").c_str());
+  Film *film = requestManager->getFilm(filmId);
+  vector<Film*> topFilms = requestManager->topFilms(film);
+  map<string,string> filmDetail = film->getDetail();
+  res->setBody(filmDetail["name"]);
+  res->setHeader("Content-Type", "text/html");
   return res;
 }

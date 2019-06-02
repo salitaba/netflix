@@ -72,11 +72,12 @@ class HomeHandler : public RequestHandler {
   RequestManager *requestManager;
 };
 
-class LogoutHandler : public RequestHandler{
-  public:
-    LogoutHandler(Repository *, RequestManager *);
-    Response *callback(Request *req);
-  private:
+class LogoutHandler : public RequestHandler {
+ public:
+  LogoutHandler(Repository *, RequestManager *);
+  Response *callback(Request *req);
+
+ private:
   Repository *repository;
   RequestManager *requestManager;
 };
@@ -84,6 +85,16 @@ class LogoutHandler : public RequestHandler{
 class DeleteFilmHandler : public RequestHandler {
  public:
   DeleteFilmHandler(Repository *repository, RequestManager *requestManager);
+  Response *callback(Request *);
+
+ private:
+  RequestManager *requestManager;
+  Repository *repository;
+};
+
+class ShowFilmsHandler : public RequestHandler {
+ public:
+  ShowFilmsHandler(Repository *repository, RequestManager *requestManager);
   Response *callback(Request *);
 
  private:
