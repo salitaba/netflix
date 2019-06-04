@@ -287,17 +287,21 @@ Response *ShowFilmsHandler::callback(Request *req) {
     //               <p class="card-text">length : 20 min </p>
     //               <p class="card-text">rate : 8/10</p>
     map<string, string> filmDetail = film->getDetail();
-    body += " <div class=\"card\" style=\"border: none;\">\n";
+    body += " <div class=\"card text-center\" style=\"border: none;\">\n";
     body += "<div class=\"card-body\" \n>";
     body +=
         "<div class=\"container shadow p-3 mb-5 bg-white rounded\" "
         "style=\"margin-top: 30px;\"> \n";
-    body += "<h5 class=\"card-title\">" + filmDetail["name"] + "</h5> \n";
+    body += "<h3 class=\"card-title\">" + filmDetail["name"] + "</h5> \n";
     body += "<p class=\"card-text\">Length : " + filmDetail["length"] +
             " min </p> \n";
     body += "<p class=\"card-text\">Director : " + filmDetail["director"] +
             "</p> \n";
     body += "<p class=\"card-text\">Rate : " + filmDetail["rate"] + "</p> \n";
+    body +=
+        "<a class='btn btn-primary' role='button' "
+        "href='films?film_id=" +
+        filmDetail["id"] + "'> Show film </a>\n";
     body += "</div> </div> </div> \n";
   }
   body += "</div> </div> </body> </html>";
