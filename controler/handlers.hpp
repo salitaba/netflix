@@ -12,6 +12,11 @@
 #include "../models/RequestManager.h"
 #include "../server/server.hpp"
 
+class HTML{
+  public:
+    std::string static getP(std::string content, std::string stlye = "") ;
+};
+
 class Repository {
  public:
   bool haveSessionId(std::string sessionId);

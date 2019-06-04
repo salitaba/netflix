@@ -2,6 +2,10 @@
 
 using namespace std;
 
+string HTML::getP(string content, string style) {
+  return "<p style=\"" + style + "\">" + content + "</p> \n";
+}
+
 Response *RandomNumberHandler::callback(Request *req) {
   Response *res = new Response;
   res->setHeader("Content-Type", "text/html");
@@ -83,14 +87,35 @@ Response *SignupHandler::callback(Request *req) {
 
   requestManager->handle(req);
   Request addFilm("POST");
-  addFilm.setQuery("?film_id=1&name=ali&year=1888&length=20&director=AliTaba&summary=the_best_book&price=2000&");
+  addFilm.setQuery(
+      "?film_id=1&name=ali&year=1888&length=20&director=AliTaba&summary=the_"
+      "best_book&price=2000&");
   addFilm.setPath("/films");
   requestManager->handle(&addFilm);
-  
+  addFilm.setQuery(
+      "?film_id=2&name=ali&year=1888&length=20&director=AliTaba&summary=the_"
+      "best_book&price=2000&");
+  addFilm.setPath("/films");
+  requestManager->handle(&addFilm);
+  addFilm.setQuery(
+      "?film_id=3&name=ali&year=1888&length=20&director=AliTaba&summary=the_"
+      "best_book&price=2000&");
+  addFilm.setPath("/films");
+  requestManager->handle(&addFilm);
+  addFilm.setQuery(
+      "?film_id=4&name=ali&year=1888&length=20&director=AliTaba&summary=the_"
+      "best_book&price=2000&");
+  addFilm.setPath("/films");
+  requestManager->handle(&addFilm);
+  addFilm.setQuery(
+      "?film_id=5&name=ali&year=1888&length=20&director=AliTaba&summary=the_"
+      "best_book&price=2000&");
+  addFilm.setPath("/films");
+  requestManager->handle(&addFilm);
+
   // User *userr = requestManager->findUserName(username);
   // userr->addFilm(new Film("ali", "1888", "2min", "2000", "the best book",
   //                         "AliTaba", 1, userr));
-
 
   Response *res = Response::redirect("/home");
   int sessionId = repository->getSessionId(username);
@@ -153,15 +178,23 @@ Response *HomeHandler::callback(Request *req) {
       cout << "is film Exite ?" << endl;
       map<string, string> detail = film->getDetail();
       body += "<tr class='clickable-row' data-href='logout'>\n";
-      body += "<th class='align-middle' scope=\"row\">" + to_string(counter) + "</th>\n";
+      body += "<th class='align-middle' scope=\"row\">" + to_string(counter) +
+              "</th>\n";
       body += "<td class='align-middle'>" + detail["name"] + "</td>\n";
       body += "<td class='align-middle'>" + detail["price"] + " $</td>\n";
       body += "<td class='align-middle'>" + detail["year"] + "</td>\n";
       body += "<td class='align-middle'>" + detail["length"] + "</td>\n";
       body += "<td class='align-middle'>" + detail["rate"] + "</td>\n";
       body += "<td class='align-middle'>" + detail["director"] + "</td>\n";
-      body += "<td class='align-middle'> <a class='btn btn-primary' role='button' href='films?film_id=" + detail["id"] + "'> Show film </a> </td>\n";
-      body += "<td class='align-middle'> <a class='btn btn-primary' role='button' href='delete_films?user=" + detail["username"] + "&film_id=" + detail["id"] + "'> Delete film </a> </td>\n";
+      body +=
+          "<td class='align-middle'> <a class='btn btn-primary' role='button' "
+          "href='films?film_id=" +
+          detail["id"] + "'> Show film </a> </td>\n";
+      body +=
+          "<td class='align-middle'> <a class='btn btn-primary' role='button' "
+          "href='delete_films?user=" +
+          detail["username"] + "&film_id=" + detail["id"] +
+          "'> Delete film </a> </td>\n";
       body += "</tr>\n";
       counter++;
     }
@@ -189,14 +222,15 @@ Response *LogoutHandler::callback(Request *req) {
   return res;
 }
 
-DeleteFilmHandler::DeleteFilmHandler(Repository *_repository, RequestManager *_requestManager){
+DeleteFilmHandler::DeleteFilmHandler(Repository *_repository,
+                                     RequestManager *_requestManager) {
   repository = _repository;
   requestManager = _requestManager;
 }
 
 Response *DeleteFilmHandler::callback(Request *req) {
   string sessionId = req->getSessionId();
-  if(repository->haveSessionId(sessionId) == false) {
+  if (repository->haveSessionId(sessionId) == false) {
     throw Server::Exception("you are not loggin!");
   }
   string username = repository->findUser(sessionId);
@@ -206,24 +240,69 @@ Response *DeleteFilmHandler::callback(Request *req) {
   return res;
 }
 
-ShowFilmsHandler::ShowFilmsHandler(Repository *_repository, RequestManager *_requestManager){
+ShowFilmsHandler::ShowFilmsHandler(Repository *_repository,
+                                   RequestManager *_requestManager) {
   repository = _repository;
   requestManager = _requestManager;
 }
 
 Response *ShowFilmsHandler::callback(Request *req) {
   string sessionId = req->getSessionId();
-  if(repository->haveSessionId(sessionId) == false) {
+  if (repository->haveSessionId(sessionId) == false) {
     throw Server::Exception("you are not loggin!");
   }
   string username = repository->findUser(sessionId);
   requestManager->setUser(username);
-  Response *res = new Response;
   int filmId = atoi(req->getQueryParam("film_id").c_str());
   Film *film = requestManager->getFilm(filmId);
-  vector<Film*> topFilms = requestManager->topFilms(film);
-  map<string,string> filmDetail = film->getDetail();
-  res->setBody(filmDetail["name"]);
+  vector<Film *> topFilms = requestManager->topFilms(film);
+  map<string, string> filmDetail = film->getDetail();
+
+  string body, s;
+  ifstream headerFile;
+  headerFile.open("template/film_header.html");
+  while (headerFile >> s) {
+    body += s + "\n";
+  }
+  body += HTML::getP(filmDetail["name"],
+                     "text-align: center; font-weight: bold; font-size: 2em; "
+                     "background-color: rgb(216, 216, 216);");
+  body += HTML::getP("Lenght : " + filmDetail["length"] + " min");
+  body += HTML::getP("Price : " + filmDetail["price"] + "$");
+  body += HTML::getP("Rate : " + filmDetail["rate"]);
+  body += HTML::getP("Published date : " + filmDetail["year"]);
+  body += HTML::getP("Director : " + filmDetail["director"]);
+  body += HTML::getP("Summary : " + filmDetail["summary"]);
+  body += "</div>";
+  body +=
+      "<div class=\"container\" style=\"margin-top: 30px;\"> \n<div "
+      "class=\"card-deck\"> \n";
+
+  for (auto film : topFilms) {
+    //   <div class="card-deck">
+    //       <div class="card">
+    //           <div class="card-body">
+    //               <h5 class="card-title">Ant Man</h5>
+    //               <p class="card-text">director : ali</p>
+    //               <p class="card-text">length : 20 min </p>
+    //               <p class="card-text">rate : 8/10</p>
+    map<string, string> filmDetail = film->getDetail();
+    body += " <div class=\"card\" style=\"border: none;\">\n";
+    body += "<div class=\"card-body\" \n>";
+    body +=
+        "<div class=\"container shadow p-3 mb-5 bg-white rounded\" "
+        "style=\"margin-top: 30px;\"> \n";
+    body += "<h5 class=\"card-title\">" + filmDetail["name"] + "</h5> \n";
+    body += "<p class=\"card-text\">Length : " + filmDetail["length"] +
+            " min </p> \n";
+    body += "<p class=\"card-text\">Director : " + filmDetail["director"] +
+            "</p> \n";
+    body += "<p class=\"card-text\">Rate : " + filmDetail["rate"] + "</p> \n";
+    body += "</div> </div> </div> \n";
+  }
+  body += "</div> </div> </body> </html>";
+  Response *res = new Response;
+  res->setBody(body);
   res->setHeader("Content-Type", "text/html");
   return res;
 }
