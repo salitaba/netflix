@@ -34,7 +34,7 @@ public:
     void put(ali::Request request);
     void getMethod(ali::Request request);
     void published(ali::Request request);
-    void searchFilm(ali::Request request);
+    std::vector<Film*> searchFilm(ali::Request request);
     void seprateSearchFromShowDetailFilm(ali::Request request);
     void buyFilm(ali::Request request);
     void rateFilm(ali::Request request);

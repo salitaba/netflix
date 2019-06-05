@@ -117,5 +117,15 @@ class PostFilmsHandler : public RequestHandler {
   Repository *repository;
 };
 
+class SearchHandler : public RequestHandler {
+ public:
+  SearchHandler(Repository *repository, RequestManager *requestManager);
+  Response *callback(Request *);
+
+ private:
+  RequestManager *requestManager;
+  Repository *repository;
+};
+
 
 #endif

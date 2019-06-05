@@ -240,9 +240,9 @@ void RequestManager::seprateSearchFromShowDetailFilm(ali::Request request) {
     this->searchFilm(request);
 }
 
-void RequestManager::searchFilm(ali::Request request) {
+vector<Film*> RequestManager::searchFilm(ali::Request request) {
   int counter = 1;
-
+  vector<Film*> answer;
   string name = request.get(NAME, true), minYear = request.get(MIN_YEAR, true);
   string minRate = request.get(MIN_RATE, true),
          price = request.get(PRICE, true);
@@ -254,8 +254,11 @@ void RequestManager::searchFilm(ali::Request request) {
        << endl;
 
   for (auto film : films)
-    if (film->find(name, minYear, minRate, price, maxYear, director))
+    if (film->find(name, minYear, minRate, price, maxYear, director)){
       film->printDetail(counter), counter++;
+      answer.push_back(film);
+    }
+  return answer;
 }
 
 void RequestManager::buyFilm(ali::Request request) {

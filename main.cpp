@@ -37,8 +37,10 @@ int main(int argc, char **argv) {
     server.get("/delete_films", new DeleteFilmHandler(repository, requestManager));
     server.get("/films", new ShowFilmsHandler(repository, requestManager));
     server.get("/post_film", new ShowPage("static/post_film.html"));
-    server.post("/post_film", new PostFilmsHandler(repository, requestManager));
-    server.get("/test", new ShowPage("template/film_header.html"));
+    server.post("/films", new PostFilmsHandler(repository, requestManager));
+    server.get("/test", new ShowPage("template/test.html"));
+    server.get("/your_film_search", new SearchHandler(repository, requestManager));
+    server.get("/all_film_search", new SearchHandler(repository, requestManager));
     server.run();
   } catch (Server::Exception e) {
     cerr << e.getMessage() << endl;

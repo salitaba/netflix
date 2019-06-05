@@ -93,22 +93,22 @@ Response *SignupHandler::callback(Request *req) {
   addFilm.setPath("/films");
   requestManager->handle(&addFilm);
   addFilm.setQuery(
-      "?film_id=2&name=ali&year=1888&length=20&director=AliTaba&summary=the_"
+      "?film_id=2&name=ali&year=1888&length=20&director=Ali&summary=the_"
       "best_book&price=2000&");
   addFilm.setPath("/films");
   requestManager->handle(&addFilm);
   addFilm.setQuery(
-      "?film_id=3&name=ali&year=1888&length=20&director=AliTaba&summary=the_"
+      "?film_id=3&name=ali&year=1888&length=20&director=Taba&summary=the_"
       "best_book&price=2000&");
   addFilm.setPath("/films");
   requestManager->handle(&addFilm);
   addFilm.setQuery(
-      "?film_id=4&name=ali&year=1888&length=20&director=AliTaba&summary=the_"
+      "?film_id=4&name=ali&year=1888&length=20&director=hickKas&summary=the_"
       "best_book&price=2000&");
   addFilm.setPath("/films");
   requestManager->handle(&addFilm);
   addFilm.setQuery(
-      "?film_id=5&name=ali&year=1888&length=20&director=AliTaba&summary=the_"
+      "?film_id=5&name=ali&year=1888&length=20&director=me&summary=the_"
       "best_book&price=2000&");
   addFilm.setPath("/films");
   requestManager->handle(&addFilm);
@@ -171,9 +171,46 @@ Response *HomeHandler::callback(Request *req) {
     body += s + "\n";
   }
   if (user->isPublisher() == true) {
-    vector<Film *> films = user->find();
+    string director = "";
+    if (req->getQueryParam("your_films") == "yes")
+      director = req->getQueryParam("director");
+    vector<Film *> films = user->find("", "", "", "", "", director);
     cout << "Film size : " << films.size() << endl;
     int counter = 1;
+    body +=
+        "<div class='container shadow p-3 mb-5 bg-white rounded' "
+        "style='margin-top: 30px;'> \n"
+        "<div class='row justify-content-between'"
+        "style=' color:#007bff;'>"
+        "<div class='col-4' style='font-weight: bold; font-size: 2em; "
+        "text-align: left;'>"
+        "Your Films!"
+        "</div>"
+        "<div class='col-6'>"
+        "<form class='form-inline my-2 my-lg-0' style='float:right;' "
+        "action='your_film_search'>"
+        "<input class='form-control mr-sm-2' type='search' "
+        "placeholder='Search Director' name='director' aria-label='Search'>"
+        "<button class='btn btn-outline-success my-2 my-sm-0' "
+        "type='submit'>Search</button>"
+        "</form>"
+        "</div>"
+        "</div>"
+        "<table class='table table-hover' style='text-align: center;'>\n"
+        "<thead>\n"
+        "<tr>\n"
+        "<th scope='col '>film</th>\n"
+        "<th scope='col '>name</th>\n"
+        "<th scope='col '>price</th>\n"
+        "<th scope='col '>published date</th>\n"
+        "<th scope='col '>length</th>\n"
+        "<th scope='col '>rate</th>\n"
+        "<th scope='col '>director</th>\n"
+        "<th scope='col '>link</th>\n"
+        "<th scope='col '>delete</th>\n"
+        "</tr>\n"
+        "</thead>\n"
+        "<tbody>\n";
     for (auto film : films) {
       cout << "is film Exite ?" << endl;
       map<string, string> detail = film->getDetail();
@@ -200,13 +237,73 @@ Response *HomeHandler::callback(Request *req) {
       body += "</tr>\n";
       counter++;
     }
+    body += "</tbody>  </table>";
+    body +=
+        "<a class='btn btn-outline-primary' style='margin:auto; width:100%;' "
+        "href='post_film' role='button'>Add Film</a> \n";
+    body += "</div> </body> </html>";
+  }
+
+  if (req->getQueryParam("your_films") == "yes")
+    req->setQueryParam("director", "");
+  vector<Film *> films = requestManager->searchFilm(ali::Request(req));
+  cout << "Film size : " << films.size() << endl;
+  int counter = 1;
+  body +=
+      "<div class='container shadow p-3 mb-5 bg-white rounded' "
+      "style='margin-top: 30px;'> \n"
+      "<div class='row justify-content-between'"
+      "style=' color:#007bff;'>"
+      "<div class='col-4' style='font-weight: bold; font-size: 2em; "
+      "text-align: left;'>"
+      "Films in Site"
+      "</div>"
+      "<div class='col-6'>"
+      "<form class='form-inline my-2 my-lg-0' style='float:right;' "
+      "action='all_film_search'>"
+      "<input class='form-control mr-sm-2' type='search' "
+      "placeholder='Search Director' name='director' aria-label='Search'>"
+      "<button class='btn btn-outline-success my-2 my-sm-0' "
+      "type='submit'>Search</button>"
+      "</form>"
+      "</div>"
+      "</div>"
+      "<table class='table table-hover' style='text-align: center;'>\n"
+      "<thead>\n"
+      "<tr>\n"
+      "<th scope='col '>film</th>\n"
+      "<th scope='col '>name</th>\n"
+      "<th scope='col '>price</th>\n"
+      "<th scope='col '>published date</th>\n"
+      "<th scope='col '>length</th>\n"
+      "<th scope='col '>rate</th>\n"
+      "<th scope='col '>director</th>\n"
+      "<th scope='col '>link</th>\n"
+      "</tr>\n"
+      "</thead>\n"
+      "<tbody>\n";
+  for (auto film : films) {
+    cout << "is film Exite ?" << endl;
+    map<string, string> detail = film->getDetail();
+    body += "<tr>\n";
+    body += "<th class='align-middle' scope=\"row\">" + to_string(counter) +
+            "</th>\n";
+    body += "<td class='align-middle'>" + detail["name"] + "</td>\n";
+    body += "<td class='align-middle'>" + detail["price"] + " $</td>\n";
+    body += "<td class='align-middle'>" + detail["year"] + "</td>\n";
+    body += "<td class='align-middle'>" + detail["length"] + "</td>\n";
+    body += "<td class='align-middle'>" + detail["rate"] + "</td>\n";
+    body += "<td class='align-middle'>" + detail["director"] + "</td>\n";
+    body +=
+        "<td class='align-middle'> <a class='btn btn-primary btn-sm' "
+        "role='button' "
+        "href='films?film_id=" +
+        detail["id"] + "'> Show film </a> </td>\n";
+    body += "</tr>\n";
+    counter++;
   }
   body += "</tbody>  </table>";
-  body +=
-      "<a class='btn btn-outline-primary' style='margin:auto; width:100%;' "
-      "href='post_film' role='button'>Add Film</a> \n";
   body += "</div> </body> </html>";
-
   Response *res = new Response;
   res->setBody(body);
   res->setHeader("Content-Type", "text/html");
@@ -327,4 +424,37 @@ PostFilmsHandler::PostFilmsHandler(Repository *_repository,
   requestManager = _requestManager;
 }
 
-Response *PostFilmsHandler::callback(Request *req) {}
+Response *PostFilmsHandler::callback(Request *req) {
+  string sessionId = req->getSessionId();
+  if (repository->haveSessionId(sessionId) == false)
+    throw Server::Exception("don't have loggined!");
+  requestManager->setUser(repository->findUser(sessionId));
+  User *user = requestManager->findUserName(repository->findUser(sessionId));
+  if (user->isPublisher() == false)
+    throw Server::Exception("You are not publisher :) ");
+  requestManager->handle(req);
+  Response *res = Response::redirect("/home");
+  return res;
+}
+
+SearchHandler::SearchHandler(Repository *_repository,
+                             RequestManager *_requestManager) {
+  repository = _repository;
+  requestManager = _requestManager;
+}
+
+Response *SearchHandler::callback(Request *req) {
+  string sessionId = req->getSessionId();
+  if (repository->haveSessionId(sessionId) == false)
+    throw Server::Exception("don't have loggined!");
+  if (req->getPath() == "/your_film_search") {
+    requestManager->setUser(repository->findUser(sessionId));
+    Response *res = Response::redirect("/home?your_films=yes&director=" +
+                                       req->getQueryParam("director"));
+    return res;
+  }
+  requestManager->setUser(repository->findUser(sessionId));
+  Response *res = Response::redirect("/home?your_films=no&director=" +
+                                     req->getQueryParam("director"));
+  return res;
+}
