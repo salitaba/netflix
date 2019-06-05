@@ -177,7 +177,7 @@ Response *HomeHandler::callback(Request *req) {
     for (auto film : films) {
       cout << "is film Exite ?" << endl;
       map<string, string> detail = film->getDetail();
-      body += "<tr class='clickable-row' data-href='logout'>\n";
+      body += "<tr>\n";
       body += "<th class='align-middle' scope=\"row\">" + to_string(counter) +
               "</th>\n";
       body += "<td class='align-middle'>" + detail["name"] + "</td>\n";
@@ -187,11 +187,11 @@ Response *HomeHandler::callback(Request *req) {
       body += "<td class='align-middle'>" + detail["rate"] + "</td>\n";
       body += "<td class='align-middle'>" + detail["director"] + "</td>\n";
       body +=
-          "<td class='align-middle'> <a class='btn btn-primary' role='button' "
+          "<td class='align-middle'> <a class='btn btn-primary btn-sm' role='button' "
           "href='films?film_id=" +
           detail["id"] + "'> Show film </a> </td>\n";
       body +=
-          "<td class='align-middle'> <a class='btn btn-primary' role='button' "
+          "<td class='align-middle'> <a class='btn btn-primary btn-sm' role='button' "
           "href='delete_films?user=" +
           detail["username"] + "&film_id=" + detail["id"] +
           "'> Delete film </a> </td>\n";
@@ -199,7 +199,10 @@ Response *HomeHandler::callback(Request *req) {
       counter++;
     }
   }
-  body += "</tbody>  </table> </div> </body> </html>";
+  body += "</tbody>  </table>";
+  body += "<a class='btn btn-outline-primary' style='margin:auto; width:100%;' href='post_film' role='button'>Add Film</a> \n";
+  body += "</div> </body> </html>";
+
   Response *res = new Response;
   res->setBody(body);
   res->setHeader("Content-Type", "text/html");
@@ -279,13 +282,6 @@ Response *ShowFilmsHandler::callback(Request *req) {
       "class=\"card-deck\"> \n";
 
   for (auto film : topFilms) {
-    //   <div class="card-deck">
-    //       <div class="card">
-    //           <div class="card-body">
-    //               <h5 class="card-title">Ant Man</h5>
-    //               <p class="card-text">director : ali</p>
-    //               <p class="card-text">length : 20 min </p>
-    //               <p class="card-text">rate : 8/10</p>
     map<string, string> filmDetail = film->getDetail();
     body += " <div class=\"card text-center\" style=\"border: none;\">\n";
     body += "<div class=\"card-body\" \n>";
