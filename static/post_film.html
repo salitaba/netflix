@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="MUI.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="/bootstrap.css">
     <script src="MUI.js"></script>
     <script src="include.js"></script>
     <style>
@@ -28,42 +27,57 @@
 
 
 <body>
-    <div w3-include-html="nav.html" style="z-index: 10"></div>
+    <style>
+        .nav_bar>li>a {
+            color: white;
+            font-weight: bold;
+        }
+
+        .nav_bar>li>a:hover {
+            background: rgba(0, 0, 0, 0.05)
+        }
+    </style>
+
+
+    <ul class="mui-tabs__bar nav_bar" style="background-color:#2196F3; height: 20%;">
+        <li><a href="/">Home</a></li>
+        <li><a href="/films">Films</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li style="float:right"><a href="/logout">Logout</a></li>
+        <li style="float:right"><a href="/login">Login</a></li>
+    </ul>
     <div class="outer">
         <div class="middle">
             <div class="mui-container-fluid">
                 <div class="mui-col-md-4 mui-col-md-offset-4" style=" background-color:rgb(187, 202, 251); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                     <form class="mui-form" action="/signup" method="POST">
-                        <legend style="text-align: center; color:blue; font-size: 2em; font-weight: bold;">Sign up
+                        <legend style="text-align: center; color:blue; font-size: 2em; font-weight: bold;">Post Film
                         </legend>
                         <div class="mui-textfield mui-textfield--float-label">
-                            <input type="text" name="username" required>
-                            <label>User name</label>
+                            <input type="text" name="name" required>
+                            <label>Film name</label>
                         </div>
                         <div class="mui-textfield mui-textfield--float-label">
-                            <input type="text" name="age" required>
-                            <label>age</label>
+                            <input type="text" name="length" required>
+                            <label>length</label>
                         </div>
                         <div class="mui-textfield mui-textfield--float-label">
-                            <input type="text" name="password" required>
-                            <label>password</label>
+                            <input type="text" name="price" required>
+                            <label>price</label>
                         </div>
                         <div class="mui-textfield mui-textfield--float-label">
-                            <input type="text" name="repeatPassword" required>
-                            <label>repeat password</label>
+                            <input type="text" name="year" required>
+                            <label>product year</label>
                         </div>
                         <div class="mui-textfield mui-textfield--float-label">
-                            <input type="email" name="email" required>
-                            <label>Email Address</label>
+                            <input type="text" name="director" required>
+                            <label>director</label>
                         </div>
-                        <div class="mui-checkbox">
-                            <label>
-                                <input type="checkbox" name=publisher>
-                                Publisher
-                            </label>
+                        <div class="mui-textfield mui-textfield--float-label">
+                            <input type="text" name="summary" required>
+                            <label>summary</label>
                         </div>
-                        <!-- <button type="submit" class="mui-btn mui-btn--raised">Submit</button> -->
-                        <button type="submit" class="mui-btn mui-btn--raised btn btn-primary" style="text-align: center; width:100%">Submit</button>
+                        <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
                     </form>
                 </div>
             </div>

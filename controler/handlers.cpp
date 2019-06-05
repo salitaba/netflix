@@ -187,11 +187,13 @@ Response *HomeHandler::callback(Request *req) {
       body += "<td class='align-middle'>" + detail["rate"] + "</td>\n";
       body += "<td class='align-middle'>" + detail["director"] + "</td>\n";
       body +=
-          "<td class='align-middle'> <a class='btn btn-primary btn-sm' role='button' "
+          "<td class='align-middle'> <a class='btn btn-primary btn-sm' "
+          "role='button' "
           "href='films?film_id=" +
           detail["id"] + "'> Show film </a> </td>\n";
       body +=
-          "<td class='align-middle'> <a class='btn btn-primary btn-sm' role='button' "
+          "<td class='align-middle'> <a class='btn btn-primary btn-sm' "
+          "role='button' "
           "href='delete_films?user=" +
           detail["username"] + "&film_id=" + detail["id"] +
           "'> Delete film </a> </td>\n";
@@ -200,7 +202,9 @@ Response *HomeHandler::callback(Request *req) {
     }
   }
   body += "</tbody>  </table>";
-  body += "<a class='btn btn-outline-primary' style='margin:auto; width:100%;' href='post_film' role='button'>Add Film</a> \n";
+  body +=
+      "<a class='btn btn-outline-primary' style='margin:auto; width:100%;' "
+      "href='post_film' role='button'>Add Film</a> \n";
   body += "</div> </body> </html>";
 
   Response *res = new Response;
@@ -267,9 +271,14 @@ Response *ShowFilmsHandler::callback(Request *req) {
   while (headerFile >> s) {
     body += s + "\n";
   }
-  body += HTML::getP(filmDetail["name"],
-                     "text-align: center; font-weight: bold; font-size: 2em; "
-                     "background-color: rgb(216, 216, 216);");
+  body +=
+      "<div style=' background-color:#007bff; height: 40px; font-weight: "
+      "bold; font-size: 2em; text-align: center; color:white; margin-bottom: "
+      "20px;'>" +
+      filmDetail["name"] + "</div> \n";
+  // body += HTML::getP(filmDetail["name"],
+  //                    "text-align: center; font-weight: bold; font-size: 2em;
+  //                    " "background-color: rgb(216, 216, 216);");
   body += HTML::getP("Lenght : " + filmDetail["length"] + " min");
   body += HTML::getP("Price : " + filmDetail["price"] + "$");
   body += HTML::getP("Rate : " + filmDetail["rate"]);
@@ -288,14 +297,19 @@ Response *ShowFilmsHandler::callback(Request *req) {
     body +=
         "<div class=\"container shadow p-3 mb-5 bg-white rounded\" "
         "style=\"margin-top: 30px;\"> \n";
-    body += "<h3 class=\"card-title\">" + filmDetail["name"] + "</h5> \n";
+    // body += "<h3 class=\"card-title\">" + filmDetail["name"] + "</h5> \n";
+    body +=
+        "<div style=' background-color:#007bff; height: 40px; font-weight: "
+        "bold; font-size: 2em; text-align: center; color:white; margin-bottom: "
+        "20px;'>" +
+        filmDetail["name"] + "</div> \n";
     body += "<p class=\"card-text\">Length : " + filmDetail["length"] +
             " min </p> \n";
     body += "<p class=\"card-text\">Director : " + filmDetail["director"] +
             "</p> \n";
     body += "<p class=\"card-text\">Rate : " + filmDetail["rate"] + "</p> \n";
     body +=
-        "<a class='btn btn-primary' role='button' "
+        "<a class='btn btn-primary btn-sm' role='button' "
         "href='films?film_id=" +
         filmDetail["id"] + "'> Show film </a>\n";
     body += "</div> </div> </div> \n";
@@ -306,3 +320,11 @@ Response *ShowFilmsHandler::callback(Request *req) {
   res->setHeader("Content-Type", "text/html");
   return res;
 }
+
+PostFilmsHandler::PostFilmsHandler(Repository *_repository,
+                                   RequestManager *_requestManager) {
+  repository = _repository;
+  requestManager = _requestManager;
+}
+
+Response *PostFilmsHandler::callback(Request *req) {}

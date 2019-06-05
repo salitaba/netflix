@@ -36,6 +36,8 @@ int main(int argc, char **argv) {
     server.get("/bootstrap.min.css.map", new ShowPage("static/bootstrap.min.css.map"));
     server.get("/delete_films", new DeleteFilmHandler(repository, requestManager));
     server.get("/films", new ShowFilmsHandler(repository, requestManager));
+    server.get("/post_film", new ShowPage("static/post_film.html"));
+    server.post("/post_film", new PostFilmsHandler(repository, requestManager));
     server.get("/test", new ShowPage("template/film_header.html"));
     server.run();
   } catch (Server::Exception e) {
