@@ -241,7 +241,7 @@ Response *HomeHandler::callback(Request *req) {
     body +=
         "<a class='btn btn-outline-primary' style='margin:auto; width:100%;' "
         "href='post_film' role='button'>Add Film</a> \n";
-    body += "</div> </body> </html>";
+    body += "</div>";
   }
 
   if (req->getQueryParam("your_films") == "yes")
@@ -456,5 +456,89 @@ Response *SearchHandler::callback(Request *req) {
   requestManager->setUser(repository->findUser(sessionId));
   Response *res = Response::redirect("/home?your_films=no&director=" +
                                      req->getQueryParam("director"));
+  return res;
+}
+
+ProfileHandler::ProfileHandler(Repository *_repository,
+                               RequestManager *_requestManager) {
+  repository = _repository;
+  requestManager = _requestManager;
+}
+
+Response *ProfileHandler::callback(Request *req) {
+  string sessionId = req->getSessionId();
+  if (repository->haveSessionId(sessionId) == false)
+    throw Server::Exception("don't have loggined!");
+  requestManager->setUser(repository->findUser(sessionId));
+  User *user = requestManager->findUserName(repository->findUser(sessionId));
+  vector<Film *> films = user->findBuyedFilm();
+  string body, s;
+  ifstream headerFile;
+  headerFile.open("template/home_header.html");
+  while (headerFile >> s) {
+    body += s + "\n";
+  }
+  int counter = 1;
+  body +=
+      "<div class='container shadow p-3 mb-5 bg-white rounded' "
+      "style='margin-top: 30px;'> \n"
+      "<div class='row justify-content-between'"
+      "style=' color:#007bff;'>"
+      "<div class='col-4' style='font-weight: bold; font-size: 2em; "
+      "text-align: left;'>"
+      "Bought Films!"
+      "</div>"
+      "<div class='col-6'>"
+      "</div>"
+      "</div>"
+      "<table class='table table-hover' style='text-align: center;'>\n"
+      "<thead>\n"
+      "<tr>\n"
+      "<th scope='col '>film</th>\n"
+      "<th scope='col '>name</th>\n"
+      "<th scope='col '>price</th>\n"
+      "<th scope='col '>published date</th>\n"
+      "<th scope='col '>length</th>\n"
+      "<th scope='col '>rate</th>\n"
+      "<th scope='col '>director</th>\n"
+      "<th scope='col '>link</th>\n"
+      "</tr>\n"
+      "</thead>\n"
+      "<tbody>\n";
+  for (auto film : films) {
+    cout << "is film Exite ?" << endl;
+    map<string, string> detail = film->getDetail();
+    body += "<tr>\n";
+    body += "<th class='align-middle' scope=\"row\">" + to_string(counter) +
+            "</th>\n";
+    body += "<td class='align-middle'>" + detail["name"] + "</td>\n";
+    body += "<td class='align-middle'>" + detail["price"] + " $</td>\n";
+    body += "<td class='align-middle'>" + detail["year"] + "</td>\n";
+    body += "<td class='align-middle'>" + detail["length"] + "</td>\n";
+    body += "<td class='align-middle'>" + detail["rate"] + "</td>\n";
+    body += "<td class='align-middle'>" + detail["director"] + "</td>\n";
+    body +=
+        "<td class='align-middle'> <a class='btn btn-primary btn-sm' "
+        "role='button' "
+        "href='films?film_id=" +
+        detail["id"] + "'> Show film </a> </td>\n";
+    body += "</tr>\n";
+    counter++;
+  }
+  body += "</tbody>  </table>";
+  body += "</div>";
+  body +=
+      "<div class='row justify-content-md-center'>"
+      "<form class='form-inline my-2 my-lg-0' style='width:100%' "
+      "action='increase_money'>"
+      "<input class='form-control mr-sm-2' type='search' "
+      "placeholder='insert your money' name='money' aria-label='Search'> "
+      "<button class='btn btn-outline-success my-2 my-sm-0' "
+      "type='submit'>increase</button>"
+      "</form> </div>"
+      "</body> </html>";
+  Response *res = new Response;
+  res->setBody(body);
+  res->setHeader("Content-Type", "text/html");
   return res;
 }

@@ -41,6 +41,8 @@ int main(int argc, char **argv) {
     server.get("/test", new ShowPage("template/test.html"));
     server.get("/your_film_search", new SearchHandler(repository, requestManager));
     server.get("/all_film_search", new SearchHandler(repository, requestManager));
+    server.get("/dashboard", new ProfileHandler(repository, requestManager));
+
     server.run();
   } catch (Server::Exception e) {
     cerr << e.getMessage() << endl;

@@ -170,13 +170,17 @@ void User::showLimitedNotification(int limit){
         }
 }
 
-void User::findBuyedFilm(string name,string minYear,string minRate,string price,string maxYear,string director){
+vector<Film*> User::findBuyedFilm(string name,string minYear,string minRate,string price,string maxYear,string director){
     cout<<"#. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director"<<endl;
+    vector<Film*> answer;
     int counter = 1; 
     for(auto film : buyedFilm){
-        if( film->find(name, minYear, minRate, price, maxYear, director) == true)
+        if( film->find(name, minYear, minRate, price, maxYear, director) == true){
             film->printDetail(counter), counter++;
+            answer.push_back(film);
+        }
     }
+    return answer;
 }
 
 void User::addFilm(Film* film){

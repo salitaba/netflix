@@ -128,4 +128,14 @@ class SearchHandler : public RequestHandler {
 };
 
 
+class ProfileHandler : public RequestHandler {
+ public:
+  ProfileHandler(Repository *repository, RequestManager *requestManager);
+  Response *callback(Request *);
+
+ private:
+  RequestManager *requestManager;
+  Repository *repository;
+};
+
 #endif

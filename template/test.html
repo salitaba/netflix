@@ -3,11 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,
+initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/bootstrap.css">
     <link href="MUI.css" rel="stylesheet" type="text/css" />
     <script src="MUI.js"></script>
-    <link rel="stylesheet" href="/bootstrap.css">
     <style>
         .outer {
             display:
@@ -60,19 +61,11 @@ height:
         <li style="float:right"><a href="/login">Login</a></li>
     </ul>
     <div class='container shadow p-3 mb-5 bg-white rounded' style='margin-top: 30px;'>
-        <div class="row justify-content-between"
-            style=" color:blue;;">
-            <div class="col-4" style='font-weight: bold; font-size: 2em; text-align: center;'>
-                Your Films!
-            </div>
-            <div class="col-6">
-                <form class="form-inline my-2 my-lg-0" style="float:right;" action="home">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search Director" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
+        <div class='row justify-content-between' style=' color:#007bff;'>
+            <div class='col-4' style='font-weight: bold; font-size: 2em; text-align: left;'>Bought Films!</div>
+            <div class='col-6'></div>
         </div>
-        <table class='table table-hover' style='text-align: center; margin-top:15px;'>
+        <table class='table table-hover' style='text-align: center;'>
             <thead>
                 <tr>
                     <th scope='col '>film</th>
@@ -86,68 +79,15 @@ height:
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th class='align-middle' scope="row">1</th>
-                    <td class='align-middle'>ali</td>
-                    <td class='align-middle'>2000 $</td>
-                    <td class='align-middle'>1888</td>
-                    <td class='align-middle'>20</td>
-                    <td class='align-middle'>0</td>
-                    <td class='align-middle'>AliTaba</td>
-                    <td class='align-middle'> <a class='btn btn-primary btn-sm' role='button' href='films?film_id=1'>
-                            Show
-                            film </a> </td>
-                </tr>
-                <tr>
-                    <th class='align-middle' scope="row">2</th>
-                    <td class='align-middle'>ali</td>
-                    <td class='align-middle'>2000 $</td>
-                    <td class='align-middle'>1888</td>
-                    <td class='align-middle'>20</td>
-                    <td class='align-middle'>0</td>
-                    <td class='align-middle'>AliTaba</td>
-                    <td class='align-middle'> <a class='btn btn-primary btn-sm' role='button' href='films?film_id=2'>
-                            Show
-                            film </a> </td>
-                </tr>
-                <tr>
-                    <th class='align-middle' scope="row">3</th>
-                    <td class='align-middle'>ali</td>
-                    <td class='align-middle'>2000 $</td>
-                    <td class='align-middle'>1888</td>
-                    <td class='align-middle'>20</td>
-                    <td class='align-middle'>0</td>
-                    <td class='align-middle'>AliTaba</td>
-                    <td class='align-middle'> <a class='btn btn-primary btn-sm' role='button' href='films?film_id=3'>
-                            Show
-                            film </a> </td>
-                </tr>
-                <tr>
-                    <th class='align-middle' scope="row">4</th>
-                    <td class='align-middle'>ali</td>
-                    <td class='align-middle'>2000 $</td>
-                    <td class='align-middle'>1888</td>
-                    <td class='align-middle'>20</td>
-                    <td class='align-middle'>0</td>
-                    <td class='align-middle'>AliTaba</td>
-                    <td class='align-middle'> <a class='btn btn-primary btn-sm' role='button' href='films?film_id=4'>
-                            Show
-                            film </a> </td>
-                </tr>
-                <tr>
-                    <th class='align-middle' scope="row">5</th>
-                    <td class='align-middle'>ali</td>
-                    <td class='align-middle'>2000 $</td>
-                    <td class='align-middle'>1888</td>
-                    <td class='align-middle'>20</td>
-                    <td class='align-middle'>0</td>
-                    <td class='align-middle'>AliTaba</td>
-                    <td class='align-middle'> <a class='btn btn-primary btn-sm' role='button' href='films?film_id=5'>
-                            Show
-                            film </a> </td>
-                </tr>
             </tbody>
         </table>
+    </div>
+    <div class="row justify-content-md-center">
+        <form class='form-inline my-2 my-lg-0' action='increase_money'>
+            <input class='form-control mr-sm-2' type='search' placeholder='insert your money' name='money'
+                aria-label='Search'>
+            <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>increase</button>
+        </form>
     </div>
 </body>
 
