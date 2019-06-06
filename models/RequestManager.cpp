@@ -256,7 +256,8 @@ vector<Film*> RequestManager::searchFilm(ali::Request request) {
   for (auto film : films)
     if (film->find(name, minYear, minRate, price, maxYear, director)){
       film->printDetail(counter), counter++;
-      answer.push_back(film);
+      if(userLoggined->showMoney()>= film->getPrice())
+        answer.push_back(film);
     }
   return answer;
 }

@@ -43,7 +43,7 @@ class User {
                      std::string director = "");
   void addFilm(Film* film);
   void sendNotificationForAllFollowers();
-  void showMoney();
+  int showMoney();
   std::string getName();
 
  private:

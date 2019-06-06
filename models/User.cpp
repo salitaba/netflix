@@ -192,8 +192,9 @@ void User::sendNotificationForAllFollowers(){
         user->sendNotification(this->createPostFilmNotif());
 }
 
-void User::showMoney(){
+int User::showMoney(){
     cout << money << endl;
+    return money;
 }
 
 string User::getName(){

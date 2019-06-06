@@ -3,92 +3,94 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,
-initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/bootstrap.css">
     <link href="MUI.css" rel="stylesheet" type="text/css" />
     <script src="MUI.js"></script>
+    <script src="include.js"></script>
+    <link rel="stylesheet" href="/bootstrap.css">
     <style>
         .outer {
-            display:
-                table;
-            position:
-                absolute;
-            left:
-                0;
-            height:
-                80%;
-            width:
-                100%;
+            display: table;
+            position: absolute;
+            left: 0;
+            height: 80%;
+            width: 100%;
         }
-
+        
         .middle {
-            display:
-                table-cell;
-            vertical-align:
-                middle;
+            display: table-cell;
+            vertical-align: middle;
         }
     </style>
     <title>Document</title>
 </head>
 
+
 <body>
     <style>
         .nav_bar>li>a {
-            color:
-                white;
-            font-weight:
-                bold;
+            color: white;
+            font-weight: bold;
         }
 
         .nav_bar>li>a:hover {
-            background:
-                rgba(0,
-                0,
-                0,
-                0.05)
+            background: rgba(0, 0, 0, 0.05)
         }
     </style>
-    <ul class="mui-tabs__bar
-nav_bar" style="background-color:#2196F3;
-height:
-20%;">
+
+
+    <ul class="mui-tabs__bar nav_bar" style="background-color:#2196F3; height: 20%;">
         <li><a href="/">Home</a></li>
         <li><a href="/films">Films</a></li>
         <li><a href="/dashboard">Dashboard</a></li>
         <li style="float:right"><a href="/logout">Logout</a></li>
         <li style="float:right"><a href="/login">Login</a></li>
     </ul>
-    <div class='container shadow p-3 mb-5 bg-white rounded' style='margin-top: 30px;'>
-        <div class='row justify-content-between' style=' color:#007bff;'>
-            <div class='col-4' style='font-weight: bold; font-size: 2em; text-align: left;'>Bought Films!</div>
-            <div class='col-6'></div>
+    <div class="outer">
+        <div class="middle">
+            <div class="mui-container-fluid">
+                <div class="mui-col-md-4 mui-col-md-offset-4" style=" background-color:rgb(187, 202, 251); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                    <form class="mui-form" action="/films" method="POST">
+                        <legend style="text-align: center; color:blue; font-size: 2em; font-weight: bold;">Post Film
+                        </legend>
+                        <div class="mui-textfield mui-textfield--float-label">
+                            <input type="text" name="name" required>
+                            <label>Film name</label>
+                        </div>
+                        <div class="mui-textfield mui-textfield--float-label">
+                            <input type="text" name="length" required>
+                            <label>length</label>
+                        </div>
+                        <div class="mui-textfield mui-textfield--float-label">
+                            <input type="text" name="price" required>
+                            <label>price</label>
+                        </div>
+                        <div class="mui-textfield mui-textfield--float-label">
+                            <input type="text" name="year" required>
+                            <label>product year</label>
+                        </div>
+                        <div class="mui-textfield mui-textfield--float-label">
+                            <input type="text" name="director" required>
+                            <label>director</label>
+                        </div>
+                        <div class="mui-textfield mui-textfield--float-label">
+                            <input type="text" name="summary" required>
+                            <label>summary</label>
+                        </div>
+                        <!-- <button type="submit" class="mui-btn mui-btn--raised">Submit</button> -->
+                        <button type="submit" class="mui-btn mui-btn--raised btn btn-primary" style="text-align: center; width:100%">Submit</button>
+
+                    </form>
+                </div>
+            </div>
         </div>
-        <table class='table table-hover' style='text-align: center;'>
-            <thead>
-                <tr>
-                    <th scope='col '>film</th>
-                    <th scope='col '>name</th>
-                    <th scope='col '>price</th>
-                    <th scope='col '>published date</th>
-                    <th scope='col '>length</th>
-                    <th scope='col '>rate</th>
-                    <th scope='col '>director</th>
-                    <th scope='col '>link</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
     </div>
-    <div class="row justify-content-md-center">
-        <form class='form-inline my-2 my-lg-0' action='increase_money'>
-            <input class='form-control mr-sm-2' type='search' placeholder='insert your money' name='money'
-                aria-label='Search'>
-            <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>increase</button>
-        </form>
-    </div>
+
+    <script>
+        includeHTML();
+    </script>
 </body>
+
 
 </html>

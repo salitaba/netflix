@@ -528,17 +528,38 @@ Response *ProfileHandler::callback(Request *req) {
   body += "</tbody>  </table>";
   body += "</div>";
   body +=
-      "<div class='row justify-content-md-center'>"
+      "<div class='row justify-content-md-center justify-content-between'>"
+      "<div class='col col-lg-2' style='font-weight: bold; font-size: 2em; "
+      "text-align: left; color:#007bff;'>You have " +
+      to_string(user->showMoney()) +
+      "$ </div>"
+      "<div class='col-md-auto'>"
       "<form class='form-inline my-2 my-lg-0' style='width:100%' "
       "action='increase_money'>"
       "<input class='form-control mr-sm-2' type='search' "
-      "placeholder='insert your money' name='money' aria-label='Search'> "
+      "placeholder='insert your money' name='amount' aria-label='Search'> "
       "<button class='btn btn-outline-success my-2 my-sm-0' "
       "type='submit'>increase</button>"
-      "</form> </div>"
+      "</form> </div> </div>"
       "</body> </html>";
   Response *res = new Response;
   res->setBody(body);
   res->setHeader("Content-Type", "text/html");
+  return res;
+}
+
+IncreaseMoneyHandler::IncreaseMoneyHandler(Repository *_repository,
+                                           RequestManager *_requestManager) {
+  repository = _repository;
+  requestManager = _requestManager;
+}
+
+Response *IncreaseMoneyHandler::callback(Request *req) {
+  string sessionId = req->getSessionId();
+  if (repository->haveSessionId(sessionId) == false)
+    throw Server::Exception("don't have loggined!");
+  requestManager->setUser(repository->findUser(sessionId));
+  requestManager->increaseMoney(ali::Request(req));
+  Response *res = Response::redirect("/dashboard");
   return res;
 }

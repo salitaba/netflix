@@ -138,4 +138,16 @@ class ProfileHandler : public RequestHandler {
   Repository *repository;
 };
 
+
+class IncreaseMoneyHandler : public RequestHandler {
+ public:
+  IncreaseMoneyHandler(Repository *repository, RequestManager *requestManager);
+  Response *callback(Request *);
+
+ private:
+  RequestManager *requestManager;
+  Repository *repository;
+};
+
+
 #endif

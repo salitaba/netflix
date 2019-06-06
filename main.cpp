@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
     server.get("/your_film_search", new SearchHandler(repository, requestManager));
     server.get("/all_film_search", new SearchHandler(repository, requestManager));
     server.get("/dashboard", new ProfileHandler(repository, requestManager));
-
+    server.get("/increase_money", new IncreaseMoneyHandler(repository, requestManager));
     server.run();
   } catch (Server::Exception e) {
     cerr << e.getMessage() << endl;
