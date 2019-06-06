@@ -149,5 +149,14 @@ class IncreaseMoneyHandler : public RequestHandler {
   Repository *repository;
 };
 
+class BuyFilm : public RequestHandler {
+ public:
+  BuyFilm(Repository *repository, RequestManager *requestManager);
+  Response *callback(Request *);
+
+ private:
+  RequestManager *requestManager;
+  Repository *repository;
+};
 
 #endif

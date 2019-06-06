@@ -17,7 +17,7 @@
             height: 80%;
             width: 100%;
         }
-        
+
         .middle {
             display: table-cell;
             vertical-align: middle;
@@ -39,18 +39,18 @@
         }
     </style>
 
-
     <ul class="mui-tabs__bar nav_bar" style="background-color:#2196F3; height: 20%;">
-        <li><a href="/">Home</a></li>
+        <li><a href="/home">Home</a></li>
         <li><a href="/films">Films</a></li>
         <li><a href="/dashboard">Dashboard</a></li>
         <li style="float:right"><a href="/logout">Logout</a></li>
         <li style="float:right"><a href="/login">Login</a></li>
     </ul>
-    <div class="outer">
+    <div class="outer" style="margin-top:30px;">
         <div class="middle">
             <div class="mui-container-fluid">
-                <div class="mui-col-md-4 mui-col-md-offset-4" style=" background-color:rgb(187, 202, 251); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="mui-col-md-4 mui-col-md-offset-4"
+                    style=" background-color:rgb(187, 202, 251); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                     <form class="mui-form" action="/films" method="POST">
                         <legend style="text-align: center; color:blue; font-size: 2em; font-weight: bold;">Post Film
                         </legend>
@@ -79,7 +79,8 @@
                             <label>summary</label>
                         </div>
                         <!-- <button type="submit" class="mui-btn mui-btn--raised">Submit</button> -->
-                        <button type="submit" class="mui-btn mui-btn--raised btn btn-primary" style="text-align: center; width:100%">Submit</button>
+                        <button type="submit" class="mui-btn mui-btn--raised btn btn-primary"
+                            style="text-align: center; width:100%">Submit</button>
 
                     </form>
                 </div>

@@ -42,9 +42,9 @@ void ali::Request::convertToMap(queue<string> keyValue) {
   while (keyValue.size() > 0) {
     string keyy = keyValue.front();
     keyValue.pop();
-    cout << "KEY " << keyy << " KEY SIZE "<< keyy.size() << endl;
+    cout << "KEY " << keyy << " KEY SIZE " << keyy.size() << endl;
     key[keyy] = keyValue.front();
-    cout << "VALUE " << key[keyy] << " VALUE SIZE "<< key[keyy].size() << endl;
+    cout << "VALUE " << key[keyy] << " VALUE SIZE " << key[keyy].size() << endl;
     keyValue.pop();
   }
 }

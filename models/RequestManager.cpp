@@ -33,8 +33,10 @@ void RequestManager::handle(Request* req) {
   try {
     ali::Request query(req);
     this->handleEvents(query);
-  } catch (exception& e) {
+  } catch (std::exception& e) {
     cerr<<e.what();
+    cout<<"error happened"<<endl;
+    throw Server::Exception(e.what());
   }
 }
 
